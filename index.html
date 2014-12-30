@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Audio Player</title>
-    <script src="js/AudioPlayer.js"></script>
-    <link rel="stylesheet" href="css/style.css"/>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Audio Player</title>
+	<script src="js/AudioPlayer.js"></script>
+	<link rel="stylesheet" href="css/style.css"/>
 </head>
 
 <body>
-    <div class="main-content">
-        <div id="display-container">
-            <div id="header"></div>
-            <canvas id="visualizer" width="600" height="300"></canvas>
-        </div>
-        <div id="sidebar">
-            <div id="upload-container"><input type="file" id="upfile" accept="audio/*" multiple></div>
-            <div id="sidebar-header">Playlist</div>
-            <ul id="playlist"></ul>
-        </div>
-    </div>
-    <audio controls id="AudioPlayer" hidden="hidden"></audio>
-    <div id="progress-bar">
-        <div id="progress"></div>
-        <span id="tooltip"></span>
-    </div>
-    <div id="audio-controls" class="disabled">
-        <div id="volume-control">
-            <span id="volume-icon"></span>
-            <input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="AudioPlayer.changeVolume(this.value);">
-        </div>
-        <div id="main-controls">
-            <button class="audio-control" id="fast-rewind" onclick="AudioPlayer.fastrewind()"></button>
-            <button class="audio-control paused" id="play-pause" onclick="if(AudioPlayer.paused) {AudioPlayer.play()} else {AudioPlayer.pause()}"></button>
-            <button class="audio-control" id="stop" onclick="AudioPlayer.stop()"></button>
-            <button class="audio-control" id="fast-forward" onclick="AudioPlayer.fastforward()"></button>
-        </div>
-        <div id="secondary-controls">
-            <div class="audio-control" id="speed-cont" title="Speed"><input type="number" id="speed" oninput="AudioPlayer.changeSpeed(this.value)" value="1" min="0" max="2" step="0.1">×</div>
-            <button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()"></button>
-        </div>
-    </div>
+	<div class="main-content">
+		<div id="display-container">
+			<div id="header"></div>
+			<canvas id="visualizer" width="600" height="300"></canvas>
+		</div>
+		<div id="sidebar">
+			<div id="upload-container"><input type="file" id="upfile" accept="audio/*" multiple></div>
+			<div id="sidebar-header">Playlist</div>
+			<ul id="playlist"></ul>
+		</div>
+	</div>
+	<audio controls id="AudioPlayer" hidden="hidden"></audio>
+	<div id="progress-bar">
+		<div id="progress"></div>
+		<span id="tooltip"></span>
+	</div>
+	<div id="audio-controls" class="disabled">
+		<div id="volume-control">
+			<span id="volume-icon"></span>
+			<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="AudioPlayer.changeVolume(this.value);">
+		</div>
+		<div id="main-controls">
+			<button class="audio-control" id="fast-rewind" onclick="AudioPlayer.fastrewind()"></button>
+			<button class="audio-control paused" id="play-pause" onclick="if(AudioPlayer.paused) {AudioPlayer.play()} else {AudioPlayer.pause()}"></button>
+			<button class="audio-control" id="stop" onclick="AudioPlayer.stop()"></button>
+			<button class="audio-control" id="fast-forward" onclick="AudioPlayer.fastforward()"></button>
+		</div>
+		<div id="secondary-controls">
+			<div class="audio-control" id="speed-cont" title="Speed"><input type="number" id="speed" oninput="AudioPlayer.changeSpeed(this.value)" value="1" min="0" max="2" step="0.1">×</div>
+			<button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()"></button>
+		</div>
+	</div>
 </body>
 </html>

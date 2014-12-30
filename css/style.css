@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+/* General styles */
 html, body {
 	height: 100%;
 }
@@ -11,6 +12,8 @@ body {
 	color: white;
 	font-family: Montserrat;
 }
+
+/* Header */
 #header:not(:empty) {
 	padding: 15px;
 	background-color: #2A2A2A;
@@ -21,11 +24,15 @@ body {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+/* Main-content (Canvas + sidebar) */
 .main-content {
 	flex: 1;
 	min-width: none;
 	display: flex;
 }
+
+/* Sidebar */
 #sidebar {
 	display: flex;
 	flex-direction: column;
@@ -38,6 +45,7 @@ body {
 	background: #222;
 	padding: 10px;
 }
+/* Playlist */
 #playlist {
 	list-style: none;
 	margin: 0;
@@ -91,21 +99,8 @@ body {
 #playlist > li.playing p::before {
 	background-image: url(../img/play.svg);
 }
-#display-container {
-	flex: 1;
-	min-width: none;
-	position: relative;
-	overflow: auto;
-}
-#visualizer {
-	display: block;
-	margin: auto;
-	position: absolute;
-	top: 0; 
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
+
+/* File upload input */
 #upload-container {
 	position: relative;
 	cursor: pointer;
@@ -148,6 +143,25 @@ body {
 	pointer-events: none;
 	z-index: 0;
 }
+
+/* Canvas with visualizer */
+#display-container {
+	flex: 1;
+	min-width: none;
+	position: relative;
+	overflow: auto;
+}
+#visualizer {
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 0; 
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/* Audio controls */
 #audio-controls {
 	height: 60px;
 	background-color: #222;
@@ -172,6 +186,8 @@ body {
 	display: flex;
 	overflow: hidden;
 }
+
+/* Audio control buttons */
 .audio-control {
 	height: 100%;
 	width: 60px;
@@ -191,6 +207,7 @@ body {
 	opacity: 0.6;
 	pointer-events: none;
 }
+/* This is used to show the icon */
 .audio-control::after {
 	content: "";
 	width: 30px;
@@ -203,6 +220,14 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
+/* Make fast rewind and fast forward icons smaller */
+#fast-rewind::after,
+#fast-forward::after {
+	background-size: 80%;
+}
+
+/* Icons */
 #play-pause::after {
 	background-image: url(../img/pause.svg);
 }
@@ -211,10 +236,6 @@ body {
 }
 #stop::after {
 	background-image: url(../img/stop.svg)
-}
-#fast-rewind::after,
-#fast-forward::after {
-	background-size: 80%;
 }
 #fast-rewind::after {
 	background-image: url(../img/fast_rewind.svg);
@@ -232,12 +253,15 @@ body {
 	background-image: url(../img/loop_checked.svg);
 	filter: none;
 }
+
+/* Speed control */
 #speed-cont {
 	line-height: 60px;
 	font-size: 20px;
 }
+/* There's no icon on the speed controls */
 #speed-cont::after {
-	display: none;
+	content: none;
 }
 #speed {
 	-moz-appearance: textfield;
@@ -256,6 +280,8 @@ body {
 	background: #111;
 	height: auto !important;
 }
+
+/* Volume control */
 #volume-icon {
 	width: 20px;
 	height: 20px;
@@ -292,6 +318,8 @@ body {
 #volume-range::-moz-range-progress {
 	background-color: #0095DD;
 }
+
+/* "Progress bar" for audio */
 #progress-bar {
 	height: 5px;
 	background: black;
@@ -324,7 +352,7 @@ body:hover #tooltip {
 	opacity: 1;
 }
 
-/* Make it responsive */
+/* Make everything responsive */
 @media (max-width: 650px) {
 	#volume-control:not(:hover) {
 		width: 27px;
