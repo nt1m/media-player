@@ -1,0 +1,372 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+html, body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	background-color: #444;
+	color: white;
+	font-family: Montserrat;
+}
+#header:not(:empty) {
+	padding: 15px;
+	background-color: #2A2A2A;
+	font-size: 20px;
+	position: sticky;
+	top: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.main-content {
+	flex: 1;
+	min-width: none;
+	display: flex;
+}
+#sidebar {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 250px;
+	overflow: auto;
+	background-color: #333;
+}
+#sidebar-header {
+	background: #222;
+	padding: 10px;
+}
+#playlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	flex: 1;
+	min-width: none;
+	text-align: center;
+	overflow: auto;
+}
+#playlist:empty::after {
+	content: "Your playlist is empty";
+	display: inline-block;
+	font-size: 12px;
+	margin-top: 10px;
+}
+#playlist > li {
+	padding: 10px;
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: left;
+	cursor: pointer;
+}
+#playlist > li.playing {
+	background-color: #0095DD;
+}
+#playlist > li:not(.playing):hover {
+	background-color: rgba(255,255,255,0.1)
+}
+#playlist > li p {
+	margin: 0;
+	display: block;
+}
+#playlist > li .title {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-size: 12px;
+}
+#playlist > li p::before {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height:16px;
+	margin-right: 10px;
+	background-size: cover;
+	filter: invert(1);
+	vertical-align: top;
+}
+#playlist > li.playing p::before {
+	background-image: url(../img/play.svg);
+}
+#display-container {
+	flex: 1;
+	min-width: none;
+	position: relative;
+	overflow: auto;
+}
+#visualizer {
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 0; 
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+#upload-container {
+	position: relative;
+	cursor: pointer;
+	height: 20%;
+	overflow: hidden;
+	min-height: 50px;
+}
+#upfile {
+	cursor: pointer;
+}
+#upfile,
+#upload-container::after {
+	content:"";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-sizing: border-box;
+	text-align: center;
+	outline: 2px dashed rgba(255,255,255,0.7);
+	outline-offset: -8px;
+}
+#upload-container::before {
+	content: "Drag file(s) or click here to add music";
+	text-transform: uppercase;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 10px;
+}
+#upfile {
+	opacity: 0;
+	z-index: 99;
+}
+#upload-container::before,
+#upload-container::after {
+	text-align: center;
+	pointer-events: none;
+	z-index: 0;
+}
+#audio-controls {
+	height: 60px;
+	background-color: #222;
+	text-align: center;
+	overflow: hidden;
+}
+#main-controls {
+	display: inline-block;
+	margin-left: -100px;
+	height: 100%;
+}
+#secondary-controls {
+	float: right;
+	display: inline-block;
+	height: 100%;
+}
+#volume-control {
+	float: left;
+	padding: 20px 10px;
+	width: 200px;
+	box-sizing: border-box;
+	display: flex;
+	overflow: hidden;
+}
+.audio-control {
+	height: 100%;
+	width: 60px;
+	border: none;
+	background: none;
+	padding: 0;
+	text-align: center;
+	vertical-align: top;
+	float: left;
+	cursor: pointer;
+}
+.audio-control:not(:disabled):hover,
+.audio-control.checked {
+	background-color: rgba(255,255,255,0.3)
+}
+.disabled .audio-control, .disabled #volume-control {
+	opacity: 0.6;
+	pointer-events: none;
+}
+.audio-control::after {
+	content: "";
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	margin-top: 4px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#play-pause::after {
+	background-image: url(../img/pause.svg);
+}
+#play-pause.paused::after {
+	background-image: url(../img/play.svg)
+}
+#stop::after {
+	background-image: url(../img/stop.svg)
+}
+#fast-rewind::after,
+#fast-forward::after {
+	background-size: 80%;
+}
+#fast-rewind::after {
+	background-image: url(../img/fast_rewind.svg);
+}
+#fast-forward::after {
+	background-image: url(../img/fast_forward.svg);
+}
+#loop::after {
+	background-image: url(../img/loop.svg)
+}
+#loop.checked:not(:hover) {
+	background: none;
+}
+#loop.checked::after {
+	background-image: url(../img/loop_checked.svg);
+	filter: none;
+}
+#speed-cont {
+	line-height: 60px;
+	font-size: 20px;
+}
+#speed-cont::after {
+	display: none;
+}
+#speed {
+	-moz-appearance: textfield;
+	background: none;
+	border: none;
+	width: 30px;
+	-moz-margin-end: -20px;
+	color: white;
+	font: inherit;
+	padding: 0 25px;
+	box-shadow: none;
+	-moz-padding-start: 5px;
+	-moz-margin-start: -9px;
+}
+#speed:focus {
+	background: #111;
+	height: auto !important;
+}
+#volume-icon {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	background-size: cover;
+	background-image: url(../img/volume_up.svg);
+}
+#volume-icon.half {
+	background-image: url(../img/volume_down.svg);
+}
+#volume-icon.mute {
+	background-image: url(../img/volume_mute.svg);
+}
+#volume-range {
+	flex: 1;
+	min-width: none;
+	cursor: pointer;
+}
+#volume-range::-moz-range-track {
+	-moz-appearance: none;
+	border:none;
+	background: white;
+	border-radius: 5px;
+	height: 3px;
+}
+#volume-range::-moz-range-thumb {
+	background: #0095DD;
+	height: 16px;
+	width: 16px;
+	border: none;
+}
+#volume-range::-moz-range-progress {
+	background-color: #0095DD;
+}
+#progress-bar {
+	height: 5px;
+	background: black;
+	cursor: pointer;
+}
+#progress {
+	background: #0095DD;
+	height: 100%;
+	width: 0;
+	display: inline-block;
+	vertical-align: top;
+}
+#tooltip {
+	background: #0095DD;
+	display: inline-block;
+	position: absolute;
+	font-size: 10px;
+	padding: 2px;
+	margin-top: -5px;
+	margin-left: -35px;
+	box-sizing: border-box;
+	min-width: 35px;
+	text-align: center;
+	border-radius: 1px;
+	z-index: 9;
+	opacity: 0;
+	transition: all 0.3s;
+}
+body:hover #tooltip {
+	opacity: 1;
+}
+
+/* Make it responsive */
+@media (max-width: 650px) {
+	#volume-control:not(:hover) {
+		width: 27px;
+		padding: 20px 4px;
+	}
+	#volume-control:not(:hover) #volume-range {
+		width: 0;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		opacity: 0;
+	}
+	#volume-control {
+		z-index: 8;
+		background-color: #222;
+		position: absolute;
+		transition: all 0.3s;
+		border-color: #111;
+	}
+	#volume-control:hover {
+		border-right: 1px solid #111;
+	}
+}
+@media (max-width: 551px) {
+	#audio-controls {
+		height: 120px;
+	}
+	#main-controls, #secondary-controls {
+		height: 50%;
+	}
+	#secondary-controls {
+		display: block;
+		float: right;
+		overflow: auto;
+		width: 100%;
+		text-align: center;
+	}
+	#secondary-controls > .audio-control {
+		float: none;
+		display: inline-block;
+	}
+	#main-controls {
+		float: right;
+	}
+}
