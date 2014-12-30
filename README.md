@@ -4,3 +4,12 @@ Only works with Firefox because it uses the shiny latest ES6 stuff :) But feel f
 
 ## Contributing
 Pull requests :)
+
+## Resources
+- Audio visualiser (edited) : https://github.com/Wayou/HTML5_Audio_Visualizer
+
+## Technologies used
+- Web Audio API
+- Canvas
+- HTML <audio> tags
+- ES6
