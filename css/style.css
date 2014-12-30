@@ -10,7 +10,7 @@ body {
 	flex-direction: column;
 	background-color: #444;
 	color: white;
-	font-family: Montserrat;
+	font-family: Montserrat, Roboto, Arial, sans-serif;
 }
 
 /* Header */
