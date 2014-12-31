@@ -17,6 +17,8 @@ var AudioPlayer = {
 		this.controlsEl = document.getElementById("audio-controls");
 		this.canvasEl = document.getElementById("visualizer");
 
+		this.uploadFiles = this.uploadFiles.bind(this);
+
 		this.uploadEl.addEventListener("change", AudioPlayer.uploadFiles);
 		this.progressBar.addEventListener("mousedown", function(e) {
 			AudioPlayer.onProgressClick(e.pageX);
@@ -174,19 +176,13 @@ var AudioPlayer = {
 		var audioSrc = ctx.createMediaElementSource(audio);
 		var analyser = ctx.createAnalyser();
 
-		// we have to connect the MediaElementSource with the analyser
 		audioSrc.connect(analyser);
 
 		// frequencyBinCount tells you how many values you'll receive from the analyser
 		var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-		// we're ready to receive some data!
-		// loop
 		function renderFrame() {
-		   requestAnimationFrame(renderFrame);
-		   // update data in frequencyData
-		   analyser.getByteFrequencyData(frequencyData);
-		   // render frame based on values in frequencyData
-		   // console.log(frequencyData)
+			requestAnimationFrame(renderFrame);
+			analyser.getByteFrequencyData(frequencyData);
 		}
 		this.visualize(analyser)
 		analyser.connect(ctx.destination);
@@ -201,18 +197,17 @@ var AudioPlayer = {
 			canvas = this.canvasEl,
 			cwidth = canvas.width,
 			cheight = canvas.height - 2,
-			meterWidth = 10, //width of the meters in the spectrum
-			gap = 2, //gap between meters
+			meterWidth = 10,
+			gap = 2,
 			capHeight = 2,
-			capStyle = '#fff',
-			meterNum = 800 / (10 + 2), //count of the meters
-			capYPositionArray = [],////store the vertical position of hte caps for the preivous frame
-			ctx = canvas.getContext('2d');
+			capStyle = "#fff",
+			meterNum = 800 / (10 + 2),
+			capYPositionArray = [],
+			ctx = canvas.getContext("2d");
 		var drawMeter = function() {
 			var array = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(array);
 			if (that.status === 0) {
-				//fix when some sounds end the value still not back to zero
 				for (var i = array.length - 1; i >= 0; i--) {
 					array[i] = 0;
 				};
@@ -221,11 +216,11 @@ var AudioPlayer = {
 					allCapsReachBottom = allCapsReachBottom && (capYPositionArray[i] === 0);
 				};
 				if (allCapsReachBottom) {
-					cancelAnimationFrame(that.animationId); //since the sound is top and animation finished, stop the requestAnimation to prevent potential memory leak,THIS IS VERY IMPORTANT!
+					cancelAnimationFrame(that.animationId);
 					return;
 				};
 			};
-			var step = Math.round(array.length / meterNum); //sample limited data from the total array
+			var step = Math.round(array.length / meterNum);
 			ctx.clearRect(0, 0, cwidth, cheight);
 			for (var i = 0; i < meterNum; i++) {
 				var value = array[i * step];
@@ -233,15 +228,15 @@ var AudioPlayer = {
 					capYPositionArray.push(value);
 				};
 				ctx.fillStyle = capStyle;
-				//draw the cap, with transition effect
+
 				if (value < capYPositionArray[i]) {
 					ctx.fillRect(i * 12, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
 				} else {
 					ctx.fillRect(i * 12, cheight - value, meterWidth, capHeight);
 					capYPositionArray[i] = value;
 				};
-				ctx.fillStyle = "#0095DD"; //set the filllStyle to gradient for a better look
-				ctx.fillRect(i * 12 /*meterWidth+gap*/ , cheight - value + capHeight, meterWidth, cheight); //the meter
+				ctx.fillStyle = "#0095dd";
+				ctx.fillRect(i * 12, cheight - value + capHeight, meterWidth, cheight);
 			}
 			that.animationId = requestAnimationFrame(drawMeter);
 		}
