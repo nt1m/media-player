@@ -12,5 +12,5 @@ Pull requests :)
 ## Technologies used
 - Web Audio API
 - Canvas
-- HTML <audio> tags
+- HTML `<audio>` tag
 - ES6
