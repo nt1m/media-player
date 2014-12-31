@@ -17,6 +17,8 @@ var AudioPlayer = {
 		this.controlsEl = document.getElementById("audio-controls");
 		this.canvasEl = document.getElementById("visualizer");
 
+		this.uploadFiles = this.uploadFiles.bind(this);
+
 		this.uploadEl.addEventListener("change", AudioPlayer.uploadFiles);
 		this.progressBar.addEventListener("mousedown", function(e) {
 			AudioPlayer.onProgressClick(e.pageX);
