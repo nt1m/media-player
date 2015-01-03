@@ -93,7 +93,8 @@ var AudioPlayer = {
 	},
 	"uploadFiles": function() {
 		var uploadedMusic = this.uploadEl.files;
-		for (var music of uploadedMusic) {
+		for (var i = 0; i < uploadedMusic.length; i++) {
+			var music = uploadedMusic[i];
 			music.sidebarItem = this.createPlaylistItem(music);
 			this.playlist.push(music);
 		}
@@ -104,8 +105,9 @@ var AudioPlayer = {
 		var audio = window.URL.createObjectURL(music);
 		this.audioEl.src = audio;
 		this.headerEl.innerHTML = this.extractNameFromFile(music.name);
-		for(var item of this.playlistEl.childNodes) {
-			item.classList.remove("playing");
+		var items = this.playlistEl.childNodes;
+		for(var i = 0; i < items.length; i++) {
+			items[i].classList.remove("playing");
 		}
 		music.sidebarItem.classList.add("playing");
 		this.play();

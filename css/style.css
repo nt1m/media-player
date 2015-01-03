@@ -36,7 +36,7 @@ body {
 #sidebar {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
+	min-height: 100%;
 	width: 250px;
 	overflow: auto;
 	background-color: #333;
@@ -93,6 +93,7 @@ body {
 	height:16px;
 	margin-right: 10px;
 	background-size: cover;
+	-webkit-filter: invert(1);
 	filter: invert(1);
 	vertical-align: top;
 }
@@ -251,6 +252,7 @@ body {
 }
 #loop.checked::after {
 	background-image: url(../img/loop_checked.svg);
+	-webkit-filter: none;
 	filter: none;
 }
 
