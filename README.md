@@ -13,4 +13,3 @@ Pull requests :)
 - Web Audio API
 - Canvas
 - HTML `<audio>` tag
-- ES6
