@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -32,14 +32,14 @@
 			<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="AudioPlayer.changeVolume(this.value);">
 		</div>
 		<div id="main-controls">
-			<button class="audio-control" id="fast-rewind" onclick="AudioPlayer.fastrewind()"></button>
+			<button class="audio-control" id="fast-rewind" onclick="AudioPlayer.fastrewind()" title="Rewind"></button>
 			<button class="audio-control paused" id="play-pause" onclick="if(AudioPlayer.paused) {AudioPlayer.play()} else {AudioPlayer.pause()}"></button>
-			<button class="audio-control" id="stop" onclick="AudioPlayer.stop()"></button>
-			<button class="audio-control" id="fast-forward" onclick="AudioPlayer.fastforward()"></button>
+			<button class="audio-control" id="stop" onclick="AudioPlayer.stop()" title="Stop"></button>
+			<button class="audio-control" id="fast-forward" onclick="AudioPlayer.fastforward()" title="Forward"></button>
 		</div>
 		<div id="secondary-controls">
 			<div class="audio-control" id="speed-cont" title="Speed"><input type="number" id="speed" oninput="AudioPlayer.changeSpeed(this.value)" value="1" min="0" max="2" step="0.1">×</div>
-			<button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()"></button>
+			<button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()" title="Repeat"></button>
 		</div>
 	</div>
 </body>
