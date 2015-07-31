@@ -11,6 +11,8 @@ body {
 	background-color: #444;
 	color: white;
 	font-family: Montserrat, Roboto, Arial, sans-serif;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 
 /* Header */
