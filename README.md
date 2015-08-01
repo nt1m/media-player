@@ -1,6 +1,6 @@
 # HTML5 Audio Player
 ## Compatibility
-Only works with Firefox because it uses the shiny latest ES6 stuff :) But feel free to submit PRs to replace ES6 with cross browser JS.
+Only works on Firefox and Chrome.
 
 ## Contributing
 Pull requests :)
@@ -12,5 +12,4 @@ Pull requests :)
 ## Technologies used
 - Web Audio API
 - Canvas
-- HTML <audio> tags
-- ES6
+- HTML `<audio>` tag
