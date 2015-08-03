@@ -303,14 +303,14 @@ body {
 	background-image: url(../img/volume_mute.svg);
 }
 #volume-range {
-	-webkit-appearance:none;
+	-webkit-appearance: none;
 	flex: 1;
 	min-width: none;
 	cursor: pointer;
 }
 #volume-range::-moz-range-track {
 	-moz-appearance: none;
-	border:none;
+	border: none;
 	background: white;
 	border-radius: 5px;
 	height: 3px;
@@ -327,14 +327,14 @@ body {
 }
 
 #volume-range::-webkit-slider-track {
-	-webkit-appearance:none;
-	border:none;
+	-webkit-appearance: none;
+	border: none;
 	background: white;
 	border-radius: 5px;
 	height: 3px;
 }
 #volume-range::-webkit-slider-thumb {
-	-webkit-appearance:none;
+	-webkit-appearance: none;
 	background: #0095DD;
 	border-radius: 50%;
 	height: 16px;
