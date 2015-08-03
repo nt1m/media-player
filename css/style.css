@@ -341,9 +341,6 @@ body {
 	width: 16px;
 	border: none;
 }
-#volume-range::-webkit-slider-progress {
-	background-color: #0095DD;
-}
 
 /* "Progress bar" for audio */
 #progress-bar {
