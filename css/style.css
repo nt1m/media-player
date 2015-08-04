@@ -43,6 +43,7 @@ body {
 	width: 250px;
 	overflow: auto;
 	background-color: #333;
+	border-left: 5px solid #000;
 }
 #sidebar-header {
 	background: #222;
