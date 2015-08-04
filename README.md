@@ -3,7 +3,7 @@
 Tested on: Firefox and Chrome.
 
 ## Contributing
-Pull requests ![:)](/gh-pages/img/smile.png?raw=true ":)")
+Pull requests ![:)](/img/smile.png?raw=true ":)")
 
 ## Resources
 - Audio visualizer (modified) : [HTML5 Audio Visualizer](https://github.com/Wayou/HTML5_Audio_Visualizer)
