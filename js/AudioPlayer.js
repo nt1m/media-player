@@ -53,6 +53,17 @@ var AudioPlayer = {
 				playing.nextSibling.click();
 			}
 		});
+		this.initAudioContext();
+	},
+	initAudioContext: function() {
+		var ctx = new AudioContext();
+		var audio = this.audioEl;
+		var audioSrc = ctx.createMediaElementSource(audio);
+		var analyser = ctx.createAnalyser();
+		audioSrc.connect(analyser);
+		analyser.connect(ctx.destination);
+		this.analyser = analyser;
+		this.ctx = ctx;
 	},
 	get paused() {
 		return this.audioEl.paused;
@@ -173,21 +184,13 @@ var AudioPlayer = {
 		return {hours: hours, minutes: minutes, seconds: seconds};
 	},
 	"recordContext": function() {
-		var ctx = new AudioContext();
-		var audio = this.audioEl;
-		var audioSrc = ctx.createMediaElementSource(audio);
-		var analyser = ctx.createAnalyser();
-
-		audioSrc.connect(analyser);
-
 		// frequencyBinCount tells you how many values you'll receive from the analyser
-		var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+		var frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
 		function renderFrame() {
 			requestAnimationFrame(renderFrame);
-			analyser.getByteFrequencyData(frequencyData);
+			this.analyser.getByteFrequencyData(frequencyData);
 		}
-		this.visualize(analyser)
-		analyser.connect(ctx.destination);
+		this.visualize(this.analyser);
 	},
 	"killContext": function() {
 		var canvas = this.canvasEl;
