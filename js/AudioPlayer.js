@@ -117,10 +117,8 @@ var AudioPlayer = {
 			
 			var result = e.target.result;
 			var tags_str = result.slice(result.length-128);
-			console.log(tags_str)
 			var tags = {};
 			if (tags_str.slice(0,4)=="TAG+"){
-				console.log("TAG+")
 				tags = {
 					"title" : tags_str.slice(4,64).replace(/[\0]/g,""),
 					"artist" : tags_str.slice(64,124).replace(/[\0]/g,""),
@@ -133,7 +131,6 @@ var AudioPlayer = {
 				};
 			
 			}else if(tags_str.slice(0,3).replace(/[\0]/g,"")=="TAG"){
-				console.log("TAG")
 				tags = {
 					"title" : tags_str.slice(3,3+30).replace(/[\0]/g,""),
 					"artist" : tags_str.slice(30+3,2*30+3).replace(/[\0]/g,""),
@@ -142,19 +139,20 @@ var AudioPlayer = {
 					"comment" : tags_str.slice(3*30+7,4*30+7).replace(/[\0]/g,""),
 				};
 			}
-			AudioPlayer.playlist_id3.push(tags)
+			AudioPlayer.playlist_id3.push(tags);
+			AudioPlayer.createPlaylistItem(data);
 			AudioPlayer.setAudio(AudioPlayer.playlist.reverse()[0]);
 			AudioPlayer.controlsEl.classList.remove("disabled");
 		}
 
 	},
 	"createPlaylistItem": function(data) {
-		var playlist = this.playlistEl;
+		var playlist = AudioPlayer.playlistEl;
 		var item = document.createElement("li");
 
 		var title = document.createElement("p");
 		title.className = "title";
-		var id3 = this.playlist_id3.reverse()[0];
+		var id3 = AudioPlayer.playlist_id3.reverse()[0];
 		title.innerHTML = id3.title;
 		var cross = document.createElement("span")
 		cross.className = "cross";
@@ -169,11 +167,9 @@ var AudioPlayer = {
 				AudioPlayer.removeItem(e.target.parentElement.parentElement);
 		});
 		playlist.appendChild(item);
-		console.log(item);
 		return item;
 	},
 	"removeItem": function(li) {
-		console.log("click");
 		var key;
 		for (var i in li.parentElement.children) {
 			if (li.parentElement.children.hasOwnProperty(key)) {
@@ -199,7 +195,6 @@ var AudioPlayer = {
 		var uploadedMusic = this.uploadEl.files || files;
 		for (var i = 0; i < uploadedMusic.length; i++) {
 			if(uploadedMusic[i].type.match("audio")=="audio"){
-				console.log(uploadedMusic);
 				var music = uploadedMusic[i];
 				var add = 0;
 				for (var i = 0; i< this.playlist.length ;i++) {
@@ -224,6 +219,7 @@ var AudioPlayer = {
 		this.headerEl.innerHTML = this.playlist_id3[key];
 		document.title = this.headerEl.innerHTML;
 		var items = this.playlistEl.childNodes;
+		console.debug(items)
 		for(var i = 0; i < items.length; i++) {
 			items[i].classList.remove("playing");
 		}
@@ -263,9 +259,7 @@ var AudioPlayer = {
 	},
 	"changeSpeed": function(value) {
 		var values = [0.5,1,1.25,1.5,2,4];
-		console.debug(value,values[value])
 		this.audioEl.playbackRate = values[value];
-		console.debug(this.audioEl.playbackRate);
 	},
 	"updateProgressBar": function() {
 		var width = (this.audioEl.currentTime * document.body.clientWidth) / this.audioEl.duration;
