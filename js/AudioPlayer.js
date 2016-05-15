@@ -105,9 +105,13 @@ var AudioPlayer = {
 	"uploadFiles": function() {
 		var uploadedMusic = this.uploadEl.files;
 		for (var i = 0; i < uploadedMusic.length; i++) {
-			var music = uploadedMusic[i];
-			music.sidebarItem = this.createPlaylistItem(music);
-			this.playlist.push(music);
+			if(uploadedMusic[i].type.match("audio")=="audio"){
+				console.log(uploadedMusic);
+				var music = uploadedMusic[i];
+				music.sidebarItem = this.createPlaylistItem(music);
+				this.playlist.push(music);
+			}else
+				return false;
 		}
 		this.setAudio(this.playlist[this.playlist.length-1]);
 		this.controlsEl.classList.remove("disabled");
