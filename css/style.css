@@ -44,6 +44,21 @@ body {
 	overflow: auto;
 	background-color: #333;
 }
+#sidebar.drag{
+	box-sizing: border-box;
+	outline: 2px dashed rgba(255,255,255,0.7);
+	outline-offset: -3px;	
+}
+#sidebar.drag > #upload-container{
+	display: none;	
+}
+#sidebar.no-drag{
+	box-sizing: unset;
+	outline: none;	
+}
+#sidebar.no-drag > #upload-container{
+	display: inherit;	
+}
 #sidebar-header {
 	background: #222;
 	padding: 10px;

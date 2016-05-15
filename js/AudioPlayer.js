@@ -20,6 +20,26 @@ var AudioPlayer = {
 		this.uploadFiles = this.uploadFiles.bind(this);
 
 		this.uploadEl.addEventListener("change", AudioPlayer.uploadFiles);
+		this.sidebarEl.addEventListener("dragenter",function (e) {
+			AudioPlayer.sidebarEl.classList.remove("no-drag");
+			AudioPlayer.sidebarEl.classList.add("drag");
+		});
+		this.sidebarEl.addEventListener("dragleave",function (e) {
+			AudioPlayer.sidebarEl.classList.remove("drag");
+			AudioPlayer.sidebarEl.classList.add("no-drag");
+		});
+		this.sidebarEl.addEventListener("dragover",function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		})
+		this.sidebarEl.addEventListener("drop",function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			AudioPlayer.uploadFiles(e.dataTransfer.files);
+			AudioPlayer.sidebarEl.classList.remove("drag");
+			AudioPlayer.sidebarEl.classList.add("no-drag");
+		});
+		
 		this.progressBar.addEventListener("mousedown", function(e) {
 			AudioPlayer.onProgressClick(e.pageX);
 		});
@@ -102,8 +122,12 @@ var AudioPlayer = {
 		playlist.appendChild(item);
 		return item;
 	},
-	"uploadFiles": function() {
-		var uploadedMusic = this.uploadEl.files;
+	"uploadFiles": function(files) {
+		var uploadedMusic
+		if(files===undefined)
+			uploadedMusic = this.uploadEl.files;
+		else
+			uploadedMusic = files;
 		for (var i = 0; i < uploadedMusic.length; i++) {
 			if(uploadedMusic[i].type.match("audio")=="audio"){
 				console.log(uploadedMusic);
@@ -115,6 +139,7 @@ var AudioPlayer = {
 		}
 		this.setAudio(this.playlist[this.playlist.length-1]);
 		this.controlsEl.classList.remove("disabled");
+		return true;
 	},
 	"setAudio": function(music) {
 		var audio = window.URL.createObjectURL(music);
