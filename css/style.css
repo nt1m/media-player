@@ -185,7 +185,6 @@ body {
 	height: 60px;
 	background-color: #222;
 	text-align: center;
-	overflow: hidden;
 }
 #main-controls {
 	display: inline-block;
@@ -273,32 +272,56 @@ body {
 	-webkit-filter: none;
 	filter: none;
 }
-
-/* Speed control */
-#speed-cont {
-	line-height: 60px;
-	font-size: 20px;
+#speed-btn{
+	position: relative;
 }
-/* There's no icon on the speed controls */
-#speed-cont::after {
-	content: none;
+#speed-btn::after{
+	background-image:  url(../img/cross.svg);
+	background-size: 80%;
 }
-#speed {
-	-moz-appearance: textfield;
-	background: none;
+#speed-btn.checked::after{
+	background-image: url(../img/cross_checked.svg);
+	-webkit-filter: none;
+	filter:none;
+}
+#speed-btn.checked:not(:hover) {
+    background: none;
+}
+#speed-menu{
+	position: absolute;
+	transition: top .1s,opacity .2s;
+	width: 250px;
+	right: 0;
+	background-color: #f1f1f1;
+	vertical-align: middle;
+}
+#speed-menu > select{
+	width: 50%;
+	overflow: hidden;
 	border: none;
-	width: 30px;
-	-moz-margin-end: -20px;
-	color: white;
-	font: inherit;
-	padding: 0 25px;
-	box-shadow: none;
-	-moz-padding-start: 5px;
-	-moz-margin-start: -9px;
+	text-align: center;
 }
-#speed:focus {
-	background: #111;
-	height: auto !important;
+#speed-menu::after{
+	content:"";
+	position: absolute;
+	right: 32%;
+	top: 100%;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 10px 10px 0 10px;
+	border-color: #f1f1f1 transparent transparent transparent;
+}
+#speed-menu:nth-child(n){
+	margin-left: -35%;
+}
+#speed-btn.checked + #speed-menu{
+	bottom: 65px;
+	opacity:1;
+}
+#speed-btn.not-checked + #speed-menu{
+	bottom: -100%;
+	opacity:0;
 }
 
 /* Volume control */
@@ -422,6 +445,7 @@ body:hover #tooltip {
 		height: 50%;
 	}
 	#secondary-controls {
+		position: relative;
 		display: block;
 		float: right;
 		overflow: auto;

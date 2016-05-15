@@ -39,7 +39,18 @@
 			<button class="audio-control" id="fast-forward" onclick="AudioPlayer.fastforward()" title="Forward"></button>
 		</div>
 		<div id="secondary-controls">
-			<div class="audio-control" id="speed-cont" title="Speed"><input type="number" id="speed" oninput="AudioPlayer.changeSpeed(this.value)" value="1" min="0" max="2" step="0.1">×</div>
+			<button class="audio-control not-checked" id="speed-btn" onclick="AudioPlayer.toggleSpeedBtn()"></button>
+			<div id="speed-menu">
+						<select size="6" onchange="AudioPlayer.changeSpeed(this.value)">
+							Speed :
+							<option value="5">4</option>
+							<option value="4">2</option>
+							<option value="3">1.5</option>
+							<option value="2">1.25</option>
+							<option value="1" selected>1</option>
+							<option value="0">0.5</option>
+						</select>
+					</div>
 			<button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()" title="Repeat"></button>
 		</div>
 	</div>

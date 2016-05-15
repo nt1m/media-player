@@ -7,6 +7,7 @@ var AudioPlayer = {
 		this.playPauseEl = document.getElementById("play-pause");
 		this.volumeIcon = document.getElementById("volume-icon");
 		this.loopEl = document.getElementById("loop");
+		this.speedBtnEl = document.getElementById("speed-btn");
 
 		this.progressBar = document.getElementById("progress-bar");
 		this.progressEl = document.getElementById("progress");
@@ -46,6 +47,7 @@ var AudioPlayer = {
 		this.progressBar.addEventListener("mouseover", function(e) {
 			AudioPlayer.setProgressTooltip(e.pageX);
 		});
+		
 		this.audioEl.addEventListener("timeupdate", function() {
 			AudioPlayer.updateProgressBar();
 			AudioPlayer.tooltipEl.innerHTML = AudioPlayer.getTooltip(this.currentTime);
@@ -92,6 +94,7 @@ var AudioPlayer = {
 		this.audioEl.play();
 		AudioPlayer.recordContext()
 	},
+	
 	"pause": function() {
 		this.audioEl.pause();
 	},
@@ -145,6 +148,7 @@ var AudioPlayer = {
 		var audio = window.URL.createObjectURL(music);
 		this.audioEl.src = audio;
 		this.headerEl.innerHTML = this.extractNameFromFile(music.name);
+		document.title = this.headerEl.innerHTML;
 		var items = this.playlistEl.childNodes;
 		for(var i = 0; i < items.length; i++) {
 			items[i].classList.remove("playing");
@@ -162,6 +166,15 @@ var AudioPlayer = {
 			this.loopEl.classList.add("checked");
 		}
 	},
+	"toggleSpeedBtn": function() {
+		if(this.speedBtnEl.classList.contains("checked")){
+			this.speedBtnEl.classList.remove("checked");
+			this.speedBtnEl.classList.add("not-checked");
+		}else{
+			this.speedBtnEl.classList.remove("not-checked");
+			this.speedBtnEl.classList.add("checked");
+		}
+	},
 	"changeVolume": function(volume) {
 		this.audioEl.volume = volume;
 		if(volume == 0) {
@@ -174,9 +187,11 @@ var AudioPlayer = {
 			this.volumeIcon.className = "";
 		}
 	},
-	"changeSpeed": function(speed) {
-		this.audioEl.defaultPlaybackRate = speed;
-		console.info("DEBUG",this.audioEl.playbackRate,speed)
+	"changeSpeed": function(value) {
+		var values = [0.5,1,1.25,1.5,2,4];
+		console.debug(value,values[value])
+		this.audioEl.playbackRate = values[value];
+		console.debug(this.audioEl.playbackRate);
 	},
 	"updateProgressBar": function() {
 		var width = (this.audioEl.currentTime * document.body.clientWidth) / this.audioEl.duration;
