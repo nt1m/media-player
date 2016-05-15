@@ -126,11 +126,7 @@ var AudioPlayer = {
 		return item;
 	},
 	"uploadFiles": function(files) {
-		var uploadedMusic
-		if(files===undefined)
-			uploadedMusic = this.uploadEl.files;
-		else
-			uploadedMusic = files;
+		var uploadedMusic = this.uploadEl.files || files;
 		for (var i = 0; i < uploadedMusic.length; i++) {
 			if(uploadedMusic[i].type.match("audio")=="audio"){
 				console.log(uploadedMusic);
