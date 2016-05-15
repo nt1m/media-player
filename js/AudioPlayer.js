@@ -54,7 +54,7 @@ var AudioPlayer = {
 		});
 		this.audioEl.addEventListener("play", function() {
 			AudioPlayer.playPauseEl.classList.remove("paused");
-			if(!AudioPlayer.playlistEl.querySelector(".playing")) {
+			if(!AudioPlayer.playlistEl.querySelector(".playing") && AudioPlayer.playlistEl.querySelector(".last-played") !== undefined) {
 				AudioPlayer.playlistEl.querySelector(".last-played").className = "playing";
 			}
 		});
@@ -116,14 +116,43 @@ var AudioPlayer = {
 		var title = document.createElement("p");
 		title.className = "title";
 		title.innerHTML = this.extractNameFromFile(data.name);
+		var cross = document.createElement("span")
+		cross.className = "cross";
+		title.appendChild(cross);
 		item.appendChild(title);
 
 		item.title = this.extractNameFromFile(data.name);
-		item.addEventListener("click", function() {
-			AudioPlayer.setAudio(data);
+		item.addEventListener("click", function(e) {
+			if(e.target.className!="cross")
+				AudioPlayer.setAudio(data);
+			else
+				AudioPlayer.removeItem(e.target.parentElement.parentElement);
 		});
 		playlist.appendChild(item);
 		return item;
+	},
+	"removeItem": function(li) {
+		console.log("click");
+		var key;
+		for (var i in li.parentElement.children) {
+			if (li.parentElement.children.hasOwnProperty(key)) {
+				var element = li.parentElement.children[key];
+				if(element == li)
+					key = i;				
+			}
+		}
+		li.remove();
+		this.playlist.pop(key);
+		if(li.classList.contains("playing")){
+			if(this.playlist.length<=0){
+				this.stop();
+				this.audioEl.removeAttribute("src");
+				this.controlsEl.classList.add("disabled");
+				this.setAudio(this.playlist[this.playlist.length-1]);
+			}else{
+				this.setAudio(this.playlist[this.playlist.length-1]);
+			}	
+		}
 	},
 	"uploadFiles": function(files) {
 		var uploadedMusic = this.uploadEl.files || files;
@@ -131,13 +160,24 @@ var AudioPlayer = {
 			if(uploadedMusic[i].type.match("audio")=="audio"){
 				console.log(uploadedMusic);
 				var music = uploadedMusic[i];
-				music.sidebarItem = this.createPlaylistItem(music);
-				this.playlist.push(music);
+				var add = 0;
+				for (var i = 0; i<this.playlist.length;i++) {
+					var fn = this.playlist[i].name;
+					if(music.name==fn){
+						add+=1;
+					}
+				}
+				if(add==0){
+					music.sidebarItem = this.createPlaylistItem(music);
+					this.playlist.push(music);
+				}
 			}else
 				return false;
 		}
+		if(add==0){
 		this.setAudio(this.playlist[this.playlist.length-1]);
 		this.controlsEl.classList.remove("disabled");
+		}
 		return true;
 	},
 	"setAudio": function(music) {

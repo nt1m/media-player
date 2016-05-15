@@ -97,6 +97,7 @@ body {
 #playlist > li p {
 	margin: 0;
 	display: block;
+	position: relative;
 }
 #playlist > li .title {
 	white-space: nowrap;
@@ -114,6 +115,21 @@ body {
 	-webkit-filter: invert(1);
 	filter: invert(1);
 	vertical-align: top;
+}
+#playlist > li p .cross  {
+	width: 16px;
+	height:16px;
+	background-image:url("../img/cross.svg");
+	background-size: cover;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	opacity: 0.5;
+	position: absolute;
+	right: 0;
+}
+#playlist > li p:hover > .cross {
+	background-image:url("../img/cross_hover.svg");
+	opacity: 1;
 }
 #playlist > li.playing p::before {
 	background-image: url(../img/play.svg);
@@ -276,11 +292,11 @@ body {
 	position: relative;
 }
 #speed-btn::after{
-	background-image:  url(../img/cross.svg);
+	background-image:  url(../img/clock.svg);
 	background-size: 80%;
 }
 #speed-btn.checked::after{
-	background-image: url(../img/cross_checked.svg);
+	background-image: url(../img/clock_checked.svg);
 	-webkit-filter: none;
 	filter:none;
 }
