@@ -219,6 +219,7 @@ body {
 	box-sizing: border-box;
 	display: flex;
 	overflow: hidden;
+	position: relative;
 }
 
 /* Audio control buttons */
@@ -357,10 +358,13 @@ body {
 	background-image: url(../img/volume_mute.svg);
 }
 #volume-range {
+	top: 43%;
+	position: absolute;
 	-webkit-appearance: none;
 	flex: 1;
 	min-width: none;
 	cursor: pointer;
+	height:3px;
 }
 #volume-range::-moz-range-track {
 	-moz-appearance: none;
