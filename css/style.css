@@ -73,10 +73,20 @@ body {
 	min-width: none;
 	text-align: center;
 	overflow: auto;
+	position: relative;
 }
 #playlist:empty::after {
 	content: "Your playlist is empty";
 	display: inline-block;
+	font-size: 12px;
+	margin-top: 10px;
+}
+#playlist.Loading::before {
+	content: "Loading...";
+	position: absolute;
+	bottom: -50px;
+	left: 0;
+	right: 0;
 	font-size: 12px;
 	margin-top: 10px;
 }

@@ -54,7 +54,7 @@ var AudioPlayer = {
 		});
 		this.audioEl.addEventListener("play", function() {
 			AudioPlayer.playPauseEl.classList.remove("paused");
-			if(!AudioPlayer.playlistEl.querySelector(".playing") && AudioPlayer.playlistEl.querySelector(".last-played") !== undefined) {
+			if(!AudioPlayer.playlistEl.querySelector(".playing") && AudioPlayer.playlistEl.querySelector(".last-played") !== null) {
 				AudioPlayer.playlistEl.querySelector(".last-played").className = "playing";
 			}
 		});
@@ -108,8 +108,8 @@ var AudioPlayer = {
 	"fastforward": function() {
 		this.audioEl.currentTime += 5;
 	},
-	"playlist":[],"playlist_id3":[],
-	"addItemAsync":function (data) {
+	"playlist":[],
+	"addItemAsync":function (data,lastfile) {
 		/* For more informations https://en.wikipedia.org/wiki/ID3#Layout */
 		var fr = new FileReader();
 		fr.readAsText(data);
@@ -139,30 +139,34 @@ var AudioPlayer = {
 					"comment" : tags_str.slice(3*30+7,4*30+7).replace(/[\0]/g,""),
 				};
 			}
-			AudioPlayer.playlist_id3.push(tags);
-			AudioPlayer.createPlaylistItem(data);
-			AudioPlayer.setAudio(AudioPlayer.playlist.reverse()[0]);
-			AudioPlayer.controlsEl.classList.remove("disabled");
+			var it = {"file":data,"tags":tags};
+			AudioPlayer.playlist.push(it);
+			AudioPlayer.createPlaylistItem(data,tags);
+			if(lastfile){
+				AudioPlayer.setAudio(AudioPlayer.playlist.reverse()[0].file);
+				AudioPlayer.controlsEl.classList.remove("disabled");
+			}
 		}
+		
 
 	},
-	"createPlaylistItem": function(data) {
+	"createPlaylistItem": function(data,tags) {
 		var playlist = AudioPlayer.playlistEl;
 		var item = document.createElement("li");
 
 		var title = document.createElement("p");
 		title.className = "title";
-		var id3 = AudioPlayer.playlist_id3.reverse()[0];
-		title.innerHTML = id3.title;
+		title.innerHTML = tags.title;
 		var cross = document.createElement("span")
 		cross.className = "cross";
 		title.appendChild(cross);
 		item.appendChild(title);
-
-		item.title = id3.title;
+		item.data = data;
+		item.title = tags.title;
 		item.addEventListener("click", function(e) {
-			if(e.target.className!="cross")
-				AudioPlayer.setAudio(data);
+			if(e.target.className!="cross"){
+				AudioPlayer.setAudio(this.data);
+				}
 			else
 				AudioPlayer.removeItem(e.target.parentElement.parentElement);
 		});
@@ -193,37 +197,50 @@ var AudioPlayer = {
 	},
 	"uploadFiles": function(files) {
 		var uploadedMusic = this.uploadEl.files || files;
+		this.playlistEl.classList.add("Loading");
 		for (var i = 0; i < uploadedMusic.length; i++) {
 			if(uploadedMusic[i].type.match("audio")=="audio"){
 				var music = uploadedMusic[i];
 				var add = 0;
-				for (var i = 0; i< this.playlist.length ;i++) {
+				for (var i in this.playlist) {
 					var fn = this.playlist[i].name;
 					if(music.name==fn){
 						add+=1;
 					}
 				}
 				if(add==0){
-					this.playlist.push(music);
-					this.addItemAsync(music)
+					this.addItemAsync(music,(uploadedMusic.length-1==i))
 				}
 			}else
 				return false;
 		}
+		this.playlistEl.classList.remove("Loading");
 		return true;
 	},
 	"setAudio": function(music) {
-		var key = this.playlist.indexOf(music);
+		var key = 0;
+		for(var i=0 ; i<this.playlist.length;i++){
+			if(this.playlist[i].file.name==music.name){
+				key = i;
+				break;
+			}
+		}
 		var audio = window.URL.createObjectURL(music);
 		this.audioEl.src = audio;
-		this.headerEl.innerHTML = this.playlist_id3[key];
+		this.headerEl.innerHTML = this.playlist[key].tags.title + " | " + this.playlist[key].tags.artist;
 		document.title = this.headerEl.innerHTML;
-		var items = this.playlistEl.childNodes;
+		var items = this.playlistEl.children;
 		console.debug(items)
-		for(var i = 0; i < items.length; i++) {
-			items[i].classList.remove("playing");
+
+		for(var i  in items) {
+			if (items.hasOwnProperty(i)) {
+				items[i].classList.remove("playing");
+				if(items[i].title==this.playlist[key].tags.title){
+					items[i].classList.add("playing");
+					
+				}
+			}
 		}
-		items[key].classList.add("playing");
 		this.play();
 	},
 	"toggleLoop": function() {
