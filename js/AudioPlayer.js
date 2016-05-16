@@ -187,11 +187,12 @@ var AudioPlayer = {
 		if(li.classList.contains("playing")){
 			if(this.playlist.length<=0){
 				this.stop();
+				console.log("coco")
 				this.audioEl.removeAttribute("src");
 				this.controlsEl.classList.add("disabled");
-				this.setAudio(this.playlist[this.playlist.length-1]);
+				this.setAudio(this.playlist[this.playlist.length-1].file);
 			}else{
-				this.setAudio(this.playlist[this.playlist.length-1]);
+				this.setAudio(this.playlist[this.playlist.length-1].file);
 			}	
 		}
 	},
