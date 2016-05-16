@@ -112,31 +112,34 @@ var AudioPlayer = {
 	"addItemAsync":function (data,lastfile) {
 		/* For more informations https://en.wikipedia.org/wiki/ID3#Layout */
 		var fr = new FileReader();
-		fr.readAsText(data);
+		fr.readAsArrayBuffer(data);
 		fr.onload=function(e){
-			
 			var result = e.target.result;
-			var tags_str = result.slice(result.length-128);
+			/* Getting the last 128 bytes of the Array buffer */
+			result = result.slice(result.byteLength-128);
+			/* Converting the ArrayBuffer to String */
+			result = new Uint8Array(result);
+			result = String.fromCharCode.apply(null,result)
 			var tags = {};
-			if (tags_str.slice(0,4)=="TAG+"){
+			if (result.slice(0,4)=="TAG+"){
 				tags = {
-					"title" : tags_str.slice(4,64).replace(/[\0]/g,""),
-					"artist" : tags_str.slice(64,124).replace(/[\0]/g,""),
-					"album" : tags_str.slice(124,184).replace(/[\0]/g,""),
+					"title" : result.slice(4,64).replace(/[\0]/g,""),
+					"artist" : result.slice(64,124).replace(/[\0]/g,""),
+					"album" : result.slice(124,184).replace(/[\0]/g,""),
 					"speed_list" : ["unset","slow","medium","fast","hardcore"],
-					"speed":this.speed_list[parseInt(tags_str.slice(184,185))],
-					"genre":tags_str.slice(185,215).replace(/[\0]/g,""),
-					"start-time":tags_str.slice(215,221).replace(/[\0]/g,""),
-					"end-time":tags_str.slice(221,227).replace(/[\0]/g,""),
+					"speed":this.speed_list[parseInt(result.slice(184,185))],
+					"genre":result.slice(185,215).replace(/[\0]/g,""),
+					"start-time":result.slice(215,221).replace(/[\0]/g,""),
+					"end-time":result.slice(221,227).replace(/[\0]/g,""),
 				};
 			
-			}else if(tags_str.slice(0,3).replace(/[\0]/g,"")=="TAG"){
+			}else if(result.slice(0,3).replace(/[\0]/g,"")=="TAG"){
 				tags = {
-					"title" : tags_str.slice(3,3+30).replace(/[\0]/g,""),
-					"artist" : tags_str.slice(30+3,2*30+3).replace(/[\0]/g,""),
-					"album" : tags_str.slice(2*30+3,3*30+3).replace(/[\0]/g,""),
-					"year" : tags_str.slice(3*30+3,3*30+7).replace(/[\0]/g,""),
-					"comment" : tags_str.slice(3*30+7,4*30+7).replace(/[\0]/g,""),
+					"title" : result.slice(3,3+30).replace(/[\0]/g,""),
+					"artist" : result.slice(30+3,2*30+3).replace(/[\0]/g,""),
+					"album" : result.slice(2*30+3,3*30+3).replace(/[\0]/g,""),
+					"year" : result.slice(3*30+3,3*30+7).replace(/[\0]/g,""),
+					"comment" : result.slice(3*30+7,4*30+7).replace(/[\0]/g,""),
 				};
 			}
 			var it = {"file":data,"tags":tags};
@@ -187,7 +190,6 @@ var AudioPlayer = {
 		if(li.classList.contains("playing")){
 			if(this.playlist.length<=0){
 				this.stop();
-				console.log("coco")
 				this.audioEl.removeAttribute("src");
 				this.controlsEl.classList.add("disabled");
 				this.setAudio(this.playlist[this.playlist.length-1].file);
@@ -231,7 +233,6 @@ var AudioPlayer = {
 		this.headerEl.innerHTML = this.playlist[key].tags.title + " | " + this.playlist[key].tags.artist;
 		document.title = this.headerEl.innerHTML;
 		var items = this.playlistEl.children;
-		console.debug(items)
 
 		for(var i  in items) {
 			if (items.hasOwnProperty(i)) {
