@@ -150,6 +150,7 @@ var AudioPlayer = {
 				AudioPlayer.controlsEl.classList.remove("disabled");
 			}
 		}
+		fr=undefined
 		
 
 	},
