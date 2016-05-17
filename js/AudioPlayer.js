@@ -21,18 +21,18 @@ var AudioPlayer = {
         this.uploadFiles = this.uploadFiles.bind(this);
 
         this.uploadEl.addEventListener("change", AudioPlayer.uploadFiles);
-        this.sidebarEl.addEventListener("dragenter",function (e) {
+        this.sidebarEl.addEventListener("dragenter",function () {
             AudioPlayer.sidebarEl.classList.remove("no-drag");
             AudioPlayer.sidebarEl.classList.add("drag");
         });
-        this.sidebarEl.addEventListener("dragleave",function (e) {
+        this.sidebarEl.addEventListener("dragleave",function () {
             AudioPlayer.sidebarEl.classList.remove("drag");
             AudioPlayer.sidebarEl.classList.add("no-drag");
         });
         this.sidebarEl.addEventListener("dragover",function (e) {
             e.preventDefault();
             e.stopPropagation();
-        })
+        });
         this.sidebarEl.addEventListener("drop",function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -92,7 +92,7 @@ var AudioPlayer = {
     },
     "play": function() {
         this.audioEl.play();
-        AudioPlayer.recordContext()
+        AudioPlayer.recordContext();
     },
     
     "pause": function() {
@@ -116,7 +116,7 @@ var AudioPlayer = {
         var title = document.createElement("p");
         title.className = "title";
         title.innerHTML = this.extractNameFromFile(data.name);
-        var cross = document.createElement("span")
+        var cross = document.createElement("span");
         cross.className = "cross";
         title.appendChild(cross);
         item.appendChild(title);
@@ -132,7 +132,6 @@ var AudioPlayer = {
         return item;
     },
     "removeItem": function(li) {
-        console.log("click");
         var key;
         for (var i in li.parentElement.children) {
             if (li.parentElement.children.hasOwnProperty(key)) {
@@ -158,11 +157,10 @@ var AudioPlayer = {
         var uploadedMusic = this.uploadEl.files || files;
         for (var i = 0; i < uploadedMusic.length; i++) {
             if(uploadedMusic[i].type.match("audio")=="audio"){
-                console.log(uploadedMusic);
                 var music = uploadedMusic[i];
                 var add = 0;
-                for (var i = 0; i<this.playlist.length;i++) {
-                    var fn = this.playlist[i].name;
+                for (var k = 0; k<this.playlist.length;k++) {
+                    var fn = this.playlist[k].name;
                     if(music.name==fn){
                         add+=1;
                     }
@@ -175,8 +173,8 @@ var AudioPlayer = {
                 return false;
         }
         if(add==0){
-        this.setAudio(this.playlist[this.playlist.length-1]);
-        this.controlsEl.classList.remove("disabled");
+            this.setAudio(this.playlist[this.playlist.length-1]);
+            this.controlsEl.classList.remove("disabled");
         }
         return true;
     },
@@ -225,9 +223,7 @@ var AudioPlayer = {
     },
     "changeSpeed": function(value) {
         var values = [0.5,1,1.25,1.5,2,4];
-        console.debug(value,values[value])
         this.audioEl.playbackRate = values[value];
-        console.debug(this.audioEl.playbackRate);
     },
     "updateProgressBar": function() {
         var width = (this.audioEl.currentTime * document.body.clientWidth) / this.audioEl.duration;
@@ -265,11 +261,13 @@ var AudioPlayer = {
     },
     "recordContext": function() {
         // frequencyBinCount tells you how many values you'll receive from the analyser
-        var frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+        //var frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+        /*
         function renderFrame() {
             requestAnimationFrame(renderFrame);
             this.analyser.getByteFrequencyData(frequencyData);
         }
+        */
         this.visualize(this.analyser);
     },
     "killContext": function() {
@@ -283,7 +281,6 @@ var AudioPlayer = {
             cwidth = canvas.width,
             cheight = canvas.height - 2,
             meterWidth = 10,
-            gap = 2,
             capHeight = 2,
             capStyle = "#fff",
             meterNum = 800 / (10 + 2),
@@ -295,23 +292,23 @@ var AudioPlayer = {
             if (that.status === 0) {
                 for (var i = array.length - 1; i >= 0; i--) {
                     array[i] = 0;
-                };
-                allCapsReachBottom = true;
-                for (var i = capYPositionArray.length - 1; i >= 0; i--) {
+                }
+                var allCapsReachBottom = true;
+                for (i = capYPositionArray.length - 1; i >= 0; i--) {
                     allCapsReachBottom = allCapsReachBottom && (capYPositionArray[i] === 0);
-                };
+                }
                 if (allCapsReachBottom) {
                     cancelAnimationFrame(that.animationId);
                     return;
-                };
-            };
+                }
+            }
             var step = Math.round(array.length / meterNum);
             ctx.clearRect(0, 0, cwidth, cheight);
-            for (var i = 0; i < meterNum; i++) {
+            for (i = 0; i < meterNum; i++) {
                 var value = array[i * step];
                 if (capYPositionArray.length < Math.round(meterNum)) {
                     capYPositionArray.push(value);
-                };
+                }
                 ctx.fillStyle = capStyle;
 
                 if (value < capYPositionArray[i]) {
@@ -319,12 +316,12 @@ var AudioPlayer = {
                 } else {
                     ctx.fillRect(i * 12, cheight - value, meterWidth, capHeight);
                     capYPositionArray[i] = value;
-                };
+                }
                 ctx.fillStyle = "#0095dd";
                 ctx.fillRect(i * 12, cheight - value + capHeight, meterWidth, cheight);
             }
             that.animationId = requestAnimationFrame(drawMeter);
-        }
+        };
         this.animationId = requestAnimationFrame(drawMeter);
     },
     "setCurrentTime": function(time) {
