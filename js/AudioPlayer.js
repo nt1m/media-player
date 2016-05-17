@@ -144,15 +144,17 @@ var AudioPlayer = {
                 };
             }
             var it = {"file":data,"tags":tags};
-            AudioPlayer.playlist.push(it);
-            AudioPlayer.createPlaylistItem(data,tags,AudioPlayer.playlist.length-1);
+            //(AudioPlayer.playlist.length-1>0) && console.log(AudioPlayer.playlist[AudioPlayer.playlist.length-1].file.name)
+            AudioPlayer.playlist[AudioPlayer.playlist.length] = it;
+            AudioPlayer.createPlaylistItem(AudioPlayer.playlist.length-1,tags);
             if(lastfile){
-                AudioPlayer.setAudio(AudioPlayer.playlist.reverse()[0].file);
+                AudioPlayer.setAudio(AudioPlayer.playlist[0].file);
                 AudioPlayer.controlsEl.classList.remove("disabled");
             }
         } ;
     },
-    "createPlaylistItem": function(data,tags,key) {
+    "createPlaylistItem": function(key,tags) {
+        var data = AudioPlayer.playlist[key].file
         var titleValue = (tags.title !== undefined) && tags.title || this.extractNameFromFile(data);
         var playlist = AudioPlayer.playlistEl;
         var item = document.createElement("li");
@@ -238,6 +240,7 @@ var AudioPlayer = {
             if (items.hasOwnProperty(i)) {
                 items[i].classList.remove("playing");
                 if(items[i].getAttribute("playlist-key") ==key){
+                    console.log(key);
                     items[i].classList.add("playing");
                     
                 }
