@@ -73,7 +73,10 @@ var AudioPlayer = {
                 }
             }
             else {
-                playing.nextSibling.click();
+                if(playing.nextSibling==null)
+                    playing.parentElement.children[0].click();
+                else
+                    playing.nextSibling.click();
             }
         });
         this.initAudioContext();
