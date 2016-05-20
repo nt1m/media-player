@@ -65,19 +65,10 @@ var AudioPlayer = {
         this.audioEl.addEventListener("ended", function() {
             AudioPlayer.killContext();
             var playing = AudioPlayer.playlistEl.querySelector(".playing");
-            if(playing.matches(":last-child")) {
-                playing.classList.remove("playing");
-                playing.classList.add("last-played");
-                if(AudioPlayer.audioEl.loop) {
-                    AudioPlayer.playlistEl.firstChild.click();
-                }
-            }
-            else {
-                if(playing.nextSibling==null)
-                    playing.parentElement.children[0].click();
-                else
-                    playing.nextSibling.click();
-            }
+            if(playing.nextSibling==null)
+                playing.parentElement.children[0].click();
+            else
+                playing.nextSibling.click();
         });
         this.initAudioContext();
     },
