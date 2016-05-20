@@ -1,0 +1,236 @@
+/* Audio controls */
+#audio-controls {
+	height: 60px;
+	background-color: #222;
+	text-align: center;
+}
+#main-controls {
+	display: inline-block;
+	margin-left: -100px;
+	height: 100%;
+}
+#secondary-controls {
+	float: right;
+	display: inline-block;
+	height: 100%;
+}
+#volume-control {
+	float: left;
+	padding: 20px 10px;
+	width: 200px;
+	box-sizing: border-box;
+	display: flex;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Audio control buttons */
+.audio-control {
+	height: 100%;
+	width: 60px;
+	border: none;
+	background: none;
+	padding: 0;
+	text-align: center;
+	vertical-align: top;
+	float: left;
+	cursor: pointer;
+}
+.audio-control:not(:disabled):hover,
+.audio-control.checked {
+	background-color: rgba(255,255,255,0.3)
+}
+.disabled #main-controls {
+	opacity: 0.6;
+	pointer-events: none;
+}
+/* This is used to show the icon */
+.audio-control::after {
+	content: "";
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	margin-top: 4px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+/* Make fast rewind and fast forward icons smaller */
+#fast-rewind::after,
+#fast-forward::after {
+	background-size: 80%;
+}
+
+/* Icons */
+#play-pause::after {
+	background-image: url(../img/pause.svg);
+}
+#play-pause.paused::after {
+	background-image: url(../img/play.svg)
+}
+#stop::after {
+	background-image: url(../img/stop.svg)
+}
+#fast-rewind::after {
+	background-image: url(../img/fast_rewind.svg);
+}
+#fast-forward::after {
+	background-image: url(../img/fast_forward.svg);
+}
+#loop::after {
+	background-image: url(../img/loop.svg)
+}
+#loop.checked:not(:hover) {
+	background: none;
+}
+#loop.checked::after {
+	background-image: url(../img/loop_checked.svg);
+	-webkit-filter: none;
+	filter: none;
+}
+#speed-btn{
+	position: relative;
+}
+#speed-btn::after{
+	background-image:  url(../img/clock.svg);
+	background-size: 80%;
+}
+#speed-btn.checked::after{
+	background-image: url(../img/clock_checked.svg);
+	-webkit-filter: none;
+	filter:none;
+}
+#speed-btn.checked:not(:hover) {
+    background: none;
+}
+#speed-menu{
+	position: absolute;
+	transition: top .1s,opacity .2s;
+	width: 250px;
+	right: 0;
+	background-color: #f1f1f1;
+	vertical-align: middle;
+}
+#speed-menu > select{
+	width: 50%;
+	overflow: hidden;
+	border: none;
+	text-align: center;
+}
+#speed-menu::after{
+	content:"";
+	position: absolute;
+	right: 32%;
+	top: 100%;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 10px 10px 0 10px;
+	border-color: #f1f1f1 transparent transparent transparent;
+}
+#speed-menu:nth-child(n){
+	margin-left: -35%;
+}
+#speed-btn.checked + #speed-menu{
+	bottom: 65px;
+	opacity:1;
+}
+#speed-btn.not-checked + #speed-menu{
+	bottom: -100%;
+	opacity:0;
+}
+
+/* Volume control */
+#volume-icon {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	background-size: cover;
+	background-image: url(../img/volume_up.svg);
+}
+#volume-icon.half {
+	background-image: url(../img/volume_down.svg);
+}
+#volume-icon.mute {
+	background-image: url(../img/volume_mute.svg);
+}
+#volume-range {
+	top: 43%;
+	position: absolute;
+	-webkit-appearance: none;
+	flex: 1;
+	min-width: none;
+	cursor: pointer;
+	height:3px;
+}
+#volume-range::-moz-range-track {
+	-moz-appearance: none;
+	border: none;
+	background: white;
+	border-radius: 5px;
+	height: 3px;
+}
+#volume-range::-moz-range-thumb {
+	background: #0095DD;
+	border-radius: 50%;
+	height: 16px;
+	width: 16px;
+	border: none;
+}
+#volume-range::-moz-range-progress {
+	background-color: #0095DD;
+}
+
+#volume-range::-webkit-slider-track {
+	-webkit-appearance: none;
+	border: none;
+	background: white;
+	border-radius: 5px;
+	height: 3px;
+}
+#volume-range::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background: #0095DD;
+	border-radius: 50%;
+	height: 16px;
+	width: 16px;
+	border: none;
+}
+
+/* "Progress bar" for audio */
+#progress-bar {
+	height: 5px;
+	background: black;
+	cursor: pointer;
+}
+#progress {
+	background: #0095DD;
+	height: 100%;
+	width: 0;
+	display: inline-block;
+	vertical-align: top;
+}
+#tooltip {
+	background: #0095DD;
+	display: inline-block;
+	position: absolute;
+	font-size: 10px;
+	padding: 2px;
+	margin-top: -5px;
+	margin-left: -35px;
+	box-sizing: border-box;
+	min-width: 35px;
+	text-align: center;
+	border-radius: 1px;
+	z-index: 9;
+	opacity: 0;
+	transition: all 0.3s;
+}
+body:hover #tooltip {
+	opacity: 1;
+}

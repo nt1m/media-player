@@ -1,0 +1,124 @@
+#playlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	flex: 1;
+	min-width: none;
+	text-align: center;
+	overflow: auto;
+	position: relative;
+}
+#playlist:empty::after {
+	content: "Your playlist is empty";
+	display: inline-block;
+	font-size: 12px;
+	margin-top: 10px;
+}
+#playlist.Loading::before {
+	content: "Loading...";
+	position: absolute;
+	bottom: -50px;
+	left: 0;
+	right: 0;
+	font-size: 12px;
+	margin-top: 10px;
+}
+#playlist > li {
+	padding: 10px;
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: left;
+	cursor: pointer;
+}
+#playlist > li.playing {
+	background-color: #0095DD;
+}
+#playlist > li:not(.playing):hover {
+	background-color: rgba(255,255,255,0.1)
+}
+#playlist > li p {
+	margin: 0;
+	display: block;
+	position: relative;
+}
+#playlist > li .title {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-size: 12px;
+}
+#playlist > li p::before {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height:16px;
+	margin-right: 10px;
+	background-size: cover;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	vertical-align: top;
+}
+#playlist > li p .cross  {
+	width: 16px;
+	height:16px;
+	background-image:url("../img/cross.svg");
+	background-size: cover;
+	-webkit-filter: invert(1);
+	filter: invert(1);
+	opacity: 0.5;
+	position: absolute;
+	right: 0;
+}
+#playlist > li p:hover > .cross {
+	background-image:url("../img/cross_hover.svg");
+	opacity: 1;
+}
+#playlist > li.playing p::before {
+	background-image: url(../img/play.svg);
+}
+
+/* File upload input */
+#upload-container {
+	position: relative;
+	cursor: pointer;
+	height: 20%;
+	overflow: hidden;
+	min-height: 50px;
+}
+#upfile {
+	cursor: pointer;
+}
+#upfile,
+#upload-container::after {
+	content:"";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-sizing: border-box;
+	text-align: center;
+	outline: 2px dashed rgba(255,255,255,0.7);
+	outline-offset: -8px;
+}
+#upload-container::before {
+	content: "Drag file(s) or click here to add music";
+	text-transform: uppercase;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 10px;
+}
+#upfile {
+	opacity: 0;
+	z-index: 99;
+}
+#upload-container::before,
+#upload-container::after {
+	text-align: center;
+	pointer-events: none;
+	z-index: 0;
+}

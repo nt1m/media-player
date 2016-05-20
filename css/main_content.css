@@ -1,0 +1,23 @@
+.main-content {
+	flex: 1;
+	min-width: none;
+	display: flex;
+}
+
+
+/* Canvas with visualizer */
+#display-container {
+	flex: 1;
+	min-width: none;
+	position: relative;
+	overflow: auto;
+}
+#visualizer {
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 0; 
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
