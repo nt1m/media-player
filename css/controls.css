@@ -161,6 +161,7 @@
 }
 #volume-range {
 	top: 43%;
+	left: 31px;
 	position: absolute;
 	-webkit-appearance: none;
 	flex: 1;
