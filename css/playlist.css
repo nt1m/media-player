@@ -10,7 +10,7 @@
 	position: relative;
 }
 #playlist:empty::after {
-	content: "Your playlist is empty..";
+	content: "Your playlist is empty…";
 	display: inline-block;
 	font-size: 12px;
 	height: 111px;
@@ -20,7 +20,7 @@
 	background-position-y: 20px;
 }
 #playlist.Loading::before {
-	content: "Loading...";
+	content: "Loading…";
 	position: absolute;
 	bottom: -50px;
 	left: 0;
@@ -66,7 +66,7 @@
 }
 #playlist > li p .cross  {
 	width: 16px;
-	height:16px;
+	height: 16px;
 	background-image:url("../img/cross.svg");
 	background-size: cover;
 	-webkit-filter: invert(1);
