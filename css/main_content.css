@@ -25,4 +25,5 @@
 }
 #visualizer.placeholder {
 	background: url(../img/musicicon.png) no-repeat center;
+  background-size: 50%;
 }
