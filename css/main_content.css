@@ -26,6 +26,5 @@
 }
 
 #visualizer.placeholder.playing {
-    background-size: 250px;
-    background-position-y: 80px;
+        background-position-y: 48px;
 }
