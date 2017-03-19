@@ -86,16 +86,18 @@ var AudioPlayer = {
     },
     "play": function() {
         this.audioEl.play();
-        AudioPlayer.recordContext();var boot = document.getElementById('previsualizer');var bootdiv = document.getElementById('previsualizer');boot.remove(bootdiv);
+        AudioPlayer.recordContext();
+        this.canvasEl.classList.remove("placeholder");
     },
     
     "pause": function() {
         this.audioEl.pause();
-var div = document.getElementById('previsualizercontainer');div.innerHTML = div.innerHTML + '<div id="previsualizer"></div>';    },
+        this.canvasEl.classList.add("placeholder");
+    },
     "stop": function() {
         this.audioEl.pause();
         this.audioEl.currentTime = 0;
-var div = document.getElementById('previsualizercontainer');div.innerHTML = div.innerHTML + '<div id="previsualizer"></div>';
+        this.canvasEl.classList.add("placeholder");
     },
     "fastrewind": function() {
         this.audioEl.currentTime -= 5;

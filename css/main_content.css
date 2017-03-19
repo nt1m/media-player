@@ -20,4 +20,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-}#previsualizer{background:url(../img/musicicon.png) no-repeat center center;width:600px;height:300px;display:block;margin:auto;position:absolute;top:0;left:0;right:0;bottom:0}
+}
+#visualizer.placeholder {
+	background: url(../img/musicicon.png) no-repeat center;
+}
