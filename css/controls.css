@@ -3,23 +3,24 @@
 	height: 60px;
 	background-color: #222;
 	text-align: center;
+  display: flex;
 }
 #main-controls {
 	display: inline-block;
-	margin-left: -100px;
+  margin: auto;
 	height: 100%;
 }
 #secondary-controls {
-	float: right;
 	display: inline-block;
 	height: 100%;
 }
 #volume-control {
 	float: left;
-	padding: 20px 10px;
+  height: 100%;
 	width: 200px;
 	box-sizing: border-box;
 	display: flex;
+  align-items: center;
 	overflow: hidden;
 	position: relative;
 }
@@ -38,7 +39,7 @@
 }
 .audio-control:not(:disabled):hover,
 .audio-control.checked {
-	background-color: rgba(255,255,255,0.3)
+	background-color: rgba(255,255,255,0.1)
 }
 .disabled #main-controls {
 	opacity: 0.6;
@@ -101,29 +102,34 @@
 #speed-btn.checked::after{
 	background-image: url(../img/clock_checked.svg);
 	-webkit-filter: none;
-	filter:none;
+	filter: none;
 }
 #speed-btn.checked:not(:hover) {
-    background: none;
+  background: none;
 }
 #speed-menu{
-	position: absolute;
+  position: absolute;
+  width: 100px;
 	transition: top .1s,opacity .2s;
-	width: 250px;
-	right: 0;
-	background-color: #f1f1f1;
+	right: 40px;
+	background-color: #ebebeb;
 	vertical-align: middle;
+  z-index: 1000;
 }
 #speed-menu > select{
-	width: 50%;
-	overflow: hidden;
+	width: 100%;
 	border: none;
 	text-align: center;
+  background: none;
+  font: inherit;
+}
+#speed-menu > select option {
+  padding: 2px 0;
 }
 #speed-menu::after{
 	content:"";
 	position: absolute;
-	right: 32%;
+	right: calc(50% - 10px);
 	top: 100%;
 	width: 0;
 	height: 0;
@@ -147,6 +153,7 @@
 #volume-icon {
 	width: 20px;
 	height: 20px;
+  margin: 0 15px;
 	display: inline-block;
 	-webkit-filter: invert(1);
 	filter: invert(1);
@@ -160,14 +167,15 @@
 	background-image: url(../img/volume_mute.svg);
 }
 #volume-range {
-	top: 43%;
-	left: 31px;
-	position: absolute;
 	-webkit-appearance: none;
+  -moz-appearance: none;
 	flex: 1;
 	min-width: none;
 	cursor: pointer;
-	height:3px;
+  height: 3px;
+  margin: 0;
+  transition: transform 0.2s;
+  max-width: 120px !important;
 }
 #volume-range::-moz-range-track {
 	-moz-appearance: none;
@@ -185,6 +193,7 @@
 }
 #volume-range::-moz-range-progress {
 	background-color: #0095DD;
+  height: 3px;
 }
 
 #volume-range::-webkit-slider-track {

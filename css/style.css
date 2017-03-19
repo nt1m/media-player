@@ -27,49 +27,51 @@ body {
 
 
 /* Make everything responsive */
-@media (max-width: 650px) {
-	#volume-control:not(:hover) {
-		width: 27px;
-		padding: 20px 4px;
-	}
-	#volume-control:not(:hover) #volume-range {
-		width: 0;
-		overflow: hidden;
-		margin: 0;
-		padding: 0;
-		opacity: 0;
-	}
-	#volume-control {
-		z-index: 8;
-		background-color: #222;
-		position: absolute;
-		transition: all 0.3s;
-		border-color: #111;
-	}
-	#volume-control:hover {
-		border-right: 1px solid #111;
-	}
+@media (max-width: 560px) {
+  #volume-control:not(:hover) {
+    width: 50px;
+  }
+  #volume-control:not(:hover) #volume-range {
+    transform: scale(0)
+  }
+  #volume-control:hover + #main-controls {
+    flex: 0;
+    opacity: 0;
+  }
+  #sidebar {
+    max-width: 200px;
+  }
 }
-@media (max-width: 551px) {
-	#audio-controls {
-		height: 120px;
-	}
-	#main-controls, #secondary-controls {
-		height: 50%;
-	}
-	#secondary-controls {
-		position: relative;
-		display: block;
-		float: right;
-		overflow: auto;
-		width: 100%;
-		text-align: center;
-	}
-	#secondary-controls > .audio-control {
-		float: none;
-		display: inline-block;
-	}
-	#main-controls {
-		float: right;
-	}
+@media (max-width: 450px) {
+  .audio-control {
+    padding: 0;
+    width: 45px;
+  }
+  #display-container {
+    display: none;
+  }
+  #sidebar {
+    max-width: none;
+    width: 100%;
+  }
+  #volume-control:not(:hover) {
+    width: 30px;
+  }
+  #volume-icon {
+    margin: 0 5px;
+  }
+}
+
+@media (max-width:340px) {
+  #secondary-controls {
+    width: 30px;
+  }
+  #secondary-controls .audio-control {
+    height: 30px;
+    width: 30px;
+  }
+  #secondary-controls .audio-control::after {
+    width: 20px;
+    height: 20px;
+  }
 }

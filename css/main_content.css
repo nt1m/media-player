@@ -20,6 +20,8 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
+  image-rendering: -moz-crisp-edges;
+  max-width: 90%;
 }
 #visualizer.placeholder {
 	background: url(../img/musicicon.png) no-repeat center;

@@ -31,6 +31,7 @@
 	box-sizing: border-box;
 	text-align: left;
 	cursor: pointer;
+  display: flex;
 }
 #playlist > li.playing {
 	background-color: #0095DD;
@@ -42,6 +43,7 @@
 	margin: 0;
 	display: block;
 	position: relative;
+  flex: 1;
 }
 #playlist > li .title {
 	white-space: nowrap;
@@ -60,20 +62,22 @@
 	filter: invert(1);
 	vertical-align: top;
 }
-#playlist > li p .cross  {
+#playlist > li .cross {
 	width: 16px;
-	height:16px;
+	height: 16px;
 	background-image:url("../img/cross.svg");
-	background-size: cover;
+	background-size: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
 	-webkit-filter: invert(1);
 	filter: invert(1);
-	opacity: 0.5;
-	position: absolute;
-	right: 0;
+	opacity: 0.88;
+  margin-left: 2px;
+  border-radius: 2px;
 }
-#playlist > li p:hover > .cross {
-	background-image:url("../img/cross_hover.svg");
+#playlist .cross:hover {
 	opacity: 1;
+  background-color: #00ffaa;
 }
 #playlist > li.playing p::before {
 	background-image: url(../img/play.svg);
