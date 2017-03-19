@@ -24,3 +24,7 @@
 #visualizer.placeholder {
 	background: url(../img/musicicon.png) no-repeat center;
 }
+
+#visualizer.placeholder.playing {
+        background-position-y: 48px;
+}

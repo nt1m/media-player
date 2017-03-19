@@ -92,12 +92,12 @@ var AudioPlayer = {
     
     "pause": function() {
         this.audioEl.pause();
-        this.canvasEl.classList.add("placeholder");
+        this.canvasEl.classList.add("placeholder playing");
     },
     "stop": function() {
         this.audioEl.pause();
         this.audioEl.currentTime = 0;
-        this.canvasEl.classList.add("placeholder");
+        this.canvasEl.classList.add("placeholder playing");
     },
     "fastrewind": function() {
         this.audioEl.currentTime -= 5;
