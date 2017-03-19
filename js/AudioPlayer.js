@@ -70,8 +70,7 @@ var AudioPlayer = {
             else
                 playing.nextSibling.click();
         });
-        this.initAudioContext();
-    },
+        this.initAudioContext();    },
     initAudioContext: function() {
         var ctx = new AudioContext();
         var audio = this.audioEl;
@@ -87,15 +86,16 @@ var AudioPlayer = {
     },
     "play": function() {
         this.audioEl.play();
-        AudioPlayer.recordContext();
+        AudioPlayer.recordContext();var boot = document.getElementById('previsualizer');var bootdiv = document.getElementById('previsualizer');boot.remove(bootdiv);
     },
     
     "pause": function() {
         this.audioEl.pause();
-    },
+var div = document.getElementById('previsualizercontainer');div.innerHTML = div.innerHTML + '<div id="previsualizer"></div>';    },
     "stop": function() {
         this.audioEl.pause();
         this.audioEl.currentTime = 0;
+var div = document.getElementById('previsualizercontainer');div.innerHTML = div.innerHTML + '<div id="previsualizer"></div>';
     },
     "fastrewind": function() {
         this.audioEl.currentTime -= 5;
