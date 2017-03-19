@@ -10,10 +10,14 @@
 	position: relative;
 }
 #playlist:empty::after {
-	content: "Your playlist is empty";
-	display: inline-block;
-	font-size: 12px;
-	margin-top: 10px;
+	content: "Your playlist is empty..";
+        display: inline-block;
+        font-size: 12px;
+        height: 111px;
+        margin-top: 10px;
+        background: url(../img/cat.png) no-repeat center;
+        background-size: 80px;
+        background-position-y: 20px;
 }
 #playlist.Loading::before {
 	content: "Loading...";
