@@ -1,6 +1,6 @@
 "use strict";
 
-/* exported Utils */
+/* exported Utils, Element */
 
 var Utils = {
   readID3Data(audio) {
@@ -85,7 +85,7 @@ var Utils = {
     if (i > -1) {
       return title.split(splitTitle[i]).map(trim);
     }
-    return [title, null]
+    return [title, null];
   },
 
   sanitizeCommonKeywords(name) {
@@ -117,7 +117,7 @@ function Element(tagName, attributes) {
   var element = document.createElement(tagName);
   for (var attr in attributes) {
     if (attr == "style" || attr == "css") {
-      element.style = attributes[attr]
+      element.style = attributes[attr];
       continue;
     }
     if (attr == "content") {
@@ -125,7 +125,7 @@ function Element(tagName, attributes) {
       continue;
     }
     if (attr.startsWith("on")) {
-      element.addEventListener(attr.replace("on","").toLowerCase(), attributes[attr]);
+      element.addEventListener(attr.replace("on", "").toLowerCase(), attributes[attr]);
       continue;
     }
     if (attr == "parent") {

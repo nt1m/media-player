@@ -1,3 +1,5 @@
+"use strict";
+
 /*
   Constructor
   @param Object params
@@ -28,7 +30,7 @@ Playlist.prototype = {
     @param File audio: The file to add
   */
   add(audio) {
-    if (this.list.has(hash(audio))) {
+    if (this.list.has(createHash(audio))) {
       return Promise.resolve();
     }
     let adding = new PlaylistItem({
@@ -45,7 +47,9 @@ Playlist.prototype = {
   },
 
   selectNext(hash) {
-    if (!hash) hash = this.selectedItem;
+    if (!hash) {
+      hash = this.selectedItem;
+    }
     var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
     var nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
     var nextItem = [...this.list.keys()][nextItemIndex];
@@ -77,11 +81,11 @@ Playlist.prototype = {
     this.selectedItem = null;
     this.params.onItemCleared();
   }
-}
+};
 
 function PlaylistItem(params) {
   this.playlist = params.playlist;
-  this.hash = hash(params.audio);
+  this.hash = createHash(params.audio);
   this.audio = params.audio;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
@@ -89,7 +93,7 @@ function PlaylistItem(params) {
     this.tags = tags;
 
     this.createDOM();
-    
+
     return this;
   });
 }
@@ -107,21 +111,21 @@ PlaylistItem.prototype = {
       parent: item
     });
 
-    var songName = Element("span", {
+    Element("span", {
       class: "title",
       content: this.tags.title,
       parent: textContainer
     });
 
     if (this.tags.artist) {
-      var songName = Element("span", {
+      Element("span", {
         class: "artist",
         content: this.tags.artist,
         parent: textContainer
       });
     }
 
-    var remove = Element("button", {
+    Element("button", {
       class: "cross",
       onClick: (e) => {
         this.onItemRemoved(this.hash);
@@ -129,7 +133,7 @@ PlaylistItem.prototype = {
       },
       parent: item
     });
- 
+
     this.element = item;
     return item;
   },
@@ -145,8 +149,8 @@ PlaylistItem.prototype = {
   destroy() {
     this.element.remove();
   }
-}
+};
 
-function hash(audio) {
+function createHash(audio) {
   return encodeURIComponent(audio.name.replace(/\s/g, ""));
 }

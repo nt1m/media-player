@@ -3,6 +3,8 @@
 module.exports = {
   globals: {
     AudioPlayer: true,
+    Playlist: true,
+    Element: true,
     Utils: true
   },
   env: {

@@ -20,13 +20,14 @@ var AudioPlayer = {
     this.controlsEl = document.getElementById("audio-controls");
     this.canvasEl = document.getElementById("visualizer");
 
-
     /* Initialize playlist */
     this.playlist = new Playlist({
       element: document.getElementById("playlist"),
       onItemSelected: this.setAudio.bind(this),
       onItemRemoved: () => {},
-      onItemCleared: () => this.UIEnabled = false,
+      onItemCleared: () => {
+        this.UIEnabled = false;
+      },
     });
 
     /* Bind functions */
@@ -102,8 +103,10 @@ var AudioPlayer = {
   setAudio(hash) {
     let item = this.playlist.list.get(hash);
     this.audioEl.src = URL.createObjectURL(item.audio);
-    this.headerEl.textContent = item.tags.artist ? item.tags.artist + " - " + item.tags.title
-                                                 : item.tags.title;
+
+    let artistAndTitle = item.tags.artist ? item.tags.artist + " - " + item.tags.title
+                                          : item.tags.title;
+    this.headerEl.textContent = artistAndTitle;
     document.title = this.headerEl.textContent;
 
     this.play();
@@ -257,7 +260,9 @@ var AudioPlayer = {
         }
         ctx.fillStyle = capStyle;
         if (value < capYPositionArray[i]) {
-          ctx.fillRect(i * totalWidth, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
+          ctx.fillRect(i * totalWidth,
+                       cheight - (--capYPositionArray[i]),
+                       meterWidth, capHeight);
         } else {
           ctx.fillRect(i * totalWidth, cheight - value, meterWidth, capHeight);
           capYPositionArray[i] = value;
