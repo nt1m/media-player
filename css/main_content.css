@@ -1,29 +1,29 @@
 .main-content {
-	flex: 1;
-	min-width: none;
-	display: flex;
+  flex: 1;
+  min-width: none;
+  display: flex;
 }
 
 
 /* Canvas with visualizer */
 #display-container {
-	flex: 1;
-	min-width: none;
-	position: relative;
-	overflow: auto;
+  flex: 1;
+  min-width: none;
+  position: relative;
+  overflow: auto;
 }
 #visualizer {
-	display: block;
-	margin: auto;
-	position: absolute;
-	top: 0; 
-	left: 0;
-	right: 0;
-	bottom: 0;
+  display: block;
+  margin: auto;
+  position: absolute;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
   image-rendering: -moz-crisp-edges;
   max-width: 90%;
 }
 #visualizer.placeholder {
-	background: url(../img/musicicon.png) no-repeat center;
+  background: url(../img/musicicon.png) no-repeat center;
   background-size: 50%;
 }

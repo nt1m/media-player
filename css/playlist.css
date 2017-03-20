@@ -1,90 +1,91 @@
 #playlist {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	flex: 1;
-	min-width: none;
-	text-align: center;
-	overflow: auto;
-	position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  flex: 1;
+  min-width: none;
+  text-align: center;
+  overflow: auto;
+  position: relative;
 }
 #playlist::before {
-	display: inline-block;
-	font-size: 12px;
-	height: 100%;
-	padding: 10px;
-	box-sizing: border-box;
+  display: inline-block;
+  font-size: 12px;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
 }
 #playlist:empty::before {
-	content: "Your playlist is empty… Why not add some music ?";
-	background: url(../img/cat.png) no-repeat center;
-	background-size: 80px;
-	background-position-y: center;
+  content: "Your playlist is empty…\AWhy not add some music ?";
+  background: url(../img/cat.png) no-repeat center;
+  background-size: 80px;
+  background-position-y: center;
 }
 #playlist.loading::before {
-	content: "Loading…";
+  content: "Loading…";
 }
 #playlist.loading > li {
-	opacity: 0.5;
+  opacity: 0.5;
 }
 #playlist > li {
-	padding: 10px;
-	margin: 0;
-	width: 100%;
-	box-sizing: border-box;
-	text-align: left;
-	cursor: pointer;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  cursor: pointer;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 #playlist > li::before {
-	content: "";
-	display: inline-block;
-	width: 16px;
-	height:16px;
-	margin-right: 10px;
-	background-size: cover;
-	-webkit-filter: invert(1);
-	filter: invert(1);
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height:16px;
+  margin-right: 10px;
+  background-size: cover;
+  -webkit-filter: invert(1);
+  filter: invert(1);
 }
 #playlist > li.playing {
-	background-color: #0095DD;
+  background-color: #0095DD;
 }
 #playlist > li.playing::before {
-	background-image: url(../img/play.svg);
+  background-image: url(../img/play.svg);
 }
 #playlist > li:not(.playing):hover {
-	background-color: rgba(255,255,255,0.1)
+  background-color: rgba(255,255,255,0.1)
 }
 #playlist > li p {
-	margin: 0;
-	display: block;
-	position: relative;
+  margin: 0;
+  display: block;
+  position: relative;
   flex: 1;
   white-space: nowrap;
-	text-overflow: ellipsis;
+  text-overflow: ellipsis;
   overflow: hidden;
   font-size: 14px;
 }
 #playlist > li p .artist {
-	display: block;
-	font-size: 12px;
+  display: block;
+  font-size: 12px;
   opacity: 0.5;
 }
 #playlist > li .cross {
   background-color: transparent;
   border: none;
-	width: 16px;
-	height: 16px;
-	background-image:url("../img/cross.svg");
-	background-size: 10px;
+  width: 16px;
+  height: 16px;
+  background-image:url("../img/cross.svg");
+  background-size: 10px;
   background-position: center;
   background-repeat: no-repeat;
-	-webkit-filter: invert(1);
-	filter: invert(1);
-	opacity: 0.88;
+  -webkit-filter: invert(1);
+  filter: invert(1);
+  opacity: 0.88;
   margin-left: 2px;
   border-radius: 2px;
 }
@@ -92,50 +93,50 @@
   background-color: #ddd;
 }
 #playlist .cross:hover {
-	opacity: 1;
+  opacity: 1;
   background-color: #15ced9;
 }
 
 /* File upload input */
 #upload-container {
-	position: relative;
-	cursor: pointer;
-	height: 20%;
-	overflow: hidden;
-	min-height: 50px;
+  position: relative;
+  cursor: pointer;
+  height: 20%;
+  overflow: hidden;
+  min-height: 50px;
 }
 #upfile {
-	cursor: pointer;
+  cursor: pointer;
 }
 #upfile,
 #upload-container::after {
-	content:"";
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	box-sizing: border-box;
-	text-align: center;
-	outline: 2px dashed rgba(255,255,255,0.7);
-	outline-offset: -8px;
+  content:"";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  text-align: center;
+  outline: 2px dashed rgba(255,255,255,0.7);
+  outline-offset: -8px;
 }
 #upload-container::before {
-	content: "Drag file(s) or click here to add music";
-	text-transform: uppercase;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 10px;
+  content: "Drag file(s) or click here to add music";
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
 }
 #upfile {
-	opacity: 0;
-	z-index: 99;
+  opacity: 0;
+  z-index: 99;
 }
 #upload-container::before,
 #upload-container::after {
-	text-align: center;
-	pointer-events: none;
-	z-index: 0;
+  text-align: center;
+  pointer-events: none;
+  z-index: 0;
 }

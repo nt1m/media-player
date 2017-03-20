@@ -1,12 +1,12 @@
 /* Header */
 #header:not(:empty) {
-	padding: 15px;
-	background-color: #2A2A2A;
-	font-size: 20px;
-	position: sticky;
-	top: 0;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+  padding: 15px;
+  background-color: #2A2A2A;
+  font-size: 20px;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   z-index: 999;
 }

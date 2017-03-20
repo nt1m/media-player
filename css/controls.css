@@ -1,109 +1,109 @@
 /* Audio controls */
 #audio-controls {
-	height: 60px;
-	background-color: #222;
-	text-align: center;
+  height: 60px;
+  background-color: #222;
+  text-align: center;
   display: flex;
 }
 #main-controls {
-	display: inline-block;
+  display: inline-block;
   margin: auto;
-	height: 100%;
+  height: 100%;
 }
 #secondary-controls {
-	display: inline-block;
-	height: 100%;
+  display: inline-block;
+  height: 100%;
   position: relative;
 }
 #volume-control {
-	float: left;
+  float: left;
   height: 100%;
-	width: 200px;
-	box-sizing: border-box;
-	display: flex;
+  width: 200px;
+  box-sizing: border-box;
+  display: flex;
   align-items: center;
-	overflow: hidden;
-	position: relative;
+  overflow: hidden;
+  position: relative;
 }
 
 /* Audio control buttons */
 .audio-control {
-	height: 100%;
-	width: 60px;
-	border: none;
-	background: none;
-	padding: 0;
-	text-align: center;
-	vertical-align: top;
-	float: left;
-	cursor: pointer;
+  height: 100%;
+  width: 60px;
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: center;
+  vertical-align: top;
+  float: left;
+  cursor: pointer;
 }
 .audio-control:not(:disabled):hover,
 .audio-control.checked {
-	background-color: rgba(255,255,255,0.1)
+  background-color: rgba(255,255,255,0.1)
 }
 .disabled #main-controls {
-	opacity: 0.6;
-	pointer-events: none;
+  opacity: 0.6;
+  pointer-events: none;
 }
 /* This is used to show the icon */
 .audio-control::after {
-	content: "";
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	-webkit-filter: invert(1);
-	filter: invert(1);
-	margin-top: 4px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
+  content: "";
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  -webkit-filter: invert(1);
+  filter: invert(1);
+  margin-top: 4px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Make fast rewind and fast forward icons smaller */
 #fast-rewind::after,
 #fast-forward::after {
-	background-size: 80%;
+  background-size: 80%;
 }
 
 /* Icons */
 #play-pause::after {
-	background-image: url(../img/pause.svg);
+  background-image: url(../img/pause.svg);
 }
 #play-pause.paused::after {
-	background-image: url(../img/play.svg)
+  background-image: url(../img/play.svg)
 }
 #stop::after {
-	background-image: url(../img/stop.svg)
+  background-image: url(../img/stop.svg)
 }
 #fast-rewind::after {
-	background-image: url(../img/fast_rewind.svg);
+  background-image: url(../img/fast_rewind.svg);
 }
 #fast-forward::after {
-	background-image: url(../img/fast_forward.svg);
+  background-image: url(../img/fast_forward.svg);
 }
 #loop::after {
-	background-image: url(../img/loop.svg)
+  background-image: url(../img/loop.svg)
 }
 #loop.checked:not(:hover) {
-	background: none;
+  background: none;
 }
 #loop.checked::after {
-	background-image: url(../img/loop_checked.svg);
-	-webkit-filter: none;
-	filter: none;
+  background-image: url(../img/loop_checked.svg);
+  -webkit-filter: none;
+  filter: none;
 }
 #speed-btn{
-	position: relative;
+  position: relative;
 }
 #speed-btn::after{
-	background-image:  url(../img/clock.svg);
-	background-size: 80%;
+  background-image:  url(../img/clock.svg);
+  background-size: 80%;
 }
 #speed-btn.checked::after{
-	background-image: url(../img/clock_checked.svg);
-	-webkit-filter: none;
-	filter: none;
+  background-image: url(../img/clock_checked.svg);
+  -webkit-filter: none;
+  filter: none;
 }
 #speed-btn.checked:not(:hover) {
   background: none;
@@ -111,18 +111,18 @@
 #speed-menu{
   position: absolute;
   width: 100px;
-	transition: all .3s;
-	left: 0;
-	background-color: #ebebeb;
+  transition: all .3s;
+  left: 0;
+  background-color: #ebebeb;
   box-shadow: 0 0 2px black;
-	vertical-align: middle;
+  vertical-align: middle;
   z-index: 1000;
   border-radius: 2px;
 }
 #speed-menu > select{
-	width: 100%;
-	border: none;
-	text-align: center;
+  width: 100%;
+  border: none;
+  text-align: center;
   background: none;
   font: inherit;
   overflow: hidden;
@@ -132,24 +132,24 @@
   padding: 2px 0;
 }
 #speed-menu::after{
-	content:"";
-	position: absolute;
-	left: 20px;
-	top: 100%;
-	width: 0;
-	height: 0;
-	border-style: solid;
-	border-width: 10px 10px 0 10px;
-	border-color: #f1f1f1 transparent transparent transparent;
+  content:"";
+  position: absolute;
+  left: 20px;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #f1f1f1 transparent transparent transparent;
 }
 #speed-btn.checked + #speed-menu{
-	bottom: 100%;
-	opacity:1;
+  bottom: 100%;
+  opacity:1;
 }
 #speed-btn.not-checked + #speed-menu{
   transform: scale(0.5);
-	bottom: -100%;
-	opacity: 0;
+  bottom: -100%;
+  opacity: 0;
   z-index: 0;
   visibility: hidden;
   pointer-events: none;
@@ -157,96 +157,96 @@
 
 /* Volume control */
 #volume-icon {
-	width: 20px;
-	height: 20px;
+  width: 20px;
+  height: 20px;
   margin: 0 15px;
-	display: inline-block;
-	-webkit-filter: invert(1);
-	filter: invert(1);
-	background-size: cover;
-	background-image: url(../img/volume_up.svg);
+  display: inline-block;
+  -webkit-filter: invert(1);
+  filter: invert(1);
+  background-size: cover;
+  background-image: url(../img/volume_up.svg);
 }
 #volume-icon.half {
-	background-image: url(../img/volume_down.svg);
+  background-image: url(../img/volume_down.svg);
 }
 #volume-icon.mute {
-	background-image: url(../img/volume_mute.svg);
+  background-image: url(../img/volume_mute.svg);
 }
 #volume-range {
-	-webkit-appearance: none;
+  -webkit-appearance: none;
   -moz-appearance: none;
-	flex: 1;
-	min-width: none;
-	cursor: pointer;
+  flex: 1;
+  min-width: none;
+  cursor: pointer;
   height: 3px;
   margin: 0;
   transition: transform 0.2s;
   max-width: 120px !important;
 }
 #volume-range::-moz-range-track {
-	-moz-appearance: none;
-	border: none;
-	background: white;
-	border-radius: 5px;
-	height: 3px;
+  -moz-appearance: none;
+  border: none;
+  background: white;
+  border-radius: 5px;
+  height: 3px;
 }
 #volume-range::-moz-range-thumb {
-	background: #0095DD;
-	border-radius: 50%;
-	height: 16px;
-	width: 16px;
-	border: none;
+  background: #0095DD;
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  border: none;
 }
 #volume-range::-moz-range-progress {
-	background-color: #0095DD;
+  background-color: #0095DD;
   height: 3px;
 }
 
 #volume-range::-webkit-slider-track {
-	-webkit-appearance: none;
-	border: none;
-	background: white;
-	border-radius: 5px;
-	height: 3px;
+  -webkit-appearance: none;
+  border: none;
+  background: white;
+  border-radius: 5px;
+  height: 3px;
 }
 #volume-range::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	background: #0095DD;
-	border-radius: 50%;
-	height: 16px;
-	width: 16px;
-	border: none;
+  -webkit-appearance: none;
+  background: #0095DD;
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  border: none;
 }
 
 /* "Progress bar" for audio */
 #progress-bar {
-	height: 5px;
-	background: black;
-	cursor: pointer;
+  height: 5px;
+  background: black;
+  cursor: pointer;
 }
 #progress {
-	background: #0095DD;
-	height: 100%;
-	width: 0;
-	display: inline-block;
-	vertical-align: top;
+  background: #0095DD;
+  height: 100%;
+  width: 0;
+  display: inline-block;
+  vertical-align: top;
 }
 #tooltip {
-	background: #0095DD;
-	display: inline-block;
-	position: absolute;
-	font-size: 10px;
-	padding: 2px;
-	margin-top: -5px;
-	margin-left: -35px;
-	box-sizing: border-box;
-	min-width: 35px;
-	text-align: center;
-	border-radius: 1px;
-	z-index: 9;
-	opacity: 0;
-	transition: all 0.3s;
+  background: #0095DD;
+  display: inline-block;
+  position: absolute;
+  font-size: 10px;
+  padding: 2px;
+  margin-top: -5px;
+  margin-left: -35px;
+  box-sizing: border-box;
+  min-width: 35px;
+  text-align: center;
+  border-radius: 1px;
+  z-index: 9;
+  opacity: 0;
+  transition: all 0.3s;
 }
 body:hover #tooltip {
-	opacity: 1;
+  opacity: 1;
 }
