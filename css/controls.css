@@ -13,6 +13,7 @@
 #secondary-controls {
 	display: inline-block;
 	height: 100%;
+  position: relative;
 }
 #volume-control {
 	float: left;
@@ -110,11 +111,13 @@
 #speed-menu{
   position: absolute;
   width: 100px;
-	transition: top .1s,opacity .2s;
-	right: 40px;
+	transition: all .3s;
+	left: 0;
 	background-color: #ebebeb;
+  box-shadow: 0 0 2px black;
 	vertical-align: middle;
   z-index: 1000;
+  border-radius: 2px;
 }
 #speed-menu > select{
 	width: 100%;
@@ -122,6 +125,8 @@
 	text-align: center;
   background: none;
   font: inherit;
+  overflow: hidden;
+  border-radius: 2px;
 }
 #speed-menu > select option {
   padding: 2px 0;
@@ -129,7 +134,7 @@
 #speed-menu::after{
 	content:"";
 	position: absolute;
-	right: calc(50% - 10px);
+	left: 20px;
 	top: 100%;
 	width: 0;
 	height: 0;
@@ -137,16 +142,17 @@
 	border-width: 10px 10px 0 10px;
 	border-color: #f1f1f1 transparent transparent transparent;
 }
-#speed-menu:nth-child(n){
-	margin-left: -35%;
-}
 #speed-btn.checked + #speed-menu{
-	bottom: 65px;
+	bottom: 100%;
 	opacity:1;
 }
 #speed-btn.not-checked + #speed-menu{
+  transform: scale(0.5);
 	bottom: -100%;
-	opacity:0;
+	opacity: 0;
+  z-index: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Volume control */

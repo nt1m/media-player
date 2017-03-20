@@ -52,5 +52,36 @@ var Utils = {
     var t = file.name.split(".");
     return t.slice(0, t.length - 1).join(".");
   },
+  convertSecondsToDisplay(time) {
+    var hours = Math.floor(time / 3600);
+    time = time - hours * 3600;
+    var minutes = Math.floor(time / 60);
+    var seconds = Math.floor(time - minutes * 60);
+    return {hours, minutes, seconds};
+  }
 };
+
+function Element(tagName, attributes) {
+  var element = document.createElement(tagName);
+  for (var attr in attributes) {
+    if (attr == "style" || attr == "css") {
+      element.style = attributes[attr]
+      continue;
+    }
+    if (attr == "content") {
+      element.innerHTML = attributes.content;
+      continue;
+    }
+    if (attr.startsWith("on")) {
+      element.addEventListener(attr.replace("on","").toLowerCase(), attributes[attr]);
+      continue;
+    }
+    if (attr == "parent") {
+      attributes.parent.appendChild(element);
+      continue;
+    }
+    element.setAttribute(attr, attributes[attr]);
+  }
+  return element;
+}
 

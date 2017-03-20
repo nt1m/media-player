@@ -17,15 +17,23 @@ var AudioPlayer = {
     this.tooltipEl = document.getElementById("tooltip");
 
     this.sidebarEl = document.getElementById("sidebar");
-    this.playlistEl = document.getElementById("playlist");
     this.controlsEl = document.getElementById("audio-controls");
     this.canvasEl = document.getElementById("visualizer");
+
+
+    /* Initialize playlist */
+    this.playlist = new Playlist({
+      element: document.getElementById("playlist"),
+      onItemSelected: this.setAudio.bind(this),
+      onItemRemoved: () => {},
+      onItemCleared: () => this.UIEnabled = false,
+    });
 
     /* Bind functions */
     this.uploadFiles = this.uploadFiles.bind(this);
 
     /* Setup uploader */
-    this.uploadEl.addEventListener("change", () => this.uploadFiles());
+    this.uploadEl.addEventListener("change", () => this.uploadFiles(this.uploadEl.files));
 
     this.sidebarEl.addEventListener("dragenter", () => {
       this.sidebarEl.classList.remove("no-drag");
@@ -56,30 +64,54 @@ var AudioPlayer = {
 
     this.audioEl.addEventListener("timeupdate", function() {
       AudioPlayer.updateProgressBar();
-      AudioPlayer.tooltipEl.innerHTML = AudioPlayer.getTooltip(this.currentTime);
+      AudioPlayer.tooltipEl.textContent = AudioPlayer.getTooltip(this.currentTime);
     });
     this.audioEl.addEventListener("play", () => {
       this.playPauseEl.classList.remove("paused");
-
-      if (this.playlistEl.querySelector(".playing") &&
-          this.playlistEl.querySelector(".last-played") !== null) {
-        this.playlistEl.querySelector(".last-played").className = "playing";
-      }
     });
     this.audioEl.addEventListener("pause", () => {
       this.playPauseEl.classList.add("paused");
     });
-    this.audioEl.addEventListener("ended", function() {
-      AudioPlayer.killContext();
-      var playing = AudioPlayer.playlistEl.querySelector(".playing");
-      if (playing.nextSibling == null) {
-        playing.parentElement.children[0].click();
-      } else {
-        playing.nextSibling.click();
-      }
+    this.audioEl.addEventListener("ended", () => {
+      this.killContext();
+      this.playlist.selectNext();
     });
     this.initAudioContext();
   },
+  set UIEnabled(value) {
+    if (!value) {
+      this.controlsEl.classList.add("disabled");
+      this.headerEl.textContent = "";
+      this.stop();
+    } else {
+      this.controlsEl.classList.remove("disabled");
+    }
+  },
+
+  /** Sidebar **/
+  uploadFiles(uploadedMusic) {
+    uploadedMusic = Array.from(uploadedMusic) || [];
+    this.playlist.element.classList.add("loading");
+
+    uploadedMusic = uploadedMusic.filter(m => m.type.match("audio") == "audio");
+    this.playlist.addAll(uploadedMusic).then(() => {
+      this.playlist.element.classList.remove("loading");
+      this.UIEnabled = true;
+    });
+    return true;
+  },
+  setAudio(hash) {
+    let item = this.playlist.list.get(hash);
+    this.audioEl.src = URL.createObjectURL(item.audio);
+    this.headerEl.textContent = (item.tags.title !== undefined) &&
+      (item.tags.title + " | " + item.tags.artist)
+      || Utils.extractNameFromFile(item.audio);
+    document.title = this.headerEl.textContent;
+
+    this.play();
+  },
+
+  /** Audio controls **/
   initAudioContext() {
     var ctx = new AudioContext();
     var audio = this.audioEl;
@@ -114,120 +146,6 @@ var AudioPlayer = {
   fastforward() {
     this.audioEl.currentTime += 5;
   },
-  playlist: [],
-  addItemAsync(data, lastfile) {
-    Utils.readID3Data(data).then(tags => {
-      var it = {file: data, tags};
-      AudioPlayer.playlist[AudioPlayer.playlist.length] = it;
-      AudioPlayer.createPlaylistItem(AudioPlayer.playlist.length - 1, tags);
-      if (lastfile) {
-        AudioPlayer.setAudio(AudioPlayer.playlist[0].file);
-        AudioPlayer.controlsEl.classList.remove("disabled");
-      }
-    });
-  },
-  createPlaylistItem(key, tags) {
-    var data = AudioPlayer.playlist[key].file;
-    var titleValue = (tags.title !== undefined) && tags.title ||
-                     Utils.extractNameFromFile(data);
-    var playlist = AudioPlayer.playlistEl;
-
-    var item = document.createElement("li");
-    item.setAttribute("playlist-key", key);
-
-    var title = document.createElement("p");
-    title.className = "title";
-    title.innerHTML = titleValue;
-    item.appendChild(title);
-
-    var cross = document.createElement("span");
-    cross.className = "cross";
-    item.appendChild(cross);
-
-    item.data = data;
-    item.title = titleValue;
-    item.addEventListener("click", function(e) {
-      if (e.target.className != "cross") {
-        AudioPlayer.setAudio(this.data);
-      } else {
-        AudioPlayer.removeItem(e.target.parentElement.parentElement);
-      }
-    });
-    playlist.appendChild(item);
-    return item;
-  },
-  removeItem(li) {
-    var key;
-    for (var i in li.parentElement.children) {
-      if (li.parentElement.children.hasOwnProperty(key)) {
-        var element = li.parentElement.children[key];
-        if (element == li) {
-          key = i;
-        }
-      }
-    }
-    li.remove();
-    this.playlist.pop(key);
-    if (li.classList.contains("playing")) {
-      if (this.playlist.length <= 0) {
-        this.stop();
-        this.audioEl.removeAttribute("src");
-        this.controlsEl.classList.add("disabled");
-        this.setAudio(this.playlist[this.playlist.length - 1].file);
-      } else {
-        this.setAudio(this.playlist[this.playlist.length - 1].file);
-      }
-    }
-  },
-  uploadFiles(files) {
-    var uploadedMusic = this.uploadEl.files || files;
-    this.playlistEl.classList.add("Loading");
-    for (let i = 0; i < uploadedMusic.length; i++) {
-      if (uploadedMusic[i].type.match("audio") == "audio") {
-        var music = uploadedMusic[i];
-        var add = 0;
-        for (var k in this.playlist) {
-          var fn = this.playlist[k].name;
-          if (music.name == fn) {
-            add += 1;
-          }
-        }
-        if (add == 0) {
-          this.addItemAsync(music, (uploadedMusic.length - 1 == i));
-        }
-      } else {
-        return false;
-      }
-    }
-    this.playlistEl.classList.remove("Loading");
-    return true;
-  },
-  setAudio(music) {
-    var key = 0;
-    for (let i = 0; i < this.playlist.length; i++) {
-      if (this.playlist[i].file.name == music.name) {
-        key = i;
-        break;
-      }
-    }
-
-    this.audioEl.src = URL.createObjectURL(music);
-    this.headerEl.textContent = (this.playlist[key].tags.title !== undefined) &&
-      (this.playlist[key].tags.title + " | " + this.playlist[key].tags.artist)
-      || Utils.extractNameFromFile(music);
-    document.title = this.headerEl.textContent;
-    var items = this.playlistEl.children;
-
-    for (var i in items) {
-      if (items.hasOwnProperty(i)) {
-        items[i].classList.remove("playing");
-        if (items[i].getAttribute("playlist-key") == key) {
-          items[i].classList.add("playing");
-        }
-      }
-    }
-    this.play();
-  },
   toggleLoop() {
     if (this.audioEl.loop) {
       this.audioEl.loop = false;
@@ -259,6 +177,12 @@ var AudioPlayer = {
   changeSpeed(value) {
     var values = [0.5, 1, 1.25, 1.5, 2, 4];
     this.audioEl.playbackRate = values[value];
+    this.audioEl.defaultPlaybackRate = values[value];
+  },
+
+  /** Progress bar **/
+  setCurrentTime(time) {
+    this.audioEl.currentTime = time;
   },
   updateProgressBar() {
     var width = (this.audioEl.currentTime * document.body.clientWidth)
@@ -274,7 +198,7 @@ var AudioPlayer = {
     this.progressBar.title = this.getTooltip(duration);
   },
   getTooltip(time) {
-    var data = this.convertSecondsToDisplay(time);
+    var data = Utils.convertSecondsToDisplay(time);
     var display = "";
     if (data.hours !== 0) {
       display = data.hours;
@@ -288,13 +212,8 @@ var AudioPlayer = {
     display = display + data.minutes + ":" + data.seconds;
     return display;
   },
-  convertSecondsToDisplay(time) {
-    var hours = Math.floor(time / 3600);
-    time = time - hours * 3600;
-    var minutes = Math.floor(time / 60);
-    var seconds = Math.floor(time - minutes * 60);
-    return {hours, minutes, seconds};
-  },
+
+  /** Visualizer **/
   recordContext() {
     this.visualize(this.analyser);
   },
@@ -350,9 +269,6 @@ var AudioPlayer = {
       that.animationId = requestAnimationFrame(drawMeter);
     };
     this.animationId = requestAnimationFrame(drawMeter);
-  },
-  setCurrentTime(time) {
-    this.audioEl.currentTime = time;
   }
 };
 

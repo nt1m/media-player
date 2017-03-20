@@ -74,4 +74,9 @@ body {
     width: 20px;
     height: 20px;
   }
+  #speed-menu,
+  #speed-menu::after{
+    left: auto;
+    right: 3px;
+  }
 }
