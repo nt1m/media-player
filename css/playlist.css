@@ -13,11 +13,11 @@
 	display: inline-block;
 	font-size: 12px;
 	height: 100%;
-	padding-top: 10px;
+	padding: 10px;
 	box-sizing: border-box;
 }
 #playlist:empty::before {
-	content: "Your playlist is empty… Why not add some items ?";
+	content: "Your playlist is empty… Why not add some music ?";
 	background: url(../img/cat.png) no-repeat center;
 	background-size: 80px;
 	background-position-y: center;
