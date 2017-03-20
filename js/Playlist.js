@@ -105,9 +105,15 @@ PlaylistItem.prototype = {
       onClick: () => this.onItemSelected(this.hash),
       parent: this.playlist.element
     });
-
+    
     var textContainer = Element("p", {
       class: "text-container",
+      parent: item
+    });
+
+    var textContainer = Element("div", {
+      class: "playcoverart",
+      style: "background:url(http://musicmedia.ign.com/music/image/article/117/1171117/25-most-iconic-album-covers-of-all-time-20110527043617131-000.jpg);background-size:cover",
       parent: item
     });
 
