@@ -55,9 +55,18 @@
 }
 #playlist > li.playing::before {
   background-image: url(../img/play.svg);
+  background-color: rgba(69, 69, 69, 0.5);
+  border-radius: 50%;
+  z-index: 1;
 }
 #playlist > li:not(.playing):hover {
   background-color: rgba(255,255,255,0.1)
+}
+.playcoverart {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 3px;
 }
 #playlist > li p {
   margin: 0;
