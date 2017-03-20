@@ -17,7 +17,7 @@
 	box-sizing: border-box;
 }
 #playlist:empty::before {
-	content: "Your playlist is empty… Why not click above?";
+	content: "Your playlist is empty… Why not add some items ?";
 	background: url(../img/cat.png) no-repeat center;
 	background-size: 80px;
 	background-position-y: center;
