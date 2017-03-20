@@ -5,6 +5,9 @@
 @import url(main_content.css);
 @import url(controls.css);
 /* General styles */
+html {
+  --theme-highlight-color: #0095dd;
+}
 html, body {
   height: 100%;
 }

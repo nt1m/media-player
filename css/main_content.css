@@ -26,39 +26,17 @@
 #visualizer.placeholder {
   background: url(../img/musicicon.png) no-repeat center;
   background-size: 50%;
+  fill: var(--theme-highlight-color);
+  filter: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feComposite in="FillPaint" in2="SourceGraphic" operator="in"/></filter></svg>#a');
 }
 
-#menu {
-    background: rgba(68, 68, 68, 0.9);
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 1000;
-    display: none;
-}
-
-#menu header {
-    width: 100%;
-    height: 50px;
-    background: #222;
-    border-bottom: 5px solid #000;
-    color: #fff;
-}
-
-#menu header .return {
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    line-height: 43px;
-    text-indent: 4px;
-    border-right: 1px dotted;
-    display: inline-block;
-    cursor: pointer;
-}
-
-#menu header span {
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 10px;
-    display: inline-block;
+/* Settings */
+#settings-overlay {
+  background: rgba(68, 68, 68, 0.9);
+  bottom: 64px;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 1000;
 }
