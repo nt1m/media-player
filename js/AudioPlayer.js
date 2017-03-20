@@ -31,6 +31,7 @@ var AudioPlayer = {
     });
 
     this.settingsOverlay = new SettingsOverlay({
+      store: new SettingsStore(),
       element: document.getElementById("settings-overlay"),
       toggle: document.getElementById("settings-btn")
     });

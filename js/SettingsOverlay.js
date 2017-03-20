@@ -1,4 +1,5 @@
 function SettingsOverlay(params) {
+  this.store = params.store;
   this.element = params.element;
   this.toggle = params.toggle;
 
