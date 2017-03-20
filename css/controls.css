@@ -135,6 +135,12 @@
   padding: 2px 0;
   -moz-appearance: none;
 }
+
+#speed-menu > select option:hover {
+    background: #000;
+    color: #fff;
+}
+
 #speed-menu > select:focus > option:checked {
   filter: invert(1);
 }
