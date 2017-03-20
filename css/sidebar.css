@@ -14,7 +14,7 @@
 #sidebar.drag > #upload-container {
   display: none;  
 }
-#sidebar.no-drag{
+#sidebar.no-drag {
   box-sizing: unset;
   outline: none;  
 }

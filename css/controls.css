@@ -39,8 +39,9 @@
   cursor: pointer;
 }
 .audio-control:not(:disabled):hover,
+.audio-control:focus,
 .audio-control.checked {
-  background-color: rgba(255,255,255,0.1)
+  background-color: rgba(255,255,255,0.1);
 }
 .disabled #main-controls {
   opacity: 0.6;
@@ -93,14 +94,14 @@
   -webkit-filter: none;
   filter: none;
 }
-#speed-btn{
+#speed-btn {
   position: relative;
 }
-#speed-btn::after{
+#speed-btn::after {
   background-image:  url(../img/clock.svg);
   background-size: 80%;
 }
-#speed-btn.checked::after{
+#speed-btn.checked::after {
   background-image: url(../img/clock_checked.svg);
   -webkit-filter: none;
   filter: none;
@@ -108,18 +109,20 @@
 #speed-btn.checked:not(:hover) {
   background: none;
 }
-#speed-menu{
+#speed-menu {
   position: absolute;
   width: 100px;
   transition: all .3s;
   left: 0;
-  background-color: #ebebeb;
-  box-shadow: 0 0 2px black;
+  background-color: #f1f1f1;
+  box-shadow: 0 0 3px #ccc;
   vertical-align: middle;
   z-index: 1000;
   border-radius: 2px;
+  filter: invert(1);
 }
-#speed-menu > select{
+#speed-menu > select {
+  -moz-appearance: none;
   width: 100%;
   border: none;
   text-align: center;
@@ -130,6 +133,10 @@
 }
 #speed-menu > select option {
   padding: 2px 0;
+  -moz-appearance: none;
+}
+#speed-menu > select:focus > option:checked {
+  filter: invert(1);
 }
 #speed-menu::after{
   content:"";
@@ -221,7 +228,7 @@
 /* "Progress bar" for audio */
 #progress-bar {
   height: 5px;
-  background: black;
+  background: #121212;
   cursor: pointer;
 }
 #progress {

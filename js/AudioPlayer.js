@@ -225,10 +225,11 @@ var AudioPlayer = {
       canvas = this.canvasEl,
       cwidth = canvas.width,
       cheight = canvas.height - 2,
-      meterWidth = 10,
-      capHeight = 2,
+      meterWidth = 12,
+      capHeight = 3,
+      totalWidth = meterWidth + capHeight,
       capStyle = "#fff",
-      meterNum = 800 / (10 + 2),
+      meterNum = 600 / (meterWidth + capHeight),
       capYPositionArray = [],
       ctx = canvas.getContext("2d");
     var drawMeter = function() {
@@ -256,17 +257,19 @@ var AudioPlayer = {
         }
         ctx.fillStyle = capStyle;
         if (value < capYPositionArray[i]) {
-          ctx.fillRect(i * 12, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
+          ctx.fillRect(i * totalWidth, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
         } else {
-          ctx.fillRect(i * 12, cheight - value, meterWidth, capHeight);
+          ctx.fillRect(i * totalWidth, cheight - value, meterWidth, capHeight);
           capYPositionArray[i] = value;
         }
         ctx.fillStyle = "#0095dd";
-        ctx.fillRect(i * 12, cheight - value + capHeight, meterWidth, cheight);
+        ctx.fillRect(i * totalWidth, cheight - value + capHeight, meterWidth, cheight);
       }
       that.animationId = requestAnimationFrame(drawMeter);
     };
-    this.animationId = requestAnimationFrame(drawMeter);
+    if (!this.animationId) {
+      this.animationId = requestAnimationFrame(drawMeter);
+    }
   }
 };
 

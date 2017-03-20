@@ -23,6 +23,10 @@ body {
   overflow: hidden;
 }
 
+* {
+  outline: none;
+}
+
 /* Make everything responsive */
 @media (max-width: 560px) {
   #volume-control:not(:hover) {
