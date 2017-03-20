@@ -36,9 +36,24 @@
 	text-align: left;
 	cursor: pointer;
   display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+#playlist > li::before {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height:16px;
+	margin-right: 10px;
+	background-size: cover;
+	-webkit-filter: invert(1);
+	filter: invert(1);
 }
 #playlist > li.playing {
 	background-color: #0095DD;
+}
+#playlist > li.playing::before {
+	background-image: url(../img/play.svg);
 }
 #playlist > li:not(.playing):hover {
 	background-color: rgba(255,255,255,0.1)
@@ -48,23 +63,15 @@
 	display: block;
 	position: relative;
   flex: 1;
-}
-#playlist > li .title {
-	white-space: nowrap;
+  white-space: nowrap;
 	text-overflow: ellipsis;
-	overflow: hidden;
-	font-size: 12px;
+  overflow: hidden;
+  font-size: 14px;
 }
-#playlist > li p::before {
-	content: "";
-	display: inline-block;
-	width: 16px;
-	height:16px;
-	margin-right: 10px;
-	background-size: cover;
-	-webkit-filter: invert(1);
-	filter: invert(1);
-	vertical-align: top;
+#playlist > li p .artist {
+	display: block;
+	font-size: 12px;
+  opacity: 0.5;
 }
 #playlist > li .cross {
   background-color: transparent;
@@ -87,9 +94,6 @@
 #playlist .cross:hover {
 	opacity: 1;
   background-color: #15ced9;
-}
-#playlist > li.playing p::before {
-	background-image: url(../img/play.svg);
 }
 
 /* File upload input */

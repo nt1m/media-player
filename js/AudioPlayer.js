@@ -94,18 +94,16 @@ var AudioPlayer = {
     this.playlist.element.classList.add("loading");
 
     uploadedMusic = uploadedMusic.filter(m => m.type.match("audio") == "audio");
-    this.playlist.addAll(uploadedMusic).then(() => {
+    return this.playlist.addAll(uploadedMusic).then(() => {
       this.playlist.element.classList.remove("loading");
       this.UIEnabled = true;
     });
-    return true;
   },
   setAudio(hash) {
     let item = this.playlist.list.get(hash);
     this.audioEl.src = URL.createObjectURL(item.audio);
-    this.headerEl.textContent = (item.tags.title !== undefined) &&
-      (item.tags.title + " | " + item.tags.artist)
-      || Utils.extractNameFromFile(item.audio);
+    this.headerEl.textContent = item.tags.artist ? item.tags.artist + " - " + item.tags.title
+                                                 : item.tags.title;
     document.title = this.headerEl.textContent;
 
     this.play();

@@ -28,6 +28,9 @@ Playlist.prototype = {
     @param File audio: The file to add
   */
   add(audio) {
+    if (this.list.has(hash(audio))) {
+      return Promise.resolve();
+    }
     let adding = new PlaylistItem({
       audio,
       playlist: this
@@ -93,20 +96,30 @@ function PlaylistItem(params) {
 
 PlaylistItem.prototype = {
   createDOM() {
-    var titleValue = (this.tags.title !== undefined) && this.tags.title ||
-                     Utils.extractNameFromFile(this.audio);
-
     var item = Element("li", {
-      title: titleValue,
+      title: this.tags.title,
       onClick: () => this.onItemSelected(this.hash),
       parent: this.playlist.element
     });
 
-    var title = Element("p", {
-      class: "title",
-      content: titleValue,
+    var textContainer = Element("p", {
+      class: "text-container",
       parent: item
     });
+
+    var songName = Element("span", {
+      class: "title",
+      content: this.tags.title,
+      parent: textContainer
+    });
+
+    if (this.tags.artist) {
+      var songName = Element("span", {
+        class: "artist",
+        content: this.tags.artist,
+        parent: textContainer
+      });
+    }
 
     var remove = Element("button", {
       class: "cross",
@@ -135,5 +148,5 @@ PlaylistItem.prototype = {
 }
 
 function hash(audio) {
-  return Date.now() + encodeURIComponent(audio.name.split(".")[0].replace(/\s/g, ""));
+  return encodeURIComponent(audio.name.replace(/\s/g, ""));
 }

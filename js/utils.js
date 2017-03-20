@@ -9,7 +9,7 @@ var Utils = {
     reader.readAsArrayBuffer(audio);
 
     return new Promise(resolve => {
-      reader.onload = function(e) {
+      reader.onload = (e) => {
         var result = e.target.result;
 
         /* Getting the last 128 bytes of the Array buffer */
@@ -42,16 +42,65 @@ var Utils = {
             year: result.slice(3 * 30 + 3, 3 * 30 + 7).replace(/[\0]/g, ""),
             comment: result.slice(3 * 30 + 7, 4 * 30 + 7).replace(/[\0]/g, "")
           };
+        } else {
+          tags = this.predictTagsFromName(audio.name);
         }
-
         resolve(tags);
       };
     });
   },
-  extractNameFromFile(file) {
-    var t = file.name.split(".");
+  predictTagsFromName(name) {
+    var tags = {};
+    name = this.removeFileExtension(name);
+    var splitName = name.split("-");
+    if (splitName.length > 1) {
+      tags.artist = trim(splitName[0]);
+
+      splitName.shift();
+      tags.title = trim(splitName.join(""));
+    } else {
+      tags.title = trim(name);
+    }
+    tags.title = this.sanitizeCommonKeywords(tags.title);
+
+    var ftData = this.extractFeaturing(tags.title);
+    if (ftData[1]) {
+      tags.title = ftData[0];
+      tags.artist += ", " + ftData[1];
+    }
+
+    return tags;
+  },
+
+  removeFileExtension(name) {
+    var t = name.split(".");
     return t.slice(0, t.length - 1).join(".");
   },
+
+  extractFeaturing(title) {
+    var ftKeywords = ["feat", "feat.", "ft.", "featuring"];
+    var splitTitle = title.toLowerCase().split(" ");
+    var i = splitTitle.findIndex(w => ftKeywords.indexOf(w) > -1);
+    console.log(i, splitTitle);
+    if (i > -1) {
+      return title.split(splitTitle[i]).map(trim);
+    }
+    return [title, null]
+  },
+
+  sanitizeCommonKeywords(name) {
+    var keywords = ["lyric", "video", "audio", "lyrics", "official"];
+    var removedKeywords = keywords.map(k => "[" + k);
+    removedKeywords = removedKeywords.concat(keywords.map(k => "(" + k));
+    removedKeywords = removedKeywords.concat(keywords.map(k => "[" + k + "]"));
+    removedKeywords = removedKeywords.concat(keywords.map(k => "(" + k + ")"));
+    removedKeywords = removedKeywords.concat(keywords.map(k => k + "]"));
+    removedKeywords = removedKeywords.concat(keywords.map(k => k + ")"));
+
+    name = name.split(" ").filter(w => removedKeywords.indexOf(w.toLowerCase()) === -1);
+    return name.join(" ");
+  },
+
   convertSecondsToDisplay(time) {
     var hours = Math.floor(time / 3600);
     time = time - hours * 3600;
@@ -61,6 +110,9 @@ var Utils = {
   }
 };
 
+function trim(str) {
+  return str.trim().replace(/\s+/ig, " ").replace(/\(\s?\)/g, "");
+}
 function Element(tagName, attributes) {
   var element = document.createElement(tagName);
   for (var attr in attributes) {
