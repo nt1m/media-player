@@ -7,6 +7,15 @@ function SettingsOverlay(params) {
     this.hidden = !this.hidden;
   });
 
+  Element("header", {
+    class: "header",
+    content: "Settings",
+    parent: this.element
+  });
+
+  this.settingsContainer = Element("div", {
+    parent: this.element
+  });
   this.store.definitions.forEach((s) => this.createSetting(s));
 }
 
@@ -21,7 +30,7 @@ SettingsOverlay.prototype = {
   createSetting(setting) {
     var element = Element("p", {
       class: "setting",
-      parent: this.element
+      parent: this.settingsContainer
     });
 
     Element("span", {
@@ -51,7 +60,7 @@ SettingsOverlay.prototype = {
       var input = Element("input", {
         parent: element,
         type: setting.type,
-        onchange() {
+        oninput() {
           store.setItem(setting.id, this.value);
         }
       });

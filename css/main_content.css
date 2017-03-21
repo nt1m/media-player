@@ -40,3 +40,13 @@
   position: fixed;
   z-index: 1000;
 }
+#settings-overlay > div {
+  padding: 15px;
+}
+
+.setting {
+  max-width: 400px;
+}
+.setting input, .setting select {
+  float: right;
+}
