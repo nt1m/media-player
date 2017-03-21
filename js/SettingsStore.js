@@ -26,7 +26,7 @@ SettingsStore.prototype = {
       id: "theme-highlight-color",
       name: "Highlight color",
       default: "#0087ff",
-      type: "<color>",
+      type: "color",
       onApply(value) {
         document.documentElement.style.setProperty("--theme-highlight-color", value);
       }
