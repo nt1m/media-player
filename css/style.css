@@ -5,6 +5,9 @@
 @import url(main_content.css);
 @import url(controls.css);
 /* General styles */
+html {
+  --theme-highlight-color: #0087ff;
+}
 html, body {
   height: 100%;
 }
@@ -21,6 +24,11 @@ body {
   -moz-user-select: none;
   -webkit-user-select: none;
   overflow: hidden;
+}
+
+.light {
+  filter: invert(1);
+  background-color: rgba(244, 244, 244, 0.9);
 }
 
 * {

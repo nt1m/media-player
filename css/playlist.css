@@ -51,7 +51,7 @@
   filter: invert(1);
 }
 #playlist > li.playing {
-  background-color: #0095DD;
+  background-color: var(--theme-highlight-color);
 }
 #playlist > li.playing::before {
   background-image: url(../img/play.svg);

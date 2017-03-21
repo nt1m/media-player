@@ -7,6 +7,8 @@
 	<link rel="shortcut icon" href="img/favicon.png">
 	<title>Audio Player</title>
 	<script src="js/utils.js"></script>
+	<script src="js/SettingsStore.js"></script>
+	<script src="js/SettingsOverlay.js"></script>
 	<script src="js/Playlist.js"></script>
 	<script src="js/AudioPlayer.js"></script>
 	<link rel="stylesheet" href="css/style.css"/>
@@ -54,7 +56,9 @@
 						</select>
 					</div>
 			<button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()" title="Repeat"></button>
+			<button class="audio-control" title="Settings" id="settings-btn"></button>
 		</div>
 	</div>
+	<div id="settings-overlay" hidden></div>
 </body>
 </html>

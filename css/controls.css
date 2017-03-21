@@ -41,24 +41,27 @@
 .audio-control:not(:disabled):hover,
 .audio-control:focus,
 .audio-control.checked {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255,255,255,0.08);
 }
-.disabled #main-controls {
+.disabled #main-controls, .disabled #speed-btn {
   opacity: 0.6;
   pointer-events: none;
 }
 /* This is used to show the icon */
 .audio-control::after {
   content: "";
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   display: inline-block;
-  -webkit-filter: invert(1);
-  filter: invert(1);
+  fill: white;
   margin-top: 4px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  filter: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feComposite in="FillPaint" in2="SourceGraphic" operator="in"/></filter></svg>#a');
+}
+.audio-control.checked::after {
+  fill: var(--theme-highlight-color);
 }
 
 /* Make fast rewind and fast forward icons smaller */
@@ -86,28 +89,11 @@
 #loop::after {
   background-image: url(../img/loop.svg)
 }
-#loop.checked:not(:hover) {
-  background: none;
-}
-#loop.checked::after {
-  background-image: url(../img/loop_checked.svg);
-  -webkit-filter: none;
-  filter: none;
-}
 #speed-btn {
   position: relative;
 }
 #speed-btn::after {
   background-image:  url(../img/clock.svg);
-  background-size: 80%;
-}
-#speed-btn.checked::after {
-  background-image: url(../img/clock_checked.svg);
-  -webkit-filter: none;
-  filter: none;
-}
-#speed-btn.checked:not(:hover) {
-  background: none;
 }
 #speed-menu {
   position: absolute;
@@ -161,6 +147,9 @@
   visibility: hidden;
   pointer-events: none;
 }
+#settings-btn::after {
+  background-image: url(../img/settings.svg);
+}
 
 /* Volume control */
 #volume-icon {
@@ -168,10 +157,10 @@
   height: 20px;
   margin: 0 15px;
   display: inline-block;
-  -webkit-filter: invert(1);
-  filter: invert(1);
   background-size: cover;
   background-image: url(../img/volume_up.svg);
+  -webkit-filter: invert(1);
+  filter: invert(1);
 }
 #volume-icon.half {
   background-image: url(../img/volume_down.svg);
@@ -198,14 +187,14 @@
   height: 3px;
 }
 #volume-range::-moz-range-thumb {
-  background: #0095DD;
+  background: var(--theme-highlight-color);
   border-radius: 50%;
   height: 16px;
   width: 16px;
   border: none;
 }
 #volume-range::-moz-range-progress {
-  background-color: #0095DD;
+  background-color: var(--theme-highlight-color);
   height: 3px;
 }
 
@@ -218,7 +207,7 @@
 }
 #volume-range::-webkit-slider-thumb {
   -webkit-appearance: none;
-  background: #0095DD;
+  background: var(--theme-highlight-color);
   border-radius: 50%;
   height: 16px;
   width: 16px;
@@ -232,14 +221,14 @@
   cursor: pointer;
 }
 #progress {
-  background: #0095DD;
+  background: var(--theme-highlight-color);
   height: 100%;
   width: 0;
   display: inline-block;
   vertical-align: top;
 }
 #tooltip {
-  background: #0095DD;
+  background: var(--theme-highlight-color);
   display: inline-block;
   position: absolute;
   font-size: 10px;

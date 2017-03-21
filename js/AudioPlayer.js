@@ -30,6 +30,12 @@ var AudioPlayer = {
       },
     });
 
+    this.settingsOverlay = new SettingsOverlay({
+      store: new SettingsStore(),
+      element: document.getElementById("settings-overlay"),
+      toggle: document.getElementById("settings-btn")
+    });
+
     /* Bind functions */
     this.uploadFiles = this.uploadFiles.bind(this);
 
@@ -267,7 +273,7 @@ var AudioPlayer = {
           ctx.fillRect(i * totalWidth, cheight - value, meterWidth, capHeight);
           capYPositionArray[i] = value;
         }
-        ctx.fillStyle = "#0095dd";
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--theme-highlight-color");
         ctx.fillRect(i * totalWidth, cheight - value + capHeight, meterWidth, cheight);
       }
       that.animationId = requestAnimationFrame(drawMeter);
