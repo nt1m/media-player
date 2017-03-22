@@ -41,11 +41,13 @@
 #settings-overlay {
   background: rgba(68, 68, 68, 0.9);
   bottom: 64px;
-  top: 0;
   left: 0;
   right: 0;
   position: fixed;
   z-index: 1000;
+  top: 100%;
+  opacity: 0;
+  transition: top .5s, opacity .5s;
 }
 #settings-overlay > div {
   padding: 15px;

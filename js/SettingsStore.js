@@ -1,3 +1,5 @@
+"use strict";
+
 function SettingsStore(params) {
   this.getItem = this.getItem.bind(this);
   this.setItem = this.setItem.bind(this);
@@ -47,4 +49,4 @@ SettingsStore.prototype = {
     var i = this.definitions.findIndex(s => s.id === id);
     return this.definitions[i];
   }
-}
+};

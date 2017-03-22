@@ -1,10 +1,18 @@
+"use strict";
+
 function SettingsOverlay(params) {
   this.store = params.store;
   this.element = params.element;
   this.toggle = params.toggle;
 
   this.toggle.addEventListener("click", () => {
-    this.hidden = !this.hidden;
+    if (this.element.style.opacity == 0) {
+      this.element.style.opacity = 1;
+      this.element.style.top = 0;
+    } else {
+      this.element.style.opacity = 0;
+      this.element.style.top = "100%";
+    }
   });
 
   Element("header", {
