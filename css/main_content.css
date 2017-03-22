@@ -29,7 +29,14 @@
   fill: var(--theme-highlight-color);
   filter: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feComposite in="FillPaint" in2="SourceGraphic" operator="in"/></filter></svg>#a');
 }
-
+@media screen and (-webkit-min-device-pixel-ratio:0) {  
+  #visualizer.placeholder {
+    background: none;
+    -webkit-mask: url(../img/musicicon.png) no-repeat 50% 50%;
+    -webkit-mask-size: 50% !important;
+    background-color: var(--theme-highlight-color);
+  }
+}
 /* Settings */
 #settings-overlay {
   background: rgba(68, 68, 68, 0.9);

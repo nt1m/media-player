@@ -69,7 +69,50 @@
 #fast-forward::after {
   background-size: 80%;
 }
-
+@media screen and (-webkit-min-device-pixel-ratio:0) {  
+/* Only webkit */  
+  .audio-control::after {
+    background-color: white;
+    -webkit-mask-size: cover !important;
+    margin-top: 4px;
+    filter:none;
+  }
+  .audio-control.checked::after {
+    background-color: var(--theme-highlight-color);
+  }
+  #play-pause::after {
+    -webkit-mask: url(../img/pause.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #play-pause.paused::after {
+    -webkit-mask: url(../img/play.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #stop::after {
+    -webkit-mask: url(../img/stop.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #fast-rewind::after {
+    -webkit-mask: url(../img/fast_rewind.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #fast-forward::after {
+    -webkit-mask: url(../img/fast_forward.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #loop::after {
+    -webkit-mask: url(../img/loop.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #speed-btn::after {
+    -webkit-mask: url(../img/clock.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+  #settings-btn::after {
+    -webkit-mask: url(../img/settings.svg) no-repeat 50% 50%;
+    background-image:none !important;
+  }
+}
 /* Icons */
 #play-pause::after {
   background-image: url(../img/pause.svg);
@@ -179,6 +222,10 @@
   transition: transform 0.2s;
   max-width: 120px !important;
 }
+input[type=range]::-webkit-slider-runnable-track {
+  background-color: var(--theme-highlight-color);
+  height: 3px;
+}
 #volume-range::-moz-range-track {
   -moz-appearance: none;
   border: none;
@@ -212,6 +259,7 @@
   height: 16px;
   width: 16px;
   border: none;
+  transform: translateY(-50%);
 }
 
 /* "Progress bar" for audio */
