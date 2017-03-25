@@ -64,54 +64,57 @@
 .audio-control.checked::after {
   fill: var(--theme-highlight-color);
 }
-
 /* Make fast rewind and fast forward icons smaller */
 #fast-rewind::after,
 #fast-forward::after {
   background-size: 80%;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {  
-/* Only webkit */  
+@supports ((-webkit-mask: url(../img/pause.svg)) or (mask-image: url(../img/pause.svg))) {  
   .audio-control::after {
     background-color: white;
-    -webkit-mask-size: cover !important;
-    margin-top: 4px;
-    filter:none;
+    background-image: none !important;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: cover;
+    filter: none;
   }
   .audio-control.checked::after {
     background-color: var(--theme-highlight-color);
   }
   #play-pause::after {
-    -webkit-mask: url(../img/pause.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/pause.svg);
+    mask-image: url(../img/pause.svg);
   }
   #play-pause.paused::after {
-    -webkit-mask: url(../img/play.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/play.svg);
+    mask-image: url(../img/play.svg);
   }
   #stop::after {
-    -webkit-mask: url(../img/stop.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/stop.svg);
+    mask-image: url(../img/stop.svg);
   }
   #fast-rewind::after {
-    -webkit-mask: url(../img/fast_rewind.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/fast_rewind.svg);
+    mask-image: url(../img/fast_rewind.svg);
   }
   #fast-forward::after {
-    -webkit-mask: url(../img/fast_forward.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/fast_forward.svg);
+    mask-image: url(../img/fast_forward.svg);
   }
   #loop::after {
-    -webkit-mask: url(../img/loop.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/loop.svg);
+    mask-image: url(../img/loop.svg);
   }
   #speed-btn::after {
-    -webkit-mask: url(../img/clock.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/clock.svg);
+    mask-image: url(../img/clock.svg);
   }
   #settings-btn::after {
-    -webkit-mask: url(../img/settings.svg) no-repeat 50% 50%;
-    background-image:none !important;
+    -webkit-mask-image: url(../img/settings.svg);
+    mask-image: url(../img/settings.svg);
   }
 }
 /* Icons */
@@ -179,11 +182,11 @@
   border-width: 10px 10px 0 10px;
   border-color: #f1f1f1 transparent transparent transparent;
 }
-#speed-btn.checked + #speed-menu{
+#speed-btn.checked + #speed-menu {
   bottom: 100%;
   opacity:1;
 }
-#speed-btn.not-checked + #speed-menu{
+#speed-btn.not-checked + #speed-menu {
   transform: scale(0.5);
   bottom: -100%;
   opacity: 0;

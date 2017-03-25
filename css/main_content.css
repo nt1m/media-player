@@ -29,26 +29,43 @@
   fill: var(--theme-highlight-color);
   filter: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feComposite in="FillPaint" in2="SourceGraphic" operator="in"/></filter></svg>#a');
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {  
+@supports ((-webkit-mask: url(../img/pause.svg)) or (mask-image: url(../img/pause.svg))) {  
   #visualizer.placeholder {
-    background: none;
-    -webkit-mask: url(../img/musicicon.png) no-repeat 50% 50%;
-    -webkit-mask-size: 50% !important;
+    filter: none;
+    background-image: none;
+    -webkit-mask-image: url(../img/musicicon.png);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 50%;
+
+    mask-image: url(../img/musicicon.png);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 50%;
+
     background-color: var(--theme-highlight-color);
   }
 }
+
 /* Settings */
 #settings-overlay {
   background: rgba(68, 68, 68, 0.9);
+  top: 0;
   bottom: 64px;
   left: 0;
   right: 0;
   position: fixed;
   z-index: 1000;
-  top: 100%;
-  opacity: 0;
-  transition: top .5s, opacity .5s;
+  transition: transform .5s, opacity .5s;
 }
+
+#settings-overlay.hidden {
+  -webkit-transform: translateY(100vh);
+  transform: translateY(100vh);
+  opacity: 0;
+  pointer-events: none;
+}
+
 #settings-overlay > div {
   padding: 15px;
 }

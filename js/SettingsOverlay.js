@@ -6,13 +6,9 @@ function SettingsOverlay(params) {
   this.toggle = params.toggle;
 
   this.toggle.addEventListener("click", () => {
-    if (this.element.style.opacity == 0) {
-      this.element.style.opacity = 1;
-      this.element.style.top = 0;
-    } else {
-      this.element.style.opacity = 0;
-      this.element.style.top = "100%";
-    }
+    let isHidden = this.element.classList.contains("hidden");
+    this.element.classList.toggle("hidden", !isHidden);
+    this.toggle.classList.toggle("checked", isHidden);
   });
 
   Element("header", {
