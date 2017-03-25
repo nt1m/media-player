@@ -16,6 +16,14 @@
   padding: 10px;
   box-sizing: border-box;
   white-space: pre-wrap;
+  background-color: rgba(0,0,0,0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  z-index: 99;
 }
 #playlist:empty::before {
   content: "Your playlist is empty…\AWhy not add some music ?";
@@ -27,7 +35,7 @@
   content: "Loading…";
 }
 #playlist.loading > li {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 #playlist > li {
   padding: 10px;

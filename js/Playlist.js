@@ -101,7 +101,7 @@ function PlaylistItem(params) {
 PlaylistItem.prototype = {
   createDOM() {
     var item = Element("li", {
-      title: this.tags.title,
+      title: Utils.getTooltipForTags(this.tags),
       onClick: () => this.onItemSelected(this.hash),
       parent: this.playlist.element
     });

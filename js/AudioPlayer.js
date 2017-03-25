@@ -109,13 +109,16 @@ var AudioPlayer = {
   setAudio(hash) {
     let item = this.playlist.list.get(hash);
     this.audioEl.src = URL.createObjectURL(item.audio);
-
-    let artistAndTitle = item.tags.artist ? item.tags.artist + " - " + item.tags.title
-                                          : item.tags.title;
+    this.updateHeader(item.tags);
+    this.play();
+  },
+  updateHeader(tags) {
+    let artistAndTitle = tags.artist ? tags.artist + " - " + tags.title
+                                     : tags.title;
     this.headerEl.textContent = artistAndTitle;
     document.title = this.headerEl.textContent;
 
-    this.play();
+    this.headerEl.title = Utils.getTooltipForTags(tags);
   },
 
   /** Audio controls **/
@@ -273,7 +276,8 @@ var AudioPlayer = {
           ctx.fillRect(i * totalWidth, cheight - value, meterWidth, capHeight);
           capYPositionArray[i] = value;
         }
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--theme-highlight-color");
+        ctx.fillStyle = getComputedStyle(document.documentElement)
+                        .getPropertyValue("--theme-highlight-color");
         ctx.fillRect(i * totalWidth, cheight - value + capHeight, meterWidth, cheight);
       }
       that.animationId = requestAnimationFrame(drawMeter);

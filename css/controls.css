@@ -158,6 +158,7 @@
   z-index: 1000;
   border-radius: 2px;
   filter: invert(1);
+  z-index: 20000;
 }
 #speed-menu > select {
   -moz-appearance: none;

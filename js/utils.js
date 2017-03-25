@@ -81,7 +81,6 @@ var Utils = {
     var ftKeywords = ["feat", "feat.", "ft.", "featuring"];
     var splitTitle = title.toLowerCase().split(" ");
     var i = splitTitle.findIndex(w => ftKeywords.indexOf(w) > -1);
-    console.log(i, splitTitle);
     if (i > -1) {
       return title.split(splitTitle[i]).map(trim);
     }
@@ -99,6 +98,21 @@ var Utils = {
 
     name = name.split(" ").filter(w => removedKeywords.indexOf(w.toLowerCase()) === -1);
     return name.join(" ");
+  },
+
+  getTooltipForTags(tags) {
+    let tooltip = tags.title;
+    if (tags.artist) {
+      tooltip += ` - ${tags.artist}`;
+    }
+    tooltip += "\n";
+    if (tags.album) {
+      tooltip += `\nAlbum: ${tags.album}`;
+    }
+    if (tags.genre) {
+      tooltip += `\nGenre: ${tags.genre}`;
+    }
+    return tooltip;
   },
 
   convertSecondsToDisplay(time) {
