@@ -116,6 +116,11 @@
     -webkit-mask-image: url(../img/settings.svg);
     mask-image: url(../img/settings.svg);
   }
+  #fast-rewind::after,
+  #fast-forward::after {
+    -webkit-mask-size: 80%;
+    mask-size: 80%;
+  }
 }
 /* Icons */
 #play-pause::after {
@@ -282,6 +287,7 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 #tooltip {
   background: var(--theme-highlight-color);
+  color: var(--theme-contrast-color);
   display: inline-block;
   position: absolute;
   font-size: 10px;
