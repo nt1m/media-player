@@ -137,8 +137,8 @@
 }
 
 #speed-menu > select option:hover {
-    background: #000;
-    color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 #speed-menu > select:focus > option:checked {
