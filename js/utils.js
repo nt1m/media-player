@@ -6,41 +6,36 @@ var Utils = {
   readID3Data(audio) {
     /* For more information: https://en.wikipedia.org/wiki/ID3#Layout */
     var reader = new FileReader();
-    reader.readAsArrayBuffer(audio);
+    reader.readAsArrayBuffer(audio.slice(audio.size - 128));
 
     return new Promise(resolve => {
       reader.onload = (e) => {
         var result = e.target.result;
-
-        /* Getting the last 128 bytes of the Array buffer */
-        result = result.slice(result.byteLength - 128);
-
         /* Converting the ArrayBuffer to String */
-        result = new Uint8Array(result);
-        result = String.fromCharCode.apply(null, result);
+        result = String.fromCharCode.apply(null, new Uint8Array(result));
 
         var tags = {};
 
         if (result.slice(0, 4) == "TAG+") {
           // Extended id3v1 tag
           tags = {
-            "title": result.slice(4, 64).replace(/[\0]/g, ""),
-            "artist": result.slice(64, 124).replace(/[\0]/g, ""),
-            "album": result.slice(124, 184).replace(/[\0]/g, ""),
-            "speed_list": ["unset", "slow", "medium", "fast", "hardcore"],
-            "speed": this.speed_list[parseInt(result.slice(184, 185))],
-            "genre": result.slice(185, 215).replace(/[\0]/g, ""),
-            "start-time": result.slice(215, 221).replace(/[\0]/g, ""),
-            "end-time": result.slice(221, 227).replace(/[\0]/g, "")
+            title: result.slice(4, 64).trim(),
+            artist: result.slice(64, 124).trim(),
+            album: result.slice(124, 184).trim(),
+            // speed_list: ["unset", "slow", "medium", "fast", "hardcore"],
+            // speed: this.speed_list[parseInt(result.slice(184, 185))],
+            genre: result.slice(185, 215).trim(),
+            // start_time: result.slice(215, 221).trim(),
+            // end_time: result.slice(221, 227).trim()
           };
-        } else if (result.slice(0, 3).replace(/[\0]/g, "") == "TAG") {
+        } else if (result.slice(0, 3) == "TAG") {
           // Basic id3v1 tag
           tags = {
-            title: result.slice(3, 3 + 30).replace(/[\0]/g, ""),
-            artist: result.slice(30 + 3, 2 * 30 + 3).replace(/[\0]/g, ""),
-            album: result.slice(2 * 30 + 3, 3 * 30 + 3).replace(/[\0]/g, ""),
-            year: result.slice(3 * 30 + 3, 3 * 30 + 7).replace(/[\0]/g, ""),
-            comment: result.slice(3 * 30 + 7, 4 * 30 + 7).replace(/[\0]/g, "")
+            title: result.slice(3, 3 + 30).trim(),
+            artist: result.slice(30 + 3, 2 * 30 + 3).trim(),
+            album: result.slice(2 * 30 + 3, 3 * 30 + 3).trim(),
+            year: result.slice(3 * 30 + 3, 3 * 30 + 7).trim(),
+            // comment: result.slice(3 * 30 + 7, 4 * 30 + 7).trim()
           };
         } else {
           tags = this.predictTagsFromName(audio.name);
@@ -105,7 +100,7 @@ var Utils = {
     if (tags.artist) {
       tooltip += ` - ${tags.artist}`;
     }
-    tooltip += "\n";
+    // tooltip += "\n";
     if (tags.album) {
       tooltip += `\nAlbum: ${tags.album}`;
     }
