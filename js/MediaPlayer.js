@@ -10,6 +10,7 @@ var MediaPlayer = {
     this.playPauseEl = document.getElementById("play-pause");
     this.volumeIcon = document.getElementById("volume-icon");
     this.loopEl = document.getElementById("loop");
+    this.shuffleEl = document.getElementById("shuffle");
     this.speedBtnEl = document.getElementById("speed-btn");
 
     this.progressBar = document.getElementById("progress-bar");
@@ -187,6 +188,14 @@ var MediaPlayer = {
   },
   fastforward() {
     this.videoEl.currentTime += 5;
+  },
+  toggleShuffle() {
+    this.playlist.shuffle = !this.playlist.shuffle;
+    if (this.playlist.shuffle) {
+      this.shuffleEl.classList.add("checked");
+    } else {
+      this.shuffleEl.classList.remove("checked");
+    }
   },
   toggleLoop() {
     if (this.videoEl.loop) {

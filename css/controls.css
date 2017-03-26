@@ -107,6 +107,10 @@
     -webkit-mask-image: url(../img/loop.svg);
     mask-image: url(../img/loop.svg);
   }
+  #shuffle::after {
+    -webkit-mask-image: url(../img/shuffle.svg);
+    mask-image: url(../img/shuffle.svg);
+  }
   #speed-btn::after {
     -webkit-mask-image: url(../img/clock.svg);
     mask-image: url(../img/clock.svg);
@@ -139,6 +143,9 @@
 }
 #loop::after {
   background-image: url(../img/loop.svg)
+}
+#shuffle::after {
+  background-image: url(../img/shuffle.svg)
 }
 #speed-btn {
   position: relative;
