@@ -1,6 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 /* General styles */
+[hidden] {
+  display: none !important;
+}
 html {
   --theme-highlight-color: #0087ff;
 }

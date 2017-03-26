@@ -109,6 +109,9 @@ var MediaPlayer = {
       this.controlsEl.classList.remove("disabled");
     }
   },
+  get UIEnabled() {
+    return !this.controlsEl.classList.contains("disabled");
+  },
 
   /** Sidebar **/
   uploadFiles(uploadedMedia) {

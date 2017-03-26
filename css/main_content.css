@@ -4,15 +4,26 @@
   display: flex;
 }
 
-#MediaPlayer{
-  width: 90%;
-  min-width: 600px;
-  min-height: 300px;
-  height: auto;
-  margin: auto;
-  top: 0;right: -50%;bottom: 0;left: -50%;
+#display-container {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  min-height: 0;
+  flex-direction: column;
+  display: flex;
+}
+
+#content-area {
+  height: 100%;
+  flex: 1;
+  position: relative;
+}
+
+#MediaPlayer {
+  height: 100%;
+  width: 100%;
   position: absolute;
-  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5);
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 .light #MediaPlayer {
@@ -73,13 +84,6 @@
 }
 
 /* Canvas with visualizer */
-#display-container {
-  flex: 1;
-  min-width: none;
-  position: relative;
-  overflow: hidden;
-  min-height: 0;
-}
 #visualizer {
   display: block;
   margin: auto;
@@ -90,9 +94,6 @@
   bottom: 0;
   image-rendering: -moz-crisp-edges;
   max-width: 90%;
-}
-#visualizer[hidden] {
-  display: none;
 }
 #visualizer.placeholder {
   background: url(../img/musicicon.png) no-repeat center;
