@@ -24,7 +24,7 @@ var AudioPlayer = {
     /* Initialize playlist */
     this.playlist = new Playlist({
       element: document.getElementById("playlist"),
-      onItemSelected: this.setAudio.bind(this),
+      onItemSelected: this.setMedia.bind(this),
       onItemRemoved: () => {},
       onItemCleared: () => {
         this.UIEnabled = false;
@@ -108,9 +108,11 @@ var AudioPlayer = {
       this.UIEnabled = true;
     });
   },
-  setAudio(hash) {
+  setMedia(hash) {
     let item = this.playlist.list.get(hash);
-    this.audioEl.src = URL.createObjectURL(item.audio);
+    this.audioEl.hidden = item.type != "video";
+    this.canvasEl.hidden = item.type == "video";
+    this.audioEl.src = URL.createObjectURL(item.media);
     this.updateHeader(item.tags);
     this.play();
   },

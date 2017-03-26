@@ -26,15 +26,16 @@ Playlist.prototype = {
   },
 
   /*
-    Adds an audio file to the playlist
-    @param File audio: The file to add
+    Adds an media file to the playlist
+    @param File media: The file to add
   */
-  add(audio) {
-    if (this.list.has(createHash(audio))) {
+  add(media) {
+    if (this.list.has(createHash(media))) {
       return Promise.resolve();
     }
     let adding = new PlaylistItem({
-      audio,
+      type: media.type.match("audio") == "audio" ? "audio" : "video",
+      media,
       playlist: this
     });
     return adding.then((item) => {
@@ -85,11 +86,12 @@ Playlist.prototype = {
 
 function PlaylistItem(params) {
   this.playlist = params.playlist;
-  this.hash = createHash(params.audio);
-  this.audio = params.audio;
+  this.hash = createHash(params.media);
+  this.media = params.media;
+  this.type = params.type;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
-  return Utils.readID3Data(this.audio).then(tags => {
+  return Utils.readID3Data(this.media).then(tags => {
     this.tags = tags;
 
     this.createDOM();
