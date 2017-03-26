@@ -8,6 +8,21 @@
 */
 function Playlist(params) {
   this.element = params.element;
+  this.element.scrollTo = function(y, t) {
+    t = t > 0 ? Math.floor(t / 4) : 40;
+    let step = (y - this.scrollTop) / t * 40;
+    let that = this;
+    function aux() {
+      t -= 40;
+      that.scrollTop += step;
+      if (t > 0) {
+        setTimeout(aux, 40);
+      } else {
+        that.scrollTop = y;
+      }
+    }
+    aux();
+  };
   this.params = params;
 
   this.onItemSelected = this.onItemSelected.bind(this);
@@ -21,20 +36,21 @@ function Playlist(params) {
 }
 
 Playlist.prototype = {
-  addAll(audios) {
-    return Promise.all(audios.map(a => this.add(a)));
+  addAll(media) {
+    return Promise.all(media.map(m => this.add(m)));
   },
 
   /*
-    Adds an audio file to the playlist
-    @param File audio: The file to add
+    Adds an media file to the playlist
+    @param File media: The file to add
   */
-  add(audio) {
-    if (this.list.has(createHash(audio))) {
+  add(media) {
+    if (this.list.has(createHash(media))) {
       return Promise.resolve();
     }
     let adding = new PlaylistItem({
-      audio,
+      type: media.type.match("audio") == "audio" ? "audio" : "video",
+      media,
       playlist: this
     });
     return adding.then((item) => {
@@ -85,11 +101,12 @@ Playlist.prototype = {
 
 function PlaylistItem(params) {
   this.playlist = params.playlist;
-  this.hash = createHash(params.audio);
-  this.audio = params.audio;
+  this.hash = createHash(params.media);
+  this.media = params.media;
+  this.type = params.type;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
-  return Utils.readID3Data(this.audio).then(tags => {
+  return Utils.readID3Data(this.media).then(tags => {
     this.tags = tags;
 
     this.createDOM();

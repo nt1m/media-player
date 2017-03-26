@@ -1,9 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
-@import url(header.css);
-@import url(sidebar.css);
-@import url(playlist.css);
-@import url(main_content.css);
-@import url(controls.css);
+
 /* General styles */
 html {
   --theme-highlight-color: #0087ff;
@@ -52,7 +48,7 @@ body {
   }
 }
 @media (max-width: 450px) {
-  .audio-control {
+  .media-control {
     padding: 0;
     width: 45px;
   }
@@ -75,11 +71,11 @@ body {
   #secondary-controls {
     width: 30px;
   }
-  #secondary-controls .audio-control {
+  #secondary-controls .media-control {
     height: 30px;
     width: 30px;
   }
-  #secondary-controls .audio-control::after {
+  #secondary-controls .media-control::after {
     width: 20px;
     height: 20px;
   }

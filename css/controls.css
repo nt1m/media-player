@@ -1,10 +1,9 @@
-/* Audio controls */
-#audio-controls {
+/* Media controls */
+#media-controls {
   height: 60px;
   background-color: #222;
   text-align: center;
   display: flex;
-  z-index: 2000;
 }
 #main-controls {
   display: inline-block;
@@ -27,8 +26,8 @@
   position: relative;
 }
 
-/* Audio control buttons */
-.audio-control {
+/* Media control buttons */
+.media-control {
   height: 100%;
   width: 60px;
   border: none;
@@ -39,9 +38,9 @@
   float: left;
   cursor: pointer;
 }
-.audio-control:not(:disabled):hover,
-.audio-control:focus,
-.audio-control.checked {
+.media-control:not(:disabled):hover,
+.media-control:focus,
+.media-control.checked {
   background-color: rgba(255,255,255,0.08);
 }
 .disabled #main-controls, .disabled #speed-btn {
@@ -49,7 +48,7 @@
   pointer-events: none;
 }
 /* This is used to show the icon */
-.audio-control::after {
+.media-control::after {
   content: "";
   width: 28px;
   height: 28px;
@@ -61,7 +60,7 @@
   background-size: cover;
   filter: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feComposite in="FillPaint" in2="SourceGraphic" operator="in"/></filter></svg>#a');
 }
-.audio-control.checked::after {
+.media-control.checked::after {
   fill: var(--theme-highlight-color);
 }
 /* Make fast rewind and fast forward icons smaller */
@@ -70,7 +69,7 @@
   background-size: 80%;
 }
 @supports ((-webkit-mask: url(../img/pause.svg)) or (mask-image: url(../img/pause.svg))) {  
-  .audio-control::after {
+  .media-control::after {
     background-color: white;
     background-image: none !important;
     -webkit-mask-repeat: no-repeat;
@@ -81,7 +80,7 @@
     mask-size: cover;
     filter: none;
   }
-  .audio-control.checked::after {
+  .media-control.checked::after {
     background-color: var(--theme-highlight-color);
   }
   #play-pause::after {
@@ -155,10 +154,9 @@
   background-color: #f1f1f1;
   box-shadow: 0 0 3px #ccc;
   vertical-align: middle;
-  z-index: 1000;
   border-radius: 2px;
   filter: invert(1);
-  z-index: 20000;
+  z-index: 4000;
 }
 #speed-menu > select {
   -moz-appearance: none;
@@ -278,12 +276,11 @@ input[type=range]::-webkit-slider-runnable-track {
   transform: translateY(-50%);
 }
 
-/* "Progress bar" for audio */
+/* "Progress bar" for media */
 #progress-bar {
   height: 5px;
   background: #121212;
   cursor: pointer;
-  z-index: 2001;
 }
 #progress {
   background: var(--theme-highlight-color);
