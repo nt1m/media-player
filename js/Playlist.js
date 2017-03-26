@@ -68,10 +68,12 @@ Playlist.prototype = {
       hash = this.selectedItem;
     }
     var nextItemIndex;
-    if (this.shuffle) {
-      nextItemIndex = Math.floor(Math.random() * this.list.size);
+    var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
+    if (this.shuffle && this.list.size > 1) {
+      var oth = [...Array(this.list.size).keys()].filter(e => e != itemIndex);
+      console.log(oth);
+      nextItemIndex = oth[Math.floor(Math.random() * oth.length)];
     } else {
-      var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
       nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
     }
 
