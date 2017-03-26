@@ -4,7 +4,8 @@
   "description": "An modern, clean media player built using HTML 5 technologies ",
   "main": "main.js",
   "scripts": {
-    "start": "./node_modules/.bin/electron ."
+    "start": "./node_modules/.bin/electron .",
+    "build": "./node_modules/.bin/electron-packager . MediaPlayer"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/nt1m/media-player#readme",
   "devDependencies": {
-    "electron": "^1.6.2"
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0"
   }
 }
