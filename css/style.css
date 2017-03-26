@@ -69,6 +69,7 @@ body {
   #upload-container {
     margin: 5px;
     background-color: var(--theme-highlight-color);
+    color: var(--theme-contrast-color);
     border-radius: 2px;
     min-height: 0 !important;
     height: 2em !important;

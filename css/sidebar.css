@@ -7,6 +7,9 @@
   overflow: auto;
   background-color: #303030;
 }
+.light #sidebar {
+  background-color: #0b0b0b;
+}
 #sidebar.drag {
   box-sizing: border-box;
   outline: 2px dashed rgba(255,255,255,0.7);
@@ -26,4 +29,7 @@
   background: #222;
   padding: 10px;
   -webkit-app-region: drag;
+}
+.light #sidebar-header {
+  background: #1b1b1b;
 }

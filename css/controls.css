@@ -5,6 +5,9 @@
   text-align: center;
   display: flex;
 }
+.light #media-controls {
+  background-color: #1b1b1b;
+}
 #main-controls {
   display: inline-block;
   margin: auto;
