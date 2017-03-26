@@ -1,5 +1,9 @@
 # Media player
 
+## Authors
+- Maintainers: Mohamed Hadjoudj (@MohIceAge), Tim Nguyen (@nt1m)
+- Contributors: Daniell Mesquita (@Plasmmer)
+
 ## Compatibility
 Tested on: Firefox and Chrome.
 
