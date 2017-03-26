@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron .",
-    "pack": "./node_modules/.bin/electron-packager . MediaPlayer --icon=img/icon.svg"
+    "pack": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.svg --out=dist/ --overwrite",
+    "pack-all": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.svg --out=dist/ --platform=mas,darwin,linux,win32 --overwrite"
   },
   "repository": {
     "type": "git",
