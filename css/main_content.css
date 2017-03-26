@@ -76,7 +76,7 @@
 .setting input, .setting select {
   float: right;
 }
-#AudioPlayer{
+#MediaPlayer{
   width: 80%;
   min-width: 600px;
   min-height: 300px;

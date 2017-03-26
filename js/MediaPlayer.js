@@ -1,9 +1,9 @@
 "use strict";
 
-var AudioPlayer = {
+var MediaPlayer = {
   init() {
     /* Define elements */
-    this.videoEl = document.getElementById("AudioPlayer");
+    this.videoEl = document.getElementById("MediaPlayer");
     this.uploadEl = document.getElementById("upfile");
     this.headerEl = document.getElementById("header");
 
@@ -17,7 +17,7 @@ var AudioPlayer = {
     this.tooltipEl = document.getElementById("tooltip");
 
     this.sidebarEl = document.getElementById("sidebar");
-    this.controlsEl = document.getElementById("audio-controls");
+    this.controlsEl = document.getElementById("media-controls");
     this.canvasEl = document.getElementById("visualizer");
 
     this.videoEl.controls = false;
@@ -64,15 +64,15 @@ var AudioPlayer = {
     });
 
     this.progressBar.addEventListener("mousedown", function(e) {
-      AudioPlayer.onProgressClick(e.pageX);
+      MediaPlayer.onProgressClick(e.pageX);
     });
     this.progressBar.addEventListener("mouseover", function(e) {
-      AudioPlayer.setProgressTooltip(e.pageX);
+      MediaPlayer.setProgressTooltip(e.pageX);
     });
 
     this.videoEl.addEventListener("timeupdate", function() {
-      AudioPlayer.updateProgressBar();
-      AudioPlayer.tooltipEl.textContent = AudioPlayer.getTooltip(this.currentTime);
+      MediaPlayer.updateProgressBar();
+      MediaPlayer.tooltipEl.textContent = MediaPlayer.getTooltip(this.currentTime);
     });
     this.videoEl.addEventListener("play", () => {
       this.playPauseEl.classList.remove("paused");
@@ -128,10 +128,10 @@ var AudioPlayer = {
   /** Audio controls **/
   initAudioContext() {
     var ctx = new AudioContext();
-    var audio = this.videoEl;
-    var audioSrc = ctx.createMediaElementSource(audio);
+    var media = this.videoEl;
+    var mediaSrc = ctx.createMediaElementSource(media);
     var analyser = ctx.createAnalyser();
-    audioSrc.connect(analyser);
+    mediaSrc.connect(analyser);
     analyser.connect(ctx.destination);
     this.analyser = analyser;
     this.ctx = ctx;
@@ -141,7 +141,9 @@ var AudioPlayer = {
   },
   play() {
     this.videoEl.play();
-    this.recordContext();
+    if (!this.canvasEl.hidden) {
+      this.recordContext();
+    }
     this.canvasEl.classList.remove("placeholder");
   },
 
@@ -297,5 +299,5 @@ var AudioPlayer = {
 };
 
 window.addEventListener("load", function() {
-  AudioPlayer.init();
+  MediaPlayer.init();
 }, false);

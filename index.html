@@ -6,13 +6,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="icon" href="img/icon.svg" sizes="any" type="image/svg+xml">
 	<link rel="shortcut icon" href="img/favicon.png">
-	<title>Audio Player</title>
+	<title>Media Player</title>
 	<script src="js/utils.js"></script>
 	<script src="js/SettingsStore.js"></script>
 	<script src="js/SettingsOverlay.js"></script>
 	<script src="js/Playlist.js"></script>
-	<script src="js/AudioPlayer.js"></script>
+	<script src="js/MediaPlayer.js"></script>
 	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/header.css"/>
+	<link rel="stylesheet" href="css/sidebar.css"/>
+	<link rel="stylesheet" href="css/playlist.css"/>
+	<link rel="stylesheet" href="css/main_content.css"/>
+	<link rel="stylesheet" href="css/controls.css"/>
 </head>
 
 <body>
@@ -20,7 +25,7 @@
 		<div id="display-container">
 			<div id="header" class="header"></div>
 			<canvas id="visualizer" width="600" height="300" class="placeholder" hidden="hidden"></canvas>
-			<video controls id="AudioPlayer" hidden="hidden"></video>	
+			<video controls id="MediaPlayer" hidden="hidden"></video>	
 			<div style="position: absolute;width: 100%;height: 100%"></div>		
 		</div>
 		<div id="sidebar">
@@ -33,32 +38,32 @@
 		<div id="progress"></div>
 		<span id="tooltip"></span>
 	</div>
-	<div id="audio-controls" class="disabled">
+	<div id="media-controls" class="disabled">
 		<div id="volume-control">
 			<span id="volume-icon"></span>
-			<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="AudioPlayer.changeVolume(this.value);">
+			<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="MediaPlayer.changeVolume(this.value);">
 		</div>
 		<div id="main-controls">
-			<button class="audio-control" id="fast-rewind" onclick="AudioPlayer.fastrewind()" title="Rewind"></button>
-			<button class="audio-control paused" id="play-pause" onclick="if(AudioPlayer.paused) {AudioPlayer.play()} else {AudioPlayer.pause()}"></button>
-			<button class="audio-control" id="stop" onclick="AudioPlayer.stop()" title="Stop"></button>
-			<button class="audio-control" id="fast-forward" onclick="AudioPlayer.fastforward()" title="Forward"></button>
+			<button class="media-control" id="fast-rewind" onclick="MediaPlayer.fastrewind()" title="Rewind"></button>
+			<button class="media-control paused" id="play-pause" onclick="if(MediaPlayer.paused) {MediaPlayer.play()} else {MediaPlayer.pause()}"></button>
+			<button class="media-control" id="stop" onclick="MediaPlayer.stop()" title="Stop"></button>
+			<button class="media-control" id="fast-forward" onclick="MediaPlayer.fastforward()" title="Forward"></button>
 		</div>
 		<div id="secondary-controls">
-			<button class="audio-control not-checked" id="speed-btn" onclick="AudioPlayer.toggleSpeedBtn()"></button>
+			<button class="media-control not-checked" id="speed-btn" onclick="MediaPlayer.toggleSpeedBtn()"></button>
 			<div id="speed-menu">
-						<select size="6" onchange="AudioPlayer.changeSpeed(this.value)">
+						<select size="6" onchange="MediaPlayer.changeSpeed(this.value)">
 							Speed :
 							<option value="5">2</option>
 							<option value="4">1.5</option>
 							<option value="3">1.25</option>
-							<option value="2" selected>1</option>
+							<option value="2" selected="selected" >1</option>
 							<option value="1">0.75</option>
 							<option value="0">0.5</option>
 						</select>
 					</div>
-			<button class="audio-control" id="loop" onclick="AudioPlayer.toggleLoop()" title="Repeat"></button>
-			<button class="audio-control" title="Settings" id="settings-btn"></button>
+			<button class="media-control" id="loop" onclick="MediaPlayer.toggleLoop()" title="Repeat"></button>
+			<button class="media-control" title="Settings" id="settings-btn"></button>
 		</div>
 	</div>
 	<div id="settings-overlay" class="hidden"></div>

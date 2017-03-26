@@ -21,8 +21,8 @@ function Playlist(params) {
 }
 
 Playlist.prototype = {
-  addAll(audios) {
-    return Promise.all(audios.map(a => this.add(a)));
+  addAll(media) {
+    return Promise.all(media.map(m => this.add(m)));
   },
 
   /*
