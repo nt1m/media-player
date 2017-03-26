@@ -20,6 +20,7 @@ var AudioPlayer = {
     this.controlsEl = document.getElementById("audio-controls");
     this.canvasEl = document.getElementById("visualizer");
 
+    this.audioEl.controls = false;
     /* Initialize playlist */
     this.playlist = new Playlist({
       element: document.getElementById("playlist"),
@@ -100,7 +101,8 @@ var AudioPlayer = {
     uploadedMusic = Array.from(uploadedMusic) || [];
     this.playlist.element.classList.add("loading");
 
-    uploadedMusic = uploadedMusic.filter(m => m.type.match("audio") == "audio");
+    uploadedMusic = uploadedMusic.filter(m => m.type.match("audio") == "audio"
+                                           || m.type.match("video") == "video");
     return this.playlist.addAll(uploadedMusic).then(() => {
       this.playlist.element.classList.remove("loading");
       this.UIEnabled = true;

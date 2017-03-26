@@ -20,14 +20,14 @@
 		<div id="display-container">
 			<div id="header" class="header"></div>
 			<canvas id="visualizer" width="600" height="300" class="placeholder"></canvas>
+			<video controls id="AudioPlayer" ></video>			
 		</div>
 		<div id="sidebar">
-			<div id="upload-container"><input type="file" id="upfile" accept="audio/*" multiple></div>
+			<div id="upload-container"><input type="file" id="upfile" accept="audio/*|video/*" multiple></div>
 			<div id="sidebar-header">Playlist</div>
 			<ul id="playlist"></ul>
 		</div>
 	</div>
-	<audio controls id="AudioPlayer" hidden="hidden"></audio>
 	<div id="progress-bar">
 		<div id="progress"></div>
 		<span id="tooltip"></span>

@@ -76,3 +76,12 @@
 .setting input, .setting select {
   float: right;
 }
+#AudioPlayer{
+  width: 80%;
+  min-width: 600px;
+  min-height: 300px;
+  height: auto;
+  margin: auto;
+  top: 0;right: 0;bottom: 0;left: 0;
+  position: absolute;
+}
