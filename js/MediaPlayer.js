@@ -114,6 +114,8 @@ var MediaPlayer = {
     this.canvasEl.hidden = item.type == "video";
     this.videoEl.src = URL.createObjectURL(item.media);
     this.updateHeader(item.tags);
+    // Scroll to the song
+    this.playlist.element.scrollTop = item.element.offsetTop;
     this.play();
   },
   updateHeader(tags) {
