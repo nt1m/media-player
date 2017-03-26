@@ -4,7 +4,6 @@
   background-color: #222;
   text-align: center;
   display: flex;
-  z-index: 2000;
 }
 #main-controls {
   display: inline-block;
@@ -155,10 +154,9 @@
   background-color: #f1f1f1;
   box-shadow: 0 0 3px #ccc;
   vertical-align: middle;
-  z-index: 1000;
   border-radius: 2px;
   filter: invert(1);
-  z-index: 20000;
+  z-index: 4000;
 }
 #speed-menu > select {
   -moz-appearance: none;
@@ -283,7 +281,6 @@ input[type=range]::-webkit-slider-runnable-track {
   height: 5px;
   background: #121212;
   cursor: pointer;
-  z-index: 2001;
 }
 #progress {
   background: var(--theme-highlight-color);
