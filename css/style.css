@@ -60,6 +60,7 @@ body {
   #upload-container::before {
     content: "Add audio or video" !important;
     font-size: 0.9em !important;
+    width: 100% !important;
   }
   
   #upload-container {
