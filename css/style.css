@@ -47,31 +47,57 @@ body {
     max-width: 200px;
   }
 }
-@media (max-width: 450px) {
-  .media-control {
+@media (max-width: 550px) {
+  body .media-control {
     padding: 0;
     width: 45px;
   }
-  #display-container {
+}
+@media (max-width: 450px) {
+  .header {
+    font-size: 1em !important;
+  }
+  #upload-container::before {
+    content: "Add audio or video" !important;
+    font-size: 0.9em !important;
+  }
+  
+  #upload-container {
+    margin: 5px;
+    background-color: var(--theme-highlight-color);
+    border-radius: 2px;
+    min-height: 0 !important;
+    height: 2em !important;
+  }
+  #upload-container::after {
     display: none;
+  }
+
+  .main-content {
+    flex-direction: column;
   }
   #sidebar {
     max-width: none;
-    width: 100%;
+    width: 100% !important;
+    transition: max-height 0.3s;
+  }
+  #sidebar:not(:hover) {
+    max-height: 40px;
   }
   #volume-control:not(:hover) {
-    width: 30px;
+    width: 50px;
   }
   #volume-icon {
     margin: 0 5px;
   }
 }
 
-@media (max-width:340px) {
+@media (max-width: 410px) {
   #secondary-controls {
-    width: 30px;
+    width: 60px;
   }
   #secondary-controls .media-control {
+    display: inline-block;
     height: 30px;
     width: 30px;
   }

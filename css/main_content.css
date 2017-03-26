@@ -78,6 +78,7 @@
   min-width: none;
   position: relative;
   overflow: hidden;
+  min-height: 0;
 }
 #visualizer {
   display: block;
