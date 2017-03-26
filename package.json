@@ -1,0 +1,27 @@
+{
+    "app_name": "com.nt1m.audioplayer",
+    "main": "index.html",
+    "name": "audioplayer",
+    "webexe_settings": {
+        "download_dir": "",
+        "force_download": false,
+        "linux-x32": true,
+        "linux-x64": true,
+        "mac-x64": false,
+        "nw_compression_level": 0,
+        "nw_version": "0.21.3",
+        "sdk_build": false,
+        "uncompressed_folder": false,
+        "windows-x32": false,
+        "windows-x64": true
+    },
+    "webkit": {},
+    "window": {
+        "height": 379,
+        "id": "com.nt1m.audioplayer",
+        "position": "center",
+        "resizable": true,
+        "title": "Audio Player",
+        "width": 862
+    }
+}
