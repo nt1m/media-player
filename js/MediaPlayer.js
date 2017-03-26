@@ -20,6 +20,7 @@ var MediaPlayer = {
     this.controlsEl = document.getElementById("media-controls");
     this.canvasEl = document.getElementById("visualizer");
 
+    this.controlOverlay = document.getElementById("control-overlay");
     this.videoEl.controls = false;
     /* Initialize playlist */
     this.playlist = new Playlist({
@@ -70,6 +71,13 @@ var MediaPlayer = {
       MediaPlayer.setProgressTooltip(e.pageX);
     });
 
+    this.controlOverlay.addEventListener("click", () => {
+      if (this.paused) {
+        this.play();
+      } else {
+        this.pause();
+      }
+    });
     this.videoEl.addEventListener("timeupdate", function() {
       MediaPlayer.updateProgressBar();
       MediaPlayer.tooltipEl.textContent = MediaPlayer.getTooltip(this.currentTime);
@@ -90,6 +98,8 @@ var MediaPlayer = {
     if (!value) {
       this.controlsEl.classList.add("disabled");
       this.headerEl.textContent = "";
+      this.videoEl.hidden = true;
+      this.canvasEl.hidden = false;
       this.stop();
     } else {
       this.controlsEl.classList.remove("disabled");
@@ -97,13 +107,13 @@ var MediaPlayer = {
   },
 
   /** Sidebar **/
-  uploadFiles(uploadedMusic) {
-    uploadedMusic = Array.from(uploadedMusic) || [];
+  uploadFiles(uploadedMedia) {
+    uploadedMedia = Array.from(uploadedMedia) || [];
     this.playlist.element.classList.add("loading");
 
-    uploadedMusic = uploadedMusic.filter(m => m.type.match("audio") == "audio"
+    uploadedMedia = uploadedMedia.filter(m => m.type.match("audio") == "audio"
                                            || m.type.match("video") == "video");
-    return this.playlist.addAll(uploadedMusic).then(() => {
+    return this.playlist.addAll(uploadedMedia).then(() => {
       this.playlist.element.classList.remove("loading");
       this.UIEnabled = true;
     });
@@ -114,9 +124,9 @@ var MediaPlayer = {
     this.canvasEl.hidden = item.type == "video";
     this.videoEl.src = URL.createObjectURL(item.media);
     this.updateHeader(item.tags);
-    // Scroll to the song
+    // Scroll to the selected item
     this.playlist.element.scrollTo(item.element.offsetTop, 1000);
-    this.play();
+    this.play(true);
   },
   updateHeader(tags) {
     let artistAndTitle = tags.artist ? tags.artist + " - " + tags.title
@@ -138,21 +148,33 @@ var MediaPlayer = {
     this.analyser = analyser;
     this.ctx = ctx;
   },
+  animateIndicator(playing) {
+    this.controlOverlay.className = playing ? "playing" : "paused";
+    setTimeout(() => {
+      this.controlOverlay.className = "";
+    }, 500);
+  },
   get paused() {
     return this.videoEl.paused;
   },
-  play() {
+  play(disableAnimation) {
     this.videoEl.play();
     if (!this.canvasEl.hidden) {
       this.recordContext();
     }
+    this.controlOverlay.className = "playing";
     this.canvasEl.classList.remove("placeholder");
+    if (!disableAnimation) {
+      this.animateIndicator(true);
+    }
   },
-
-  pause() {
+  pause(disableAnimation) {
     this.videoEl.pause();
     this.canvasEl.classList.add("placeholder");
     this.killContext();
+    if (!disableAnimation) {
+      this.animateIndicator(false);
+    }
   },
   stop() {
     this.videoEl.pause();

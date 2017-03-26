@@ -1,4 +1,5 @@
-# HTML5 Audio Player
+# Media player
+
 ## Compatibility
 Tested on: Firefox and Chrome.
 
@@ -10,6 +11,7 @@ Pull requests ![:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
 - Icons : [Material Design Icons](https://github.com/google/material-design-icons)
 
 ## Technologies used
-- Web Audio API
-- HTML `<audio>` tag
+- Web Audio API (visualizer)
+- HTML `<video>` tag
+- CSS variables
 - Canvas

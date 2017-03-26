@@ -4,6 +4,11 @@
 
 var Utils = {
   readID3Data(audio) {
+    if (audio.type.match("video") == "video") {
+      return Promise.resolve({
+        title: this.removeFileExtension(audio.name)
+      });
+    }
     /* For more information: https://en.wikipedia.org/wiki/ID3#Layout */
     var reader = new FileReader();
     reader.readAsArrayBuffer(audio.slice(audio.size - 128));
@@ -98,9 +103,8 @@ var Utils = {
   getTooltipForTags(tags) {
     let tooltip = tags.title;
     if (tags.artist) {
-      tooltip += ` - ${tags.artist}`;
+      tooltip = `${tags.artist} - ${tooltip}`;
     }
-    // tooltip += "\n";
     if (tags.album) {
       tooltip += `\nAlbum: ${tags.album}`;
     }
