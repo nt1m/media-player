@@ -73,6 +73,9 @@ var MediaPlayer = {
     });
 
     this.controlOverlay.addEventListener("click", () => {
+      if (!this.UIEnabled) {
+        return;
+      }
       if (this.paused) {
         this.play();
       } else {
