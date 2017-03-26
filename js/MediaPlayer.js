@@ -115,7 +115,7 @@ var MediaPlayer = {
     this.videoEl.src = URL.createObjectURL(item.media);
     this.updateHeader(item.tags);
     // Scroll to the song
-    this.playlist.element.scrollTop = item.element.offsetTop;
+    this.playlist.element.scrollTo(item.element.offsetTop, 1000);
     this.play();
   },
   updateHeader(tags) {

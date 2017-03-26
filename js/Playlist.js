@@ -8,6 +8,21 @@
 */
 function Playlist(params) {
   this.element = params.element;
+  this.element.scrollTo = function(y, t) {
+    t = t > 0 ? Math.floor(t / 4) : 40;
+    let step = (y - this.scrollTop) / t * 40;
+    let that = this;
+    function aux() {
+      t -= 40;
+      that.scrollTop += step;
+      if (t > 0) {
+        setTimeout(aux, 40);
+      } else {
+        that.scrollTop = y;
+      }
+    }
+    aux();
+  };
   this.params = params;
 
   this.onItemSelected = this.onItemSelected.bind(this);
