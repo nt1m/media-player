@@ -5,8 +5,10 @@ var MediaPlayer = {
     this.isElectron = window.process && window.process.type && window.process.versions.electron;
 
     if (this.isElectron) {
-      document.documentElement.classList.add("electron");
+      var ElectronApp = require("./js/ElectronApp");
+      ElectronApp.init();
     }
+
     /* Define elements */
     this.videoEl = document.getElementById("MediaPlayer");
     this.uploadEl = document.getElementById("upfile");

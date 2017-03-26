@@ -19,7 +19,8 @@ function createWindow() {
     title: "Media Player",
     darkTheme: true,
     backgroundColor: "#999",
-    titleBarStyle: "hidden-inset"
+    titleBarStyle: "hidden-inset",
+    vibrancy: "dark"
   });
   win.setMenu(null);
   win.loadURL(url.format({

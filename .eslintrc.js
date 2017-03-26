@@ -11,7 +11,8 @@ module.exports = {
   },
   env: {
     es6: true,
-    browser: true
+    browser: true,
+    commonjs: true
   },
   "rules": {
     // Disallow using variables outside the blocks they are defined (especially
