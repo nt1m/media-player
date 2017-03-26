@@ -1,27 +1,31 @@
 {
-    "app_name": "com.nt1m.audioplayer",
-    "main": "index.html",
-    "name": "audioplayer",
-    "webexe_settings": {
-        "download_dir": "",
-        "force_download": false,
-        "linux-x32": true,
-        "linux-x64": true,
-        "mac-x64": false,
-        "nw_compression_level": 0,
-        "nw_version": "0.21.3",
-        "sdk_build": false,
-        "uncompressed_folder": false,
-        "windows-x32": false,
-        "windows-x64": true
-    },
-    "webkit": {},
-    "window": {
-        "height": 379,
-        "id": "com.nt1m.audioplayer",
-        "position": "center",
-        "resizable": true,
-        "title": "Audio Player",
-        "width": 862
-    }
+  "name": "media-player",
+  "version": "1.0.0",
+  "description": "An modern, clean media player built using HTML 5 technologies ",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "pack": "./node_modules/.bin/electron-packager . MediaPlayer --icon=img/mediaplayer.ico"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nt1m/media-player.git"
+  },
+  "keywords": [
+    "Media",
+    "player",
+    "html5",
+    "music",
+    "video"
+  ],
+  "author": "Tim Nguyen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nt1m/media-player/issues"
+  },
+  "homepage": "https://github.com/nt1m/media-player#readme",
+  "devDependencies": {
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0"
+  }
 }
