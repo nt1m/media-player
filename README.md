@@ -1,4 +1,4 @@
-# HTML5 Audio Player
+# Media player
 ## Compatibility
 Tested on: Firefox and Chrome.
 
@@ -11,5 +11,5 @@ Pull requests ![:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
 
 ## Technologies used
 - Web Audio API
-- HTML `<audio>` tag
+- HTML `<video>` tag
 - Canvas

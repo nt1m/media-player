@@ -8,6 +8,7 @@
 */
 function Playlist(params) {
   this.element = params.element;
+  this.shuffle = false;
   this.element.scrollTo = function(y, t) {
     t = t > 0 ? Math.floor(t / 4) : 40;
     let step = (y - this.scrollTop) / t * 40;
@@ -66,8 +67,14 @@ Playlist.prototype = {
     if (!hash) {
       hash = this.selectedItem;
     }
-    var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
-    var nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
+    var nextItemIndex;
+    if (this.shuffle) {
+      nextItemIndex = Math.floor(Math.random() * this.list.size);
+    } else {
+      var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
+      nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
+    }
+
     var nextItem = [...this.list.keys()][nextItemIndex];
     this.list.get(hash).unselect();
     this.onItemSelected(nextItem);
