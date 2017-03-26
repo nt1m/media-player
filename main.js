@@ -18,9 +18,9 @@ function createWindow() {
     icon: __dirname + "/img/icon.png",
     title: "Media Player",
     darkTheme: true,
-    backgroundColor: "#999",
-    titleBarStyle: "hidden-inset",
-    vibrancy: "dark"
+    transparent: true,
+    hasShadow: true,
+    titleBarStyle: "hidden-inset"
   });
   win.setMenu(null);
   win.loadURL(url.format({
