@@ -3,7 +3,7 @@
 var AudioPlayer = {
   init() {
     /* Define elements */
-    this.audioEl = document.getElementById("AudioPlayer");
+    this.videoEl = document.getElementById("AudioPlayer");
     this.uploadEl = document.getElementById("upfile");
     this.headerEl = document.getElementById("header");
 
@@ -20,7 +20,7 @@ var AudioPlayer = {
     this.controlsEl = document.getElementById("audio-controls");
     this.canvasEl = document.getElementById("visualizer");
 
-    this.audioEl.controls = false;
+    this.videoEl.controls = false;
     /* Initialize playlist */
     this.playlist = new Playlist({
       element: document.getElementById("playlist"),
@@ -70,17 +70,17 @@ var AudioPlayer = {
       AudioPlayer.setProgressTooltip(e.pageX);
     });
 
-    this.audioEl.addEventListener("timeupdate", function() {
+    this.videoEl.addEventListener("timeupdate", function() {
       AudioPlayer.updateProgressBar();
       AudioPlayer.tooltipEl.textContent = AudioPlayer.getTooltip(this.currentTime);
     });
-    this.audioEl.addEventListener("play", () => {
+    this.videoEl.addEventListener("play", () => {
       this.playPauseEl.classList.remove("paused");
     });
-    this.audioEl.addEventListener("pause", () => {
+    this.videoEl.addEventListener("pause", () => {
       this.playPauseEl.classList.add("paused");
     });
-    this.audioEl.addEventListener("ended", () => {
+    this.videoEl.addEventListener("ended", () => {
       this.killContext();
       this.playlist.selectNext();
     });
@@ -110,9 +110,9 @@ var AudioPlayer = {
   },
   setMedia(hash) {
     let item = this.playlist.list.get(hash);
-    this.audioEl.hidden = item.type != "video";
+    this.videoEl.hidden = item.type != "video";
     this.canvasEl.hidden = item.type == "video";
-    this.audioEl.src = URL.createObjectURL(item.media);
+    this.videoEl.src = URL.createObjectURL(item.media);
     this.updateHeader(item.tags);
     this.play();
   },
@@ -128,7 +128,7 @@ var AudioPlayer = {
   /** Audio controls **/
   initAudioContext() {
     var ctx = new AudioContext();
-    var audio = this.audioEl;
+    var audio = this.videoEl;
     var audioSrc = ctx.createMediaElementSource(audio);
     var analyser = ctx.createAnalyser();
     audioSrc.connect(analyser);
@@ -137,35 +137,37 @@ var AudioPlayer = {
     this.ctx = ctx;
   },
   get paused() {
-    return this.audioEl.paused;
+    return this.videoEl.paused;
   },
   play() {
-    this.audioEl.play();
-    AudioPlayer.recordContext();
+    this.videoEl.play();
+    this.recordContext();
     this.canvasEl.classList.remove("placeholder");
   },
 
   pause() {
-    this.audioEl.pause();
+    this.videoEl.pause();
     this.canvasEl.classList.add("placeholder");
+    this.killContext();
   },
   stop() {
-    this.audioEl.pause();
-    this.audioEl.currentTime = 0;
+    this.videoEl.pause();
+    this.videoEl.currentTime = 0;
     this.canvasEl.classList.add("placeholder");
+    this.killContext();
   },
   fastrewind() {
-    this.audioEl.currentTime -= 5;
+    this.videoEl.currentTime -= 5;
   },
   fastforward() {
-    this.audioEl.currentTime += 5;
+    this.videoEl.currentTime += 5;
   },
   toggleLoop() {
-    if (this.audioEl.loop) {
-      this.audioEl.loop = false;
+    if (this.videoEl.loop) {
+      this.videoEl.loop = false;
       this.loopEl.classList.remove("checked");
     } else {
-      this.audioEl.loop = true;
+      this.videoEl.loop = true;
       this.loopEl.classList.add("checked");
     }
   },
@@ -179,7 +181,7 @@ var AudioPlayer = {
     }
   },
   changeVolume(volume) {
-    this.audioEl.volume = volume;
+    this.videoEl.volume = volume;
     if (volume == 0) {
       this.volumeIcon.className = "mute";
     } else if (volume <= 0.5) {
@@ -189,26 +191,26 @@ var AudioPlayer = {
     }
   },
   changeSpeed(value) {
-    var values = [0.5, 1, 1.25, 1.5, 2, 4];
-    this.audioEl.playbackRate = values[value];
-    this.audioEl.defaultPlaybackRate = values[value];
+    var values = [.5, .75, 1, 1.25, 1.5, 2];
+    this.videoEl.playbackRate = values[value];
+    this.videoEl.defaultPlaybackRate = values[value];
   },
 
   /** Progress bar **/
   setCurrentTime(time) {
-    this.audioEl.currentTime = time;
+    this.videoEl.currentTime = time;
   },
   updateProgressBar() {
-    var width = (this.audioEl.currentTime * document.body.clientWidth)
-                / this.audioEl.duration;
+    var width = (this.videoEl.currentTime * document.body.clientWidth)
+                / this.videoEl.duration;
     this.progressEl.style.width = width + "px";
   },
   onProgressClick(x) {
-    var duration = (x * this.audioEl.duration) / document.body.clientWidth;
+    var duration = (x * this.videoEl.duration) / document.body.clientWidth;
     this.setCurrentTime(duration);
   },
   setProgressTooltip(x) {
-    var duration = (x * this.audioEl.duration) / document.body.clientWidth;
+    var duration = (x * this.videoEl.duration) / document.body.clientWidth;
     this.progressBar.title = this.getTooltip(duration);
   },
   getTooltip(time) {
@@ -232,6 +234,8 @@ var AudioPlayer = {
     this.visualize(this.analyser);
   },
   killContext() {
+    cancelAnimationFrame(this.animationId);
+    this.animationId = null;
     var canvas = this.canvasEl;
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
