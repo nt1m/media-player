@@ -2,6 +2,11 @@
 
 var MediaPlayer = {
   init() {
+    this.isElectron = window.process && window.process.type && window.process.versions.electron;
+
+    if (this.isElectron) {
+      document.documentElement.classList.add("electron");
+    }
     /* Define elements */
     this.videoEl = document.getElementById("MediaPlayer");
     this.uploadEl = document.getElementById("upfile");

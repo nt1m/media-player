@@ -12,7 +12,15 @@ if (app.dock) {
   app.dock.setIcon(image);
 }
 function createWindow() {
-  win = new BrowserWindow({width: 800, height: 600, icon: __dirname + "/img/icon.png"});
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    icon: __dirname + "/img/icon.png",
+    title: "Media Player",
+    darkTheme: true,
+    backgroundColor: "#999",
+    titleBarStyle: "hidden-inset"
+  });
   win.setMenu(null);
   win.loadURL(url.format({
     pathname: path.join(__dirname, "./index.html"),

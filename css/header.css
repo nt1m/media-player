@@ -1,7 +1,9 @@
 /* Header */
+.electron .header,
 .header:not(:empty) {
+  -webkit-app-region: drag;
   padding: 15px;
-  background-color: #2A2A2A;
+  text-align: center;
   font-size: 20px;
   position: sticky;
   top: 0;
@@ -9,4 +11,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   z-index: 999;
+}
+
+.electron #header:empty::before {
+  content: "Media Player";
 }

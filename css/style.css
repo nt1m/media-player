@@ -15,7 +15,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  background-color: rgba(40, 40, 40, 0.9);
+  background-color: rgba(20, 20, 20, 0.95);
   color: white;
   font-family: Montserrat, Roboto, Arial, sans-serif;
   user-select: none;
