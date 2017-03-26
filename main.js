@@ -18,7 +18,6 @@ function createWindow() {
     icon: __dirname + "/img/icon.png",
     title: "Media Player",
     darkTheme: true,
-    transparent: true,
     hasShadow: true,
     titleBarStyle: "hidden-inset"
   });
