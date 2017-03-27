@@ -124,7 +124,9 @@ var MediaPlayer = {
       if (!this.UIEnabled) {
         return;
       }
-      this.togglePaused();
+      if (!this.videoEl.hidden) {
+        this.togglePaused();
+      }
     });
 
     addEventListener("keydown", (e) => {
