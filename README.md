@@ -21,7 +21,6 @@ Pull requests ![:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
 - Canvas
 
 # Build and Run From Source the standalone app
-## Installing Prerequisites
 You'll need NodeJS, Npm and optionally git.
 
 ### Install the Prerequisites
@@ -38,7 +37,7 @@ If nothing fails then you can run the app by typing:
 npm start
 ```
 
-## Bundling the app:
+### Bundling the app:
 
 The bundles will appear in `dist/`.
 
