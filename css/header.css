@@ -65,7 +65,7 @@
 
 .electron .caption-button.close:hover::before,
 .electron .caption-button.close:focus::before {
-  background-color: cyan;
+  background-color: #15ced9;
 }
 
 .electron .light .caption-button.close:focus::before,
