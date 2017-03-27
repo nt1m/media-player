@@ -223,8 +223,6 @@ var MediaPlayer = {
     uploadedMedia = Array.from(uploadedMedia) || [];
     this.playlist.element.classList.add("loading");
 
-    uploadedMedia = uploadedMedia.filter(m => m.type.match("audio") == "audio"
-                                           || m.type.match("video") == "video");
     return this.playlist.addAll(uploadedMedia).then(() => {
       this.playlist.element.classList.remove("loading");
     });

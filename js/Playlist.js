@@ -51,6 +51,10 @@ Playlist.prototype = {
     if (this.list.has(createHash(media))) {
       return Promise.resolve();
     }
+    if (media.type.match("audio") != "audio" &&
+        media.type.match("video") != "video") {
+      return Promise.resolve();
+    }
     let adding = new PlaylistItem({
       type: media.type.match("audio") == "audio" ? "audio" : "video",
       media,
