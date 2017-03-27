@@ -50,7 +50,6 @@ function createWindow() {
     }
   });
   win.webContents.once("did-stop-loading", () => {
-    console.log(process.argv)
     let fileDesc = fs.lstatSync(process.argv[process.argv.length - 1]);
     if (process.platform == "win32" && fileDesc.isFile()) {
       var openFilePath = process.argv[process.argv.length - 1];
