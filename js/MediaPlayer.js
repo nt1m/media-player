@@ -138,7 +138,7 @@ var MediaPlayer = {
         // Top arrow
         case 38:
           if (e.ctrlKey || e.metaKey) {
-            this.changeVolume(Math.max(0, this.videoEl.volume - 0.1));
+            this.changeVolume(Math.min(1, this.videoEl.volume + 0.1));
             e.preventDefault();
           } else {
             this.playlist.selectPrevious();
@@ -147,7 +147,7 @@ var MediaPlayer = {
         // Down arrow
         case 40:
           if (e.ctrlKey || e.metaKey) {
-            this.changeVolume(Math.min(1, this.videoEl.volume + 0.1));
+            this.changeVolume(Math.max(0, this.videoEl.volume - 0.1));
             e.preventDefault();
           } else {
             this.playlist.selectNext();
