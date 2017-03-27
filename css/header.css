@@ -6,6 +6,7 @@
   top: 0;
   white-space: nowrap;
   z-index: 999;
+  display: flex;
 }
 
 #settings-overlay .header,
@@ -13,14 +14,22 @@
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to left, transparent 0, black 75px);
   mask-image: linear-gradient(to left, transparent 0, black 75px);
+}
+
+#header {
+  flex: 1;
+}
+
+#header-container {
   transition: font-size 0.5s, opacity 0.2s;
+  padding-right: 0 !important;
 }
 
 .video #header-container {
   background-image: linear-gradient(rgba(20, 20, 20, 0.95), transparent);
 }
 
-.video:not(:hover) #header {
+.video:not(:hover) #header-container {
   opacity: 0;
   transition-delay: 0s, .7s;
 }
@@ -31,7 +40,6 @@
 
 .electron #header-container {
   padding: 0;
-  display: flex;
   -webkit-mask-image: none;
   mask-image: none;
 }
@@ -39,7 +47,6 @@
 .electron #header,
 .electron #settings-overlay .header {
   min-width: 0;
-  flex: 1;
   padding: 15px;
   -webkit-app-region: drag;
 }
