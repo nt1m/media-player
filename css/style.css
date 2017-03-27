@@ -26,10 +26,10 @@ body {
 }
 
 :fullscreen .light {
-  background: #000;
+  background: transparent;
 }
 :-webkit-full-screen .light {
-  background: #000;
+  background: transparent;
 }
 
 .light {
