@@ -1,13 +1,5 @@
 # Media player
 
-
-<img src="screenshots/audio-default-mac.png"/>
-                                       |
-:-------------------------------------:|:-----------------------------------------------------:
-![](screenshots/audio-compact-mac.png) | ![](screenshots/audio-compact-light-playlist-mac.png)
-
-<img src="screenshots/video-windows.png"/>
-
 ## Authors
 - Maintainers: Mohamed Hadjoudj (@MohIceAge), Tim Nguyen (@nt1m)
 - Contributors: Daniell Mesquita (@Plasmmer)
@@ -16,7 +8,7 @@
 Tested on: Firefox and Chrome.
 
 ## Contributing
-Pull requests ![:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
+Pull requests ! Feel free to skim through [our list of issues](https://github.com/nt1m/media-player/issues) to see you can contribute [:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
 
 ## Resources
 - Audio visualizer (modified): [HTML5 Audio Visualizer](https://github.com/Wayou/HTML5_Audio_Visualizer)
@@ -54,3 +46,14 @@ The bundles will appear in `dist/`.
 * macOS 64-bit: `npm run pack-osx`
 * Linux (both 32-bit and 64-bit): `npm run pack-linux`
 * For all 3 platforms: `npm run pack-all`
+
+# Screenshots
+
+Thank you for reading this readme! Here are some screenshots as reward:
+
+<img src="screenshots/audio-default-mac.png"/>
+
+![](screenshots/audio-compact-mac.png)               | ![](screenshots/audio-compact-light-playlist-mac.png)
+:---------------------------------------------------:|:-----------------------------------------------------:
+
+![](screenshots/video-windows.png)
