@@ -67,16 +67,17 @@ var MediaPlayer = {
       var ElectronApp = require("./js/ElectronApp");
       ElectronApp.init();
     }
-
-    addEventListener("webkitfullscreenchange", (e) => {
+    let fullscreenchange = (e) => {
       document.documentElement.classList.toggle("fullscreen",
-        !!(document.fullscreenElement || document.webkitFullscreenElement));
-    });
-
-    addEventListener("fullscreenchange", (e) => {
-      document.documentElement.classList.toggle("fullscreen",
-        !!(document.fullscreenElement || document.webkitFullscreenElement));
-    });
+        !!(document.fullscreenElement
+        || document.webkitFullscreenElement
+        || document.msFullscreenElement
+        || document.mozFullScreenElement));
+    };
+    addEventListener("fullscreenchange", fullscreenchange);
+    addEventListener("webkitfullscreenchange", fullscreenchange);
+    addEventListener("msfullscreenchange", fullscreenchange);
+    addEventListener("mozfullscreenchange", fullscreenchange);
     /* Bind functions */
     this.uploadFiles = this.uploadFiles.bind(this);
 
@@ -204,9 +205,11 @@ var MediaPlayer = {
       }
       document.documentElement.requestFullScreen();
     } else {
-      (document.exitFullscreen
-        || document.mozCancelFullScreen
-        || document.webkitExitFullscreen)();
+      if (!document.exitFullscreen) {
+        document.exitFullscreen = document.mozCancelFullScreen
+            || document.webkitExitFullscreen;
+      }
+      document.exitFullscreen();
     }
   },
 
@@ -322,7 +325,7 @@ var MediaPlayer = {
     }
   },
   fastrewind() {
-    console.log("fastre")
+    console.log("fastre");
     let newTime = this.videoEl.currentTime - 5;
     if (newTime > -2) {
       this.videoEl.currentTime = Math.max(newTime, 0);
@@ -334,7 +337,7 @@ var MediaPlayer = {
     }
   },
   fastforward() {
-    console.log("fastf")
+    console.log("fastf");
     let newTime = this.videoEl.currentTime + 5;
     if (newTime < this.videoEl.duration + 2) {
       this.videoEl.currentTime = Math.min(this.videoEl.duration, newTime);
