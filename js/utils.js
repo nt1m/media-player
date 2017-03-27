@@ -1,7 +1,6 @@
-/* exported Utils, Element */
-
 "use strict";
 
+/* eslint-disable no-unused-vars */
 var Utils = {
   readID3Data(audio) {
     if (audio.type.match("video") == "video") {
@@ -51,7 +50,7 @@ var Utils = {
   },
   predictTagsFromName(name) {
     if (!name) {
-      return;
+      return {};
     }
     var tags = {};
     name = this.removeFileExtension(name);
