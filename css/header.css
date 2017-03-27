@@ -22,10 +22,6 @@
   -webkit-app-region: drag;
 }
 
-.electron:not(.osx) #header {
-  text-indent: 126px;
-}
-
 .electron #header-container {
   display: flex;
   padding: 0;
