@@ -16,6 +16,7 @@ var MediaPlayer = {
 
     this.playPauseEl = document.getElementById("play-pause");
     this.volumeIcon = document.getElementById("volume-icon");
+    this.volumeSlider = document.getElementById("volume-range");
     this.loopEl = document.getElementById("loop");
     this.shuffleEl = document.getElementById("shuffle");
     this.speedBtnEl = document.getElementById("speed-btn");
@@ -40,8 +41,9 @@ var MediaPlayer = {
       },
     });
 
+    this.settingsStore = new SettingsStore();
     this.settingsOverlay = new SettingsOverlay({
-      store: new SettingsStore(),
+      store: this.settingsStore,
       element: document.getElementById("settings-overlay"),
       toggle: document.getElementById("settings-btn")
     });
@@ -229,6 +231,9 @@ var MediaPlayer = {
     }
   },
   changeVolume(volume) {
+    if (volume == this.videoEl.volume) {
+      return;
+    }
     this.videoEl.volume = volume;
     if (volume == 0) {
       this.volumeIcon.className = "mute";
@@ -236,6 +241,10 @@ var MediaPlayer = {
       this.volumeIcon.className = "half";
     } else {
       this.volumeIcon.className = "";
+    }
+    this.volumeSlider.value = volume;
+    if (this.settingsStore) {
+      this.settingsStore.setItem("volume", volume);
     }
   },
   changeSpeed(value) {

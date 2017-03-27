@@ -20,7 +20,7 @@ function SettingsOverlay(params) {
   this.settingsContainer = Element("div", {
     parent: this.element
   });
-  this.store.definitions.forEach((s) => this.createSetting(s));
+  this.store.definitions.filter((s) => !s.hidden).forEach((s) => this.createSetting(s));
 }
 
 SettingsOverlay.prototype = {

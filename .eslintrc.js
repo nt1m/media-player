@@ -2,7 +2,7 @@
 
 module.exports = {
   globals: {
-    AudioPlayer: true,
+    MediaPlayer: true,
     Playlist: true,
     Element: true,
     SettingsOverlay: true,

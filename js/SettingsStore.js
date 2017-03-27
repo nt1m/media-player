@@ -16,6 +16,21 @@ function SettingsStore(params) {
 SettingsStore.prototype = {
   definitions: [
     {
+      id: "volume",
+      name: "Volume",
+      hidden: true,
+      default: 0.5,
+      onApply: (value) => {
+        value = new Number(value);
+
+        if (isNaN(value)) {
+          return this.setItem("volume", 0.5);
+        }
+
+        return MediaPlayer.changeVolume(value);
+      }
+    },
+    {
       id: "theme",
       name: "Theme",
       default: "dark",
