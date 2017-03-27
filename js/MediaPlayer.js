@@ -185,7 +185,7 @@ var MediaPlayer = {
       this.headerEl.textContent = "";
       this.videoEl.hidden = true;
       this.canvasEl.hidden = false;
-      this.stop();
+      this.videoEl.stop();
     } else {
       this.controlsEl.classList.remove("disabled");
     }
@@ -316,7 +316,6 @@ var MediaPlayer = {
     }
   },
   fastrewind() {
-    console.log("fastre")
     let newTime = this.videoEl.currentTime - 5;
     if (newTime > -2) {
       this.videoEl.currentTime = Math.max(newTime, 0);
@@ -328,7 +327,6 @@ var MediaPlayer = {
     }
   },
   fastforward() {
-    console.log("fastf")
     let newTime = this.videoEl.currentTime + 5;
     if (newTime < this.videoEl.duration + 2) {
       this.videoEl.currentTime = Math.min(this.videoEl.duration, newTime);
