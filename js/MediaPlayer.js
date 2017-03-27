@@ -196,11 +196,17 @@ var MediaPlayer = {
 
   toggleFullscreen() {
     let shouldGoFullscreen = !document.documentElement.classList.contains("fullscreen");
-    
+
     if (shouldGoFullscreen) {
-      document.documentElement[HTMLElement.prototype.requestFullscreen ? "requestFullscreen" : "webkitRequestFullscreen"]();
+      if (!document.documentElement.requestFullScreen) {
+        document.documentElement.requestFullScreen = document.documentElement.mozRequestFullScreen
+            || document.documentElement.webkitRequestFullscreen;
+      }
+      document.documentElement.requestFullScreen();
     } else {
-      document[document.exitFullscreen ? "exitFullscreen" : "webkitExitFullscreen"]();
+      (document.exitFullscreen
+        || document.mozCancelFullScreen
+        || document.webkitExitFullscreen)();
     }
   },
 
