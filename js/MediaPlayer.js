@@ -188,7 +188,8 @@ var MediaPlayer = {
       this.headerEl.textContent = "";
       this.videoEl.hidden = true;
       this.canvasEl.hidden = false;
-      this.videoEl.stop();
+      this.videoEl.pause();
+      this.videoEl.currentTime = 0;
     } else {
       this.controlsEl.classList.remove("disabled");
     }
