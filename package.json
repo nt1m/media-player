@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "pack": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.png --out=dist/ --overwrite",
-    "pack-all": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.png --out=dist/ --platform=mas,darwin,linux,win32 --overwrite"
+    "pack-osx": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.icns --out=dist/ --platform=darwin --overwrite",
+    "pack-all": "npm pack-osx && ./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.png --out=dist/ --platform=linux,win32 --overwrite"
   },
   "repository": {
     "type": "git",
