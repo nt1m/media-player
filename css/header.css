@@ -105,8 +105,8 @@
   background-position: center;
 }
 
-.caption-button.fullscreen {
-  float: right;
+:root:not(.electron) .caption-button.fullscreen,
+.electron.osx .caption-button.fullscreen {
   flex: 0;
   min-width: 50px;
   text-align: center;
