@@ -13,7 +13,7 @@
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to left, transparent 0, black 75px);
   mask-image: linear-gradient(to left, transparent 0, black 75px);
-  transition: font-size 0.5s, opacity 0.2s 1s;
+  transition: font-size 0.5s, opacity 0.2s;
 }
 
 .video #header-container {
@@ -22,6 +22,7 @@
 
 .video:not(:hover) #header {
   opacity: 0;
+  transition-delay: 0s, .7s;
 }
 
 .electron.osx .header {
