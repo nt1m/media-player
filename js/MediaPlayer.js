@@ -68,6 +68,15 @@ var MediaPlayer = {
       ElectronApp.init();
     }
 
+    addEventListener("webkitfullscreenchange", (e) => {
+      document.documentElement.classList.toggle("fullscreen",
+        !!(document.fullscreenElement || document.webkitFullscreenElement));
+    });
+
+    addEventListener("fullscreenchange", (e) => {
+      document.documentElement.classList.toggle("fullscreen",
+        !!(document.fullscreenElement || document.webkitFullscreenElement));
+    });
     /* Bind functions */
     this.uploadFiles = this.uploadFiles.bind(this);
 
@@ -183,6 +192,16 @@ var MediaPlayer = {
   },
   get UIEnabled() {
     return !this.controlsEl.classList.contains("disabled");
+  },
+
+  toggleFullscreen() {
+    let shouldGoFullscreen = !document.documentElement.classList.contains("fullscreen");
+    
+    if (shouldGoFullscreen) {
+      document.documentElement[HTMLElement.prototype.requestFullscreen ? "requestFullscreen" : "webkitRequestFullscreen"]();
+    } else {
+      document[document.exitFullscreen ? "exitFullscreen" : "webkitExitFullscreen"]();
+    }
   },
 
   /** Sidebar **/

@@ -1,5 +1,5 @@
 /* Header */
-.header:not(:empty) {
+.header {
   padding: 15px;
   font-size: 20px;
   position: sticky;
@@ -8,7 +8,7 @@
   z-index: 999;
 }
 
-.header,
+#settings-overlay .header,
 #header {
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to left, transparent 0, black 75px);
@@ -49,6 +49,10 @@
   padding: 15px 90px;
 }
 
+.electron.osx #header {
+  padding-right: 40px;
+}
+
 .electron #header:empty::before {
   content: "Media Player";
 }
@@ -59,7 +63,7 @@
   padding: 0;
 }
 
-.electron .caption-button {
+.caption-button {
   background: none;
   border: none;
   margin: 0;
@@ -67,22 +71,22 @@
   padding: 0 5px;
 }
 
-.electron .caption-button:hover::before,
-.electron .caption-button:focus::before {
+.caption-button:hover::before,
+.caption-button:focus::before {
   background-color: rgba(0,0,0,0.1);
 }
 
-.electron .caption-button.close:hover::before,
-.electron .caption-button.close:focus::before {
+.caption-button.close:hover::before,
+.caption-button.close:focus::before {
   background-color: #15ced9;
 }
 
-.electron .light .caption-button.close:focus::before,
-.electron .light .caption-button.close:hover::before {
+.light .caption-button.close:focus::before,
+.light .caption-button.close:hover::before {
   filter: none;
 }
 
-.electron .caption-button::before {
+.caption-button::before {
   content: "";
   display: inline-block;
   width: 12px;
@@ -94,18 +98,37 @@
   background-position: center;
 }
 
-.electron .caption-button.close::before {
+.caption-button.fullscreen {
+  float: right;
+  flex: 0;
+  min-width: 50px;
+  text-align: center;
+}
+
+:root:not(.electron) .caption-button.fullscreen::before,
+.electron.osx .caption-button.fullscreen::before {
+  transform: scale(1.25);
+}
+
+.caption-button.close::before {
   background-image: url(../img/electron/close.svg);
 }
 
-.electron .caption-button.maximize::before {
+.caption-button.maximize::before {
   background-image: url(../img/electron/maximize.svg);
 }
 
-.electron .caption-button.restore::before {
+.caption-button.restore::before {
   background-image: url(../img/electron/restore.svg);
 }
 
-.electron .caption-button.minimize::before {
+.caption-button.minimize::before {
   background-image: url(../img/electron/minimize.svg);
+}
+
+.caption-button.fullscreen::before {
+  background-image: url(../img/fullscreen.svg);
+}
+.fullscreen .caption-button.fullscreen::before {
+  background-image: url(../img/fullscreen-exit.svg);
 }
