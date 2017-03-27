@@ -26,7 +26,6 @@ function createWindow() {
     minHeight: 290,
     icon: __dirname + "/img/icon.png",
     title: "Media Player",
-    darkTheme: true,
     hasShadow: true,
     frame: false,
     center: true,

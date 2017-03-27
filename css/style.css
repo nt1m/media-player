@@ -25,6 +25,13 @@ body {
   overflow: hidden;
 }
 
+:fullscreen .light {
+  background: #000;
+}
+:-webkit-full-screen .light {
+  background: #000;
+}
+
 .light {
   filter: invert(1);
   background-color: rgba(244, 244, 244, 0.9);
