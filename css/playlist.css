@@ -137,11 +137,13 @@
   cursor: pointer;
 }
 #upload-container div {
-  overflow: hidden;
   padding: 10px;
   height: 2em;
+  margin: 10px 0;
   border-radius: 2px;
   display: flex;
+  width: 100%;
+  box-sizing: border-box;
 }
 #upload-container div::before {
   flex: 1;
