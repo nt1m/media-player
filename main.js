@@ -15,6 +15,8 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 290,
+    minHeight: 290,
     icon: __dirname + "/img/icon.png",
     title: "Media Player",
     darkTheme: true,

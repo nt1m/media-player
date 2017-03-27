@@ -1,30 +1,39 @@
 /* Header */
-.electron .header,
 .header:not(:empty) {
   padding: 15px;
   font-size: 20px;
   position: sticky;
   top: 0;
-  overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
   z-index: 999;
+}
+
+.header,
+#header {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black 75px);
+  mask-image: linear-gradient(to left, transparent 0, black 75px);
 }
 
 .electron.osx .header {
   text-align: center;
 }
 
-.electron #header {
+.electron #header-container {
+  padding: 0;
+}
+
+.electron #header,
+.electron #settings-overlay .header {
   min-width: 0;
   flex: 1;
   padding: 15px;
   -webkit-app-region: drag;
 }
 
-.electron #header-container {
-  display: flex;
-  padding: 0;
+.electron.osx #header,
+.electron.osx #settings-overlay .header {
+  padding: 15px 75px;
 }
 
 .electron #header:empty::before {

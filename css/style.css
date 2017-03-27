@@ -51,15 +51,15 @@ body {
   }
 }
 @media (max-width: 650px) {
+  .header {
+    font-size: 0.9em !important;
+  }
   body .media-control {
     padding: 0;
     width: 45px;
   }
 }
 @media (max-width: 500px) {
-  .header {
-    font-size: 1em !important;
-  }
   .main-content {
     flex-direction: column;
   }
@@ -69,8 +69,11 @@ body {
     transition: max-height 0.3s;
   }
   #sidebar:not(:hover) {
-    max-height: 40px;
+    max-height: 38px;
     overflow: hidden;
+  }
+  #sidebar-header {
+    text-align: center;
   }
   #volume-control:not(:hover) {
     width: 50px;
