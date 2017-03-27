@@ -63,14 +63,14 @@
   background-color: rgba(0,0,0,0.1);
 }
 
-.electron .caption-button.close:hover::before
+.electron .caption-button.close:hover::before,
 .electron .caption-button.close:focus::before {
-  background-color: cyan !important;
+  background-color: cyan;
 }
 
 .electron .light .caption-button.close:focus::before,
 .electron .light .caption-button.close:hover::before {
-  filter: none !important;
+  filter: none;
 }
 
 .electron .caption-button::before {
