@@ -50,34 +50,16 @@ body {
     max-width: 200px;
   }
 }
-@media (max-width: 550px) {
+@media (max-width: 650px) {
   body .media-control {
     padding: 0;
     width: 45px;
   }
 }
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .header {
     font-size: 1em !important;
   }
-  #upload-container::before {
-    content: "Add audio or video" !important;
-    font-size: 0.9em !important;
-    width: 100% !important;
-  }
-  
-  #upload-container {
-    margin: 5px;
-    background-color: var(--theme-highlight-color);
-    color: var(--theme-contrast-color);
-    border-radius: 2px;
-    min-height: 0 !important;
-    height: 2em !important;
-  }
-  #upload-container::after {
-    display: none;
-  }
-
   .main-content {
     flex-direction: column;
   }
@@ -88,6 +70,7 @@ body {
   }
   #sidebar:not(:hover) {
     max-height: 40px;
+    overflow: hidden;
   }
   #volume-control:not(:hover) {
     width: 50px;
