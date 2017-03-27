@@ -63,6 +63,10 @@
   background-size: cover;
   -webkit-filter: invert(1);
   filter: invert(1);
+  border-radius: 100%;
+}
+#playlist > li.playing a:focus::before {
+  background-color: #ddd;
 }
 .contrast-black #playlist > li.playing a::before {
   -webkit-filter: none;
