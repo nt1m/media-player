@@ -7,6 +7,16 @@
   overflow: auto;
   background-color: #303030;
 }
+.video + #sidebar{
+    transition: all .5s;
+    margin-right: -250px;
+    
+}
+.video:hover  + #sidebar,.video  + #sidebar:hover {
+    margin-right: 0;
+    
+}
+
 .light #sidebar {
   background-color: #111;
 }

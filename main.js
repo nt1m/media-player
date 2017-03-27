@@ -51,8 +51,9 @@ function createWindow() {
     }
   });
   win.webContents.once("did-stop-loading", () => {
-    if (process.platform == "win32" && process.argv.length >= 2) {
-      var openFilePath = process.argv[1];
+    let fileDesc = fs.lstatSync(process.argv[process.argv.length - 1]);
+    if (process.platform == "win32" && fileDesc.isFile()) {
+      var openFilePath = process.argv[process.argv.length - 1];
       var data = fs.readFileSync(openFilePath, null);
       let openFileName = getFileNameFromPath(openFilePath);
       win.webContents.send("file-found", data, openFileName);
