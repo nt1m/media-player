@@ -21,6 +21,7 @@ function getInstallerConfig() {
     outputDirectory: path.join(outPath, "windows-installer"),
     exe: "Media Player.exe",
     setupExe: "MediaPlayerInstaller.exe",
-    setupIcon: path.join(rootPath, "img/icon.ico")
+    setupIcon: path.join(rootPath, "img/icon.ico"),
+    skipUpdateIcon: true
   });
 }
