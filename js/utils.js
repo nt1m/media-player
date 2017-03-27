@@ -1,6 +1,6 @@
-"use strict";
-
 /* exported Utils, Element */
+
+"use strict";
 
 var Utils = {
   readID3Data(audio) {

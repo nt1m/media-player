@@ -1,11 +1,12 @@
 {
   "name": "media-player",
   "version": "1.0.0",
-  "description": "An modern, clean media player built using HTML 5 technologies ",
+  "description": "An modern, clean media player built using HTML 5 technologies.",
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "pack": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.png --out=dist/ --overwrite",
+    "pack-win-installer": "node installer/windows/create-installer.js",
     "pack-win": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.ico --out=dist/ --platform=win32 --overwrite",
     "pack-osx": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.icns --out=dist/ --platform=darwin --overwrite",
     "pack-linux": "./node_modules/.bin/electron-packager . 'Media Player' --icon=img/icon.png --out=dist/ --platform=linux --overwrite",
@@ -23,7 +24,10 @@
     "video"
   ],
   "author": "Tim Nguyen",
-  "contributors": ["Mohamed Hadjoudj", "Daniell Mesquita"],
+  "contributors": [
+    "Mohamed Hadjoudj",
+    "Daniell Mesquita"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nt1m/media-player/issues"
@@ -31,6 +35,7 @@
   "homepage": "https://github.com/nt1m/media-player#readme",
   "devDependencies": {
     "electron": "^1.6.2",
-    "electron-packager": "^8.6.0"
+    "electron-packager": "^8.6.0",
+    "electron-winstaller": "^2.5.2"
   }
 }

@@ -5,6 +5,12 @@ const { app, BrowserWindow, nativeImage } = require("electron");
 const path = require("path");
 const url = require("url");
 
+const setupEvents = require("./installers/setupEvents");
+if (setupEvents.handleSquirrelEvent()) {
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
+  return;
+}
+
 let win;
 
 let image = nativeImage.createFromPath(path.join(__dirname, "./img/icon.png"));
