@@ -26,6 +26,26 @@ var MediaPlayer = {
 
     this.controlOverlay = document.getElementById("control-overlay");
     this.videoEl.controls = false;
+
+    this.previousBtn = document.getElementById("previous-btn");
+    this.nextBtn = document.getElementById("next-btn");
+    this.wirePrevNextControls({
+      element: this.previousBtn,
+      onHold: this.fastrewind.bind(this),
+      onClick: () => {
+        this.killContext();
+        this.playlist.selectPrevious();
+      }
+    });
+    this.wirePrevNextControls({
+      element: this.nextBtn,
+      onHold: this.fastforward.bind(this),
+      onClick: () => {
+        this.killContext();
+        this.playlist.selectNext();
+      }
+    });
+
     /* Initialize playlist */
     this.playlist = new Playlist({
       element: document.getElementById("playlist"),
@@ -215,6 +235,35 @@ var MediaPlayer = {
       this.controlOverlay.className = "";
     }, 500);
   },
+  wirePrevNextControls(params) {
+    let element = params.element;
+    let onClick = params.onClick;
+    let onHold = params.onHold;
+    element.addEventListener("mousedown", () => {
+      this.prevNextTimeout = setTimeout(() => {
+        if (this.prevNextTimeout) {
+          this.prevNextInterval = setInterval(() => {
+            onHold();
+          }, 500);
+        }
+      });
+    }, 1000);
+
+    element.addEventListener("mouseup", () => {
+      if (this.prevNextTimeout) {
+        clearTimeout(this.prevNextTimeout);
+        this.prevNextTimeout = null;
+      }
+      console.log(this.prevNextInterval, this.prevNextTimeout);
+      if (this.prevNextInterval) {
+        clearInterval(this.prevNextInterval);
+        this.prevNextInterval = null;
+      } else {
+        onClick();
+        console.log("click");
+      }
+    });
+  },
   get paused() {
     return this.videoEl.paused;
   },
@@ -247,17 +296,29 @@ var MediaPlayer = {
       this.pause();
     }
   },
-  stop() {
-    this.videoEl.pause();
-    this.videoEl.currentTime = 0;
-    this.canvasEl.classList.add("placeholder");
-    this.killContext();
-  },
   fastrewind() {
-    this.videoEl.currentTime -= 5;
+    console.log("fastre")
+    let newTime = this.videoEl.currentTime - 5;
+    if (newTime > -2) {
+      this.videoEl.currentTime = Math.max(newTime, 0);
+    } else {
+      this.killContext();
+      this.playlist.selectPrevious();
+      clearInterval(this.prevNextInterval);
+      this.prevNextInterval = null;
+    }
   },
   fastforward() {
-    this.videoEl.currentTime += 5;
+    console.log("fastf")
+    let newTime = this.videoEl.currentTime + 5;
+    if (newTime < this.videoEl.duration + 2) {
+      this.videoEl.currentTime = Math.min(this.videoEl.duration, newTime);
+    } else {
+      this.killContext();
+      this.playlist.selectNext();
+      clearInterval(this.prevNextInterval);
+      this.prevNextInterval = null;
+    }
   },
   toggleShuffle() {
     this.playlist.shuffle = !this.playlist.shuffle;
@@ -298,7 +359,7 @@ var MediaPlayer = {
       this.volumeIcon.className = "";
     }
     this.volumeSlider.value = volume;
-    this.volumeSlider.title = this.volumeIcon.title = (volume * 100) + "%";
+    this.volumeSlider.title = this.volumeIcon.title = Math.round(volume * 100) + "%";
     if (this.settingsStore) {
       this.settingsStore.setItem("volume", volume);
     }

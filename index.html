@@ -51,12 +51,9 @@
 				<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="MediaPlayer.changeVolume(this.value);">
 			</div>
 			<div id="main-controls">
-				<button class="media-control" id="fast-rewind" onclick="MediaPlayer.fastrewind()" ondblclick="MediaPlayer.killContext();
-      MediaPlayer.playlist.selectPrevious();" title="Rewind"></button>
+				<button class="media-control" id="previous-btn" title="Rewind"></button>
 				<button class="media-control paused" id="play-pause" onclick="MediaPlayer.togglePaused()"></button>
-				<button class="media-control" id="stop" onclick="MediaPlayer.stop()" title="Stop"></button>
-				<button class="media-control" id="fast-forward" onclick="MediaPlayer.fastforward()" ondblclick="MediaPlayer.killContext();
-      MediaPlayer.playlist.selectNext();" title="Forward"></button>
+				<button class="media-control" id="next-btn" title="Forward"></button>
 			</div>
 			<div id="secondary-controls">
 				<button class="media-control not-checked" id="speed-btn" onclick="MediaPlayer.toggleSpeedBtn()"></button>

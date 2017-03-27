@@ -26,6 +26,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
+  padding-right: 10px;
 }
 
 /* Media control buttons */
@@ -97,13 +98,13 @@
     -webkit-mask-image: url(../img/stop.svg);
     mask-image: url(../img/stop.svg);
   }
-  #fast-rewind::after {
-    -webkit-mask-image: url(../img/fast_rewind.svg);
-    mask-image: url(../img/fast_rewind.svg);
+  #previous-btn::after {
+    -webkit-mask-image: url(../img/previous-song.svg);
+    mask-image: url(../img/previous-song.svg);
   }
-  #fast-forward::after {
-    -webkit-mask-image: url(../img/fast_forward.svg);
-    mask-image: url(../img/fast_forward.svg);
+  #next-btn::after {
+    -webkit-mask-image: url(../img/next-song.svg);
+    mask-image: url(../img/next-song.svg);
   }
   #loop::after {
     -webkit-mask-image: url(../img/loop.svg);
@@ -137,11 +138,11 @@
 #stop::after {
   background-image: url(../img/stop.svg)
 }
-#fast-rewind::after {
-  background-image: url(../img/fast_rewind.svg);
+#previous-btn::after {
+  background-image: url(../img/previous-song.svg);
 }
-#fast-forward::after {
-  background-image: url(../img/fast_forward.svg);
+#next-btn::after {
+  background-image: url(../img/next-song.svg);
 }
 #loop::after {
   background-image: url(../img/loop.svg)
@@ -219,6 +220,7 @@
 
 /* Volume control */
 #volume-icon {
+  position: relative;
   min-width: 20px;
   width: 20px;
   height: 20px;
@@ -228,6 +230,22 @@
   background-image: url(../img/volume_up.svg);
   -webkit-filter: invert(1);
   filter: invert(1);
+}
+#volume-control:not(:hover) #volume-icon::after {
+  opacity: 0;
+}
+#volume-icon:not(.mute)[title]::after {
+  content: attr(title);
+  position: absolute;
+  top: -10px;
+  margin-left: 4px;
+  background-color: var(--theme-highlight-color);
+  color: var(--theme-contrast-color);
+  filter: invert(1);
+  font-size: 0.5em;
+  padding: 1px;
+  border-radius: 2px;
+  transition: opacity 0.3s;
 }
 #volume-icon.half {
   background-image: url(../img/volume_down.svg);
