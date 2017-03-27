@@ -53,6 +53,10 @@
   background-color: cyan;
 }
 
+.electron .light .caption-button.close:hover::before {
+  filter: none;
+}
+
 .electron .caption-button::before {
   content: "";
   display: inline-block;
