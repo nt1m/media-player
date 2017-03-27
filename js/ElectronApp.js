@@ -39,20 +39,20 @@ module.exports = {
       }
     });
 
-    let focusedWindow = remote.BrowserWindow.getFocusedWindow();
-    focusedWindow.on("unmaximize", () => {
-      maximizeBtn.className = "caption-button maximize";
-    });
-    focusedWindow.on("maximize", () => {
-      maximizeBtn.className = "caption-button restore";
-    });
-
     Element("button", {
       class: "caption-button close",
       parent: header,
       onclick() {
         window.close();
       }
+    });
+
+    let focusedWindow = remote.BrowserWindow.getFocusedWindow();
+    focusedWindow.on("unmaximize", () => {
+      maximizeBtn.className = "caption-button maximize";
+    });
+    focusedWindow.on("maximize", () => {
+      maximizeBtn.className = "caption-button restore";
     });
   }
 };
