@@ -119,26 +119,33 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  margin: 10px;
+  padding: 10px;
+  height: 2em;
+  border-radius: 2px;
+  display: flex;
+}
+#upload-container::before {
+  flex: 1;
+  align-self: center;
+  content: "Add music or videos";
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.9em;
+  z-index: -1;
   background-color: var(--theme-highlight-color);
   color: var(--theme-contrast-color);
   border-radius: 2px;
+  padding-top: 0.4em;
   height: 2em;
-}
-#upload-container::before {
-  content: "Add music or videos";
-  text-transform: uppercase;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-  font-size: 0.9em;
-  pointer-events: none;
-  z-index: 0;
+  box-sizing: border-box;
 }
 #upfile {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0;
   z-index: 99;
 }
