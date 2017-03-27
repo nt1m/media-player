@@ -142,8 +142,8 @@
 }
 
 #settings-overlay.hidden {
-  -webkit-transform: translateY(100vh) scale(0);
-  transform: translateY(100vh) scale(0);
+  -webkit-transform: translateY(100vh) scaleY(0);
+  transform: translateY(100vh) scaleY(0);
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
