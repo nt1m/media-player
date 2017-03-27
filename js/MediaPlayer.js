@@ -75,7 +75,16 @@ var MediaPlayer = {
     });
 
     this.progressBar.addEventListener("mousedown", function(e) {
+      this.classList.add("dragging");
       MediaPlayer.onProgressClick(e.pageX);
+    });
+    this.progressBar.addEventListener("mouseup", (e) => {
+      this.progressBar.classList.remove("dragging");
+    });
+    this.progressBar.addEventListener("mouseover", (e) => {
+      if (this.progressBar.classList.contains("dragging")) {
+        this.onProgressClick(e.pageX);
+      }
     });
     this.progressBar.addEventListener("mouseover", function(e) {
       MediaPlayer.setProgressTooltip(e.pageX);
