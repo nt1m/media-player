@@ -207,5 +207,8 @@ PlaylistItem.prototype = {
 };
 
 function createHash(audio) {
+  if (!audio.name) {
+    return Date.now();
+  }
   return encodeURIComponent(audio.name.replace(/\s/g, ""));
 }

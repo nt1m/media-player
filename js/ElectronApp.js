@@ -11,11 +11,33 @@ module.exports = {
     if (!isMac) {
       this.initWindowControls();
     }
-
+    
     ipcRenderer.on("file-found", (event, file) => {
+      function toArrayBuffer(buf) {
+          var ab = new ArrayBuffer(buf.length);
+          var view = new Uint8Array(ab);
+          for (var i = 0; i < buf.length; ++i) {
+              view[i] = buf[i];
+          }
+          return ab;
+      }
+      try {
       console.log(file);
-      alert("file found" + file.prototype);
+      let buffer = file;
+      let arraybuffer = Uint8Array.from(buffer).buffer;
+      let blob = new Blob([arraybuffer], {type: "audio/mp3"});
+      MediaPlayer.playlist.add(blob);
+      }catch(e) {console.error(e);alert(e.toString());}
     });
+    
+    // Debug
+    document.addEventListener("keydown", function (e) {
+		if (e.which === 123) {
+			remote.getCurrentWindow().toggleDevTools();
+		} else if (e.which === 116) {
+			location.reload();
+		}
+	});
   },
   initWindowControls() {
     let header = Element("div", {

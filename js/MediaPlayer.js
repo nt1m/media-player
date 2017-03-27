@@ -4,11 +4,6 @@ var MediaPlayer = {
   init() {
     this.isElectron = window.process && window.process.type && window.process.versions.electron;
 
-    if (this.isElectron) {
-      var ElectronApp = require("./js/ElectronApp");
-      ElectronApp.init();
-    }
-
     /* Define elements */
     this.videoEl = document.getElementById("MediaPlayer");
     this.uploadEl = document.getElementById("upfile");
@@ -47,6 +42,11 @@ var MediaPlayer = {
       element: document.getElementById("settings-overlay"),
       toggle: document.getElementById("settings-btn")
     });
+
+    if (this.isElectron) {
+      var ElectronApp = require("./js/ElectronApp");
+      ElectronApp.init();
+    }
 
     /* Bind functions */
     this.uploadFiles = this.uploadFiles.bind(this);

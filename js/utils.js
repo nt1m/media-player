@@ -50,6 +50,9 @@ var Utils = {
     });
   },
   predictTagsFromName(name) {
+    if (!name) {
+      return;
+    }
     var tags = {};
     name = this.removeFileExtension(name);
     var splitName = name.split("-");

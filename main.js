@@ -4,6 +4,7 @@
 const { app, BrowserWindow, nativeImage } = require("electron");
 const path = require("path");
 const url = require("url");
+const fs = require("fs");
 
 const setupEvents = require("./installer/setup-events");
 if (setupEvents.handleSquirrelEvent()) {
@@ -41,7 +42,7 @@ function createWindow() {
   // Setup file handlers
   var osxFile;
   app.on("open-file", (event, filePath) => {
-    var data = fs.readFileSync(filePath, "utf-8");
+    var data = fs.readFileSync(filePath, null);
     if (win.webContents.isLoading()) {
       win.webContents.send("file-found", data);
     } else {
@@ -51,7 +52,7 @@ function createWindow() {
   win.webContents.on("did-stop-loading", () => {
     if (process.platform == "win32" && process.argv.length >= 2) {
       var openFilePath = process.argv[1];
-      var data = fs.readFileSync(openFilePath, "utf-8");
+      var data = fs.readFileSync(openFilePath, null);
       win.webContents.send("file-found", data);
     } else if (osxFile) {
       win.webContents.send("file-found", osxFile);
