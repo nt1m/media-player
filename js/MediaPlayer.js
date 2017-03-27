@@ -67,16 +67,17 @@ var MediaPlayer = {
       var ElectronApp = require("./js/ElectronApp");
       ElectronApp.init();
     }
-
-    addEventListener("webkitfullscreenchange", (e) => {
+    let fullscreenchange = (e) => {
       document.documentElement.classList.toggle("fullscreen",
-        !!(document.fullscreenElement || document.webkitFullscreenElement));
-    });
-
-    addEventListener("fullscreenchange", (e) => {
-      document.documentElement.classList.toggle("fullscreen",
-        !!(document.fullscreenElement || document.webkitFullscreenElement));
-    });
+        !!(document.fullscreenElement
+        || document.webkitFullscreenElement
+        || document.msFullscreenElement
+        || document.mozFullScreenElement));
+    };
+    addEventListener("fullscreenchange", fullscreenchange);
+    addEventListener("webkitfullscreenchange", fullscreenchange);
+    addEventListener("msfullscreenchange", fullscreenchange);
+    addEventListener("mozfullscreenchange", fullscreenchange);
     /* Bind functions */
     this.uploadFiles = this.uploadFiles.bind(this);
 
@@ -123,7 +124,9 @@ var MediaPlayer = {
       if (!this.UIEnabled) {
         return;
       }
-      this.togglePaused();
+      if (!this.videoEl.hidden) {
+        this.togglePaused();
+      }
     });
 
     addEventListener("keydown", (e) => {
@@ -196,11 +199,19 @@ var MediaPlayer = {
 
   toggleFullscreen() {
     let shouldGoFullscreen = !document.documentElement.classList.contains("fullscreen");
-    
+
     if (shouldGoFullscreen) {
-      document.documentElement[HTMLElement.prototype.requestFullscreen ? "requestFullscreen" : "webkitRequestFullscreen"]();
+      if (!document.documentElement.requestFullScreen) {
+        document.documentElement.requestFullScreen = document.documentElement.mozRequestFullScreen
+            || document.documentElement.webkitRequestFullscreen;
+      }
+      document.documentElement.requestFullScreen();
     } else {
-      document[document.exitFullscreen ? "exitFullscreen" : "webkitExitFullscreen"]();
+      if (!document.exitFullscreen) {
+        document.exitFullscreen = document.mozCancelFullScreen
+            || document.webkitExitFullscreen;
+      }
+      document.exitFullscreen();
     }
   },
 
