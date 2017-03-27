@@ -53,7 +53,7 @@ body {
 
 @media (max-width: 800px) {
   .header {
-    font-size: 1.1em !important;
+    font-size: 1em !important;
   }
 }
 @media (max-width: 650px) {
