@@ -65,11 +65,12 @@
 
 .electron .caption-button.close:hover::before
 .electron .caption-button.close:focus::before {
-  background-color: cyan;
+  background-color: cyan !important;
 }
 
+.electron .light .caption-button.close:focus::before,
 .electron .light .caption-button.close:hover::before {
-  filter: none;
+  filter: none !important;
 }
 
 .electron .caption-button::before {
