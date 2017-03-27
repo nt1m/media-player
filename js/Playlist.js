@@ -156,9 +156,14 @@ PlaylistItem.prototype = {
       parent: this.playlist.element
     });
 
+    var itemWrap = Element("a", {
+      href: "#",
+      parent: item
+    });
+
     var textContainer = Element("p", {
       class: "text-container",
-      parent: item
+      parent: itemWrap
     });
 
     Element("span", {
@@ -181,7 +186,7 @@ PlaylistItem.prototype = {
         this.onItemRemoved(this.hash);
         e.stopPropagation();
       },
-      parent: item
+      parent: itemWrap
     });
 
     this.element = item;

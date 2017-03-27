@@ -94,10 +94,43 @@ var MediaPlayer = {
       if (!this.UIEnabled) {
         return;
       }
-      if (this.paused) {
-        this.play();
-      } else {
-        this.pause();
+      this.togglePaused();
+    });
+
+    addEventListener("keydown", (e) => {
+      switch (e.keyCode) {
+        // Spacebar
+        case 32:
+          if (document.activeElement == document.body) {
+            this.togglePaused();
+          }
+          break;
+        // Top arrow
+        case 38:
+          if (e.ctrlKey || e.metaKey) {
+            this.changeVolume(Math.max(0, this.videoEl.volume - 0.1));
+            e.preventDefault();
+          } else {
+            this.playlist.selectPrevious();
+          }
+          break;
+        // Down arrow
+        case 40:
+          if (e.ctrlKey || e.metaKey) {
+            this.changeVolume(Math.min(1, this.videoEl.volume + 0.1));
+            e.preventDefault();
+          } else {
+            this.playlist.selectNext();
+          }
+          break;
+        // Left arrow
+        case 37:
+          this.fastrewind();
+          break;
+        // Right arrow
+        case 39:
+          this.fastforward();
+          break;
       }
     });
     this.videoEl.addEventListener("timeupdate", function() {
@@ -199,6 +232,16 @@ var MediaPlayer = {
     this.killContext();
     if (!disableAnimation) {
       this.animateIndicator(false);
+    }
+  },
+  togglePaused() {
+    if (!this.UIEnabled) {
+      return;
+    }
+    if (this.paused) {
+      this.play();
+    } else {
+      this.pause();
     }
   },
   stop() {

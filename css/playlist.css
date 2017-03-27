@@ -38,6 +38,13 @@
   opacity: 0.4;
 }
 #playlist > li {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin: 0;
+  padding: 0;
+}
+#playlist > li a {
+  color: inherit;
+  text-decoration: none;
   padding: 10px;
   margin: 0;
   width: 100%;
@@ -46,9 +53,8 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-#playlist > li::before {
+#playlist > li a::before {
   content: "";
   display: inline-block;
   width: 16px;
@@ -58,19 +64,20 @@
   -webkit-filter: invert(1);
   filter: invert(1);
 }
-.contrast-black #playlist > li::before {
+.contrast-black #playlist > li.playing a::before {
   -webkit-filter: none;
   filter: none;
 }
-#playlist > li.playing {
+#playlist > li.playing a {
   background-color: var(--theme-highlight-color);
   color: var(--theme-contrast-color);
 }
-#playlist > li.playing::before {
+#playlist > li.playing a::before {
   background-image: url(../img/play.svg);
 }
-#playlist > li:not(.playing):hover {
-  background-color: rgba(255,255,255,0.1)
+#playlist > li:not(.playing):hover a,
+#playlist > li:not(.playing) a:focus {
+  background-color: rgba(255,255,255,0.1);
 }
 #playlist > li p {
   margin: 0;
@@ -106,9 +113,11 @@
   -webkit-filter: none;
   filter: none;
 }
+#playlist .playing .cross:focus,
 #playlist .playing .cross:hover {
   background-color: #ddd;
 }
+#playlist .cross:focus,
 #playlist .cross:hover {
   opacity: 1;
   background-color: #15ced9;
@@ -118,13 +127,15 @@
 #upload-container {
   position: relative;
   cursor: pointer;
+}
+#upload-container div {
   overflow: hidden;
   padding: 10px;
   height: 2em;
   border-radius: 2px;
   display: flex;
 }
-#upload-container::before {
+#upload-container div::before {
   flex: 1;
   align-self: center;
   content: "Add music or videos";
@@ -138,6 +149,15 @@
   padding-top: 0.4em;
   height: 2em;
   box-sizing: border-box;
+}
+#upfile:hover + div::before {
+  background-image: linear-gradient(rgba(255,255,255,0.4),transparent);
+}
+#upfile:hover:active + div::before {
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+}
+#upfile:focus + div::before {
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
 }
 #upfile {
   cursor: pointer;

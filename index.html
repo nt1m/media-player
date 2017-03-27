@@ -34,7 +34,7 @@
 		</div>
 		<div id="sidebar">
 			<div id="sidebar-header">Playlist</div>
-			<div id="upload-container"><input type="file" id="upfile" accept="audio/*|video/*" multiple></div>
+			<div id="upload-container"><input type="file" id="upfile" accept="audio/*|video/*" multiple><div></div></div>
 			<ul id="playlist"></ul>
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 			<div id="main-controls">
 				<button class="media-control" id="fast-rewind" onclick="MediaPlayer.fastrewind()" ondblclick="MediaPlayer.killContext();
       MediaPlayer.playlist.selectPrevious();" title="Rewind"></button>
-				<button class="media-control paused" id="play-pause" onclick="if(MediaPlayer.paused) {MediaPlayer.play()} else {MediaPlayer.pause()}"></button>
+				<button class="media-control paused" id="play-pause" onclick="MediaPlayer.togglePaused()"></button>
 				<button class="media-control" id="stop" onclick="MediaPlayer.stop()" title="Stop"></button>
 				<button class="media-control" id="fast-forward" onclick="MediaPlayer.fastforward()" ondblclick="MediaPlayer.killContext();
       MediaPlayer.playlist.selectNext();" title="Forward"></button>

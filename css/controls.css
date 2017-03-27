@@ -264,6 +264,9 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 16px;
   border: none;
 }
+#volume-range:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 10px rgba(255,255,255,0.1);
+}
 #volume-range::-moz-range-progress {
   background-color: var(--theme-highlight-color);
   height: 3px;
@@ -285,7 +288,9 @@ input[type=range]::-webkit-slider-runnable-track {
   border: none;
   transform: translateY(-50%);
 }
-
+#volume-range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 10px rgba(255,255,255,0.1);
+}
 /* "Progress bar" for media */
 #progress-bar {
   height: 5px;
