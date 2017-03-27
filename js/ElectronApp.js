@@ -16,17 +16,14 @@ module.exports = {
     ipcRenderer.on("file-found", (event, file, name) => {
       try {
         let type = MimeTypeUtils.lookup(name);
-        console.log(type, file, name);
         if (!type) {
           return;
         }
-
-        let arraybuffer = Uint8Array.from(file).buffer;
+        let arraybuffer = file.buffer;
         let blob = new Blob([arraybuffer], {type});
         blob.name = name;
         MediaPlayer.playlist.add(blob);
       } catch (e) {
-        console.error("Couldn't read file" + e);
         alert("Could not read audio/video file");
       }
     });
