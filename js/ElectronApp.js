@@ -15,8 +15,8 @@ module.exports = {
 
     ipcRenderer.on("file-found", (event, file, name) => {
       try {
-        let type = MimeTypeUtils.lookup(file);
-
+        let type = MimeTypeUtils.lookup(name);
+        console.log(type, file, name);
         if (!type) {
           return;
         }

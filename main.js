@@ -50,7 +50,7 @@ function createWindow() {
       osxFile = {data, fileName};
     }
   });
-  win.webContents.on("dom-ready", () => {
+  win.webContents.once("did-stop-loading", () => {
     if (process.platform == "win32" && process.argv.length >= 2) {
       var openFilePath = process.argv[1];
       var data = fs.readFileSync(openFilePath, null);
