@@ -114,7 +114,7 @@ body {
   }
   #speed-menu,
   #speed-menu::after{
-    left: auto;
-    right: 3px;
+    left: auto !important;
+    right: 16px;
   }
 }
