@@ -19,6 +19,7 @@ function getInstallerConfig() {
     authors: "Tim Nguyen and Mohamed Hadjoudj",
     noMsi: true,
     outputDirectory: path.join(outPath, "windows-installer"),
+    iconUrl: "https://raw.githubusercontent.com/nt1m/media-player/gh-pages/img/icon.ico",
     exe: "Media Player.exe",
     setupExe: "MediaPlayerInstaller.exe",
     setupIcon: path.join(rootPath, "img/icon.ico"),

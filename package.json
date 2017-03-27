@@ -1,5 +1,6 @@
 {
   "name": "media-player",
+  "productName": "Media Player",
   "version": "1.0.0",
   "description": "An modern, clean media player built using HTML 5 technologies.",
   "main": "main.js",
