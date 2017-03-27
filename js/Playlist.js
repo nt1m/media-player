@@ -8,6 +8,7 @@
 */
 function Playlist(params) {
   this.element = params.element;
+  this.previousItem = null;
   this.shuffle = false;
   this.element.scrollTo = function(y, t) {
     t = t > 0 ? Math.floor(t / 4) : 40;
@@ -29,6 +30,7 @@ function Playlist(params) {
   this.onItemSelected = this.onItemSelected.bind(this);
   this.onItemRemoved = this.onItemRemoved.bind(this);
   this.onItemCleared = this.onItemCleared.bind(this);
+  this.selectPrevious = this.selectPrevious.bind(this);
   this.selectNext = this.selectNext.bind(this);
 
   // Hash Map
@@ -63,21 +65,43 @@ Playlist.prototype = {
     });
   },
 
+  selectPrevious() {
+    if (this.shuffle && this.previousItem
+        && this.list.has(this.previousItem)
+        && this.previousItem != this.selectedItem) {
+      this.list.get(this.selectedItem).unselect();
+      this.onItemSelected(this.previousItem);
+    } else if (this.shuffle && this.previousItem == this.selectedItem) {
+      this.selectNext();
+    } else {
+      var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
+      var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
+      var nextItem = [...this.list.keys()][nextItemIndex];
+      this.list.get(this.selectedItem).unselect();
+      this.onItemSelected(nextItem);
+    }
+  },
+
   selectNext(hash) {
     if (!hash) {
       hash = this.selectedItem;
     }
     var nextItemIndex;
     var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
+
+    var oth = [...Array(this.list.size).keys()].filter(i => i != itemIndex);
+    if (this.list.size > 2 && this.previousItem && this.list.has(this.previousItem)) {
+      var previousItemIndex = [...this.list.keys()].findIndex(h => h === this.previousItem);
+      oth = oth.filter(i => i != previousItemIndex);
+    }
     if (this.shuffle && this.list.size > 1) {
-      var oth = [...Array(this.list.size).keys()].filter(e => e != itemIndex);
-      console.log(oth);
       nextItemIndex = oth[Math.floor(Math.random() * oth.length)];
     } else {
       nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
     }
 
     var nextItem = [...this.list.keys()][nextItemIndex];
+    this.previousItem = hash;
     this.list.get(hash).unselect();
     this.onItemSelected(nextItem);
   },

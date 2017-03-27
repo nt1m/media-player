@@ -51,10 +51,12 @@
 				<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="MediaPlayer.changeVolume(this.value);">
 			</div>
 			<div id="main-controls">
-				<button class="media-control" id="fast-rewind" onmousedown="MediaPlayer.fastrewind()" title="Rewind"></button>
+				<button class="media-control" id="fast-rewind" onclick="MediaPlayer.fastrewind()" ondblclick="MediaPlayer.killContext();
+      MediaPlayer.playlist.selectPrevious();" title="Rewind"></button>
 				<button class="media-control paused" id="play-pause" onclick="if(MediaPlayer.paused) {MediaPlayer.play()} else {MediaPlayer.pause()}"></button>
 				<button class="media-control" id="stop" onclick="MediaPlayer.stop()" title="Stop"></button>
-				<button class="media-control" id="fast-forward" onmousedown="MediaPlayer.fastforward()" title="Forward"></button>
+				<button class="media-control" id="fast-forward" onclick="MediaPlayer.fastforward()" ondblclick="MediaPlayer.killContext();
+      MediaPlayer.playlist.selectNext();" title="Forward"></button>
 			</div>
 			<div id="secondary-controls">
 				<button class="media-control not-checked" id="speed-btn" onclick="MediaPlayer.toggleSpeedBtn()"></button>
@@ -64,7 +66,7 @@
 								<option value="5">2</option>
 								<option value="4">1.5</option>
 								<option value="3">1.25</option>
-								<option value="2" selected="selected" >1</option>
+								<option value="2" selected="selected">1</option>
 								<option value="1">0.75</option>
 								<option value="0">0.5</option>
 							</select>
