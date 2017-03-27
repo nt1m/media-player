@@ -32,8 +32,10 @@ module.exports = {
         let focusedWindow = remote.BrowserWindow.getFocusedWindow();
         if (focusedWindow.isMaximized()) {
           focusedWindow.unmaximize();
+          this.className = "caption-button maximize";
         } else {
           focusedWindow.maximize();
+          this.className = "caption-button restore";
         }
       }
     });

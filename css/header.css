@@ -89,6 +89,10 @@
   background-image: url(../img/electron/maximize.svg);
 }
 
+.electron .caption-button.restore::before {
+  background-image: url(../img/electron/restore.svg);
+}
+
 .electron .caption-button.minimize::before {
   background-image: url(../img/electron/minimize.svg);
 }
