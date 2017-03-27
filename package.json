@@ -38,5 +38,8 @@
     "electron": "^1.6.2",
     "electron-packager": "^8.6.0",
     "electron-winstaller": "^2.5.2"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.15"
   }
 }

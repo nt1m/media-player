@@ -44,18 +44,20 @@ function createWindow() {
   app.on("open-file", (event, filePath) => {
     var data = fs.readFileSync(filePath, null);
     if (win.webContents.isLoading()) {
-      win.webContents.send("file-found", data);
+      win.webContents.send("file-found", data, filePath);
     } else {
-      osxFile = data;
+      let fileName = filePath.split("/").pop();
+      osxFile = {data, fileName};
     }
   });
-  win.webContents.on("did-stop-loading", () => {
+  win.webContents.on("dom-ready", () => {
     if (process.platform == "win32" && process.argv.length >= 2) {
       var openFilePath = process.argv[1];
       var data = fs.readFileSync(openFilePath, null);
-      win.webContents.send("file-found", data);
+      let openFileName = openFilePath.split("/").pop();
+      win.webContents.send("file-found", data, openFileName);
     } else if (osxFile) {
-      win.webContents.send("file-found", osxFile);
+      win.webContents.send("file-found", osxFile.data, osxFile.fileName);
     }
   });
 

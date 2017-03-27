@@ -1,6 +1,7 @@
 "use strict";
 
 const {webFrame, remote, ipcRenderer} = require("electron");
+let MimeTypeUtils = require("mime-types");
 module.exports = {
   init() {
     webFrame.setZoomLevelLimits(1, 1);
@@ -11,34 +12,35 @@ module.exports = {
     if (!isMac) {
       this.initWindowControls();
     }
-    
-    ipcRenderer.on("file-found", (event, file) => {
-      function toArrayBuffer(buf) {
-          var ab = new ArrayBuffer(buf.length);
-          var view = new Uint8Array(ab);
-          for (var i = 0; i < buf.length; ++i) {
-              view[i] = buf[i];
-          }
-          return ab;
-      }
+
+    ipcRenderer.on("file-found", (event, file, name) => {
       try {
-      console.log(file);
-      let buffer = file;
-      let arraybuffer = Uint8Array.from(buffer).buffer;
-      let blob = new Blob([arraybuffer], {type: "audio/mp3"});
-      MediaPlayer.playlist.add(blob);
-      }catch(e) {console.error(e);alert(e.toString());}
+        let type = MimeTypeUtils.lookup(file);
+
+        if (!type) {
+          return;
+        }
+
+        let arraybuffer = Uint8Array.from(file).buffer;
+        let blob = new Blob([arraybuffer], {type});
+        blob.name = name;
+        MediaPlayer.playlist.add(blob);
+      } catch (e) {
+        console.error("Couldn't read file" + e);
+        alert("Could not read audio/video file");
+      }
     });
-    
+
     // Debug
-    document.addEventListener("keydown", function (e) {
-		if (e.which === 123) {
-			remote.getCurrentWindow().toggleDevTools();
-		} else if (e.which === 116) {
-			location.reload();
-		}
-	});
+    document.addEventListener("keydown", function(e) {
+      if (e.which === 123) {
+        remote.getCurrentWindow().toggleDevTools();
+      } else if (e.which === 116) {
+        location.reload();
+      }
+    });
   },
+
   initWindowControls() {
     let header = Element("div", {
       class: "caption-buttons",
