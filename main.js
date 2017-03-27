@@ -46,7 +46,7 @@ function createWindow() {
     if (win.webContents.isLoading()) {
       win.webContents.send("file-found", data, filePath);
     } else {
-      let fileName = filePath.split("/").pop();
+      let fileName = getFileNameFromPath(filePath);
       osxFile = {data, fileName};
     }
   });
@@ -54,7 +54,7 @@ function createWindow() {
     if (process.platform == "win32" && process.argv.length >= 2) {
       var openFilePath = process.argv[1];
       var data = fs.readFileSync(openFilePath, null);
-      let openFileName = openFilePath.split("/").pop();
+      let openFileName = getFileNameFromPath(openFilePath);
       win.webContents.send("file-found", data, openFileName);
     } else if (osxFile) {
       win.webContents.send("file-found", osxFile.data, osxFile.fileName);
@@ -72,3 +72,11 @@ app.on("ready", createWindow);
 app.on("window-all-closed", () => app.quit());
 
 app.on("activate", () => (win === null) ? createWindow() : 0);
+
+function getFileNameFromPath(filePath) {
+  let fileName = filePath.split("/").pop();
+  if (fileName == filePath) {
+    fileName = filePath.split("\\").pop();
+  }
+  return fileName;
+}

@@ -174,7 +174,6 @@ var MediaPlayer = {
                                            || m.type.match("video") == "video");
     return this.playlist.addAll(uploadedMedia).then(() => {
       this.playlist.element.classList.remove("loading");
-      this.UIEnabled = true;
     });
   },
   setMedia(hash) {
@@ -187,6 +186,7 @@ var MediaPlayer = {
     this.updateHeader(item.tags);
     // Scroll to the selected item
     this.playlist.element.scrollTo(item.element.offsetTop, 1000);
+    this.UIEnabled = true;
     this.play(true);
   },
   updateHeader(tags) {
