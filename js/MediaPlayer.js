@@ -179,6 +179,8 @@ var MediaPlayer = {
   },
   setMedia(hash) {
     let item = this.playlist.list.get(hash);
+    document.querySelector("#display-container")
+            .className = item.type;
     this.videoEl.hidden = item.type != "video";
     this.canvasEl.hidden = item.type == "video";
     this.videoEl.src = URL.createObjectURL(item.media);

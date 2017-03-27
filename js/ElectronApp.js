@@ -6,8 +6,9 @@ module.exports = {
     webFrame.setZoomLevelLimits(1, 1);
     document.documentElement.classList.add("electron");
 
-    document.documentElement.classList.toggle("osx", navigator.platform.includes("Mac"));
-    if (!navigator.platform.includes("Mac")) {
+    let isMac = navigator.platform.includes("Mac");
+    document.documentElement.classList.toggle("osx", isMac);
+    if (!isMac) {
       this.initWindowControls();
     }
   },

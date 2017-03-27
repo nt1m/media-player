@@ -6,7 +6,6 @@
   top: 0;
   white-space: nowrap;
   z-index: 999;
-  transition: font-size 0.5s;
 }
 
 .header,
@@ -14,6 +13,15 @@
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to left, transparent 0, black 75px);
   mask-image: linear-gradient(to left, transparent 0, black 75px);
+  transition: font-size 0.5s, opacity 0.2s;
+}
+
+.video #header-container {
+  background-image: linear-gradient(rgba(20, 20, 20, 0.95), transparent);
+}
+
+.video:not(:hover) #header {
+  opacity: 0;
 }
 
 .electron.osx .header {

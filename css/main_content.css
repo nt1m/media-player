@@ -19,6 +19,14 @@
   position: relative;
 }
 
+.video #content-area {
+  margin-top: -54px;
+}
+
+.video #control-overlay {
+  top: 54px;
+}
+
 #MediaPlayer {
   height: 100%;
   width: 100%;
