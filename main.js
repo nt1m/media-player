@@ -37,6 +37,28 @@ function createWindow() {
     protocol: "file:",
     slashes: true,
   }));
+
+  // Setup file handlers
+  var osxFile;
+  app.on("open-file", (event, filePath) => {
+    var data = fs.readFileSync(filePath, "utf-8");
+    if (win.webContents.isLoading()) {
+      win.webContents.send("file-found", data);
+    } else {
+      osxFile = data;
+    }
+  });
+  win.webContents.on("did-stop-loading", () => {
+    if (process.platform == "win32" && process.argv.length >= 2) {
+      var openFilePath = process.argv[1];
+      var data = fs.readFileSync(openFilePath, "utf-8");
+      win.webContents.send("file-found", data);
+    } else if (osxFile) {
+      win.webContents.send("file-found", osxFile);
+    }
+  });
+
+  // Close handler
   win.on("closed", () => {
     win = null;
   });

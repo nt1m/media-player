@@ -1,6 +1,6 @@
 "use strict";
 
-const {webFrame, remote} = require("electron");
+const {webFrame, remote, ipcRenderer} = require("electron");
 module.exports = {
   init() {
     webFrame.setZoomLevelLimits(1, 1);
@@ -11,6 +11,11 @@ module.exports = {
     if (!isMac) {
       this.initWindowControls();
     }
+
+    ipcRenderer.on("file-found", (event, file) => {
+      console.log(file);
+      alert("file found" + file.prototype);
+    });
   },
   initWindowControls() {
     let header = Element("div", {
