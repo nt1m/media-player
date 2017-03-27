@@ -16,7 +16,7 @@ function getInstallerConfig() {
 
   return Promise.resolve({
     appDirectory: path.join(outPath, "Media\ Player-win32-x64"),
-    authors: "Tim Nguyen and Mohamed Hadjoudj",
+    authors: "Tim Nguyen",
     noMsi: true,
     outputDirectory: path.join(outPath, "windows-installer"),
     iconUrl: "https://raw.githubusercontent.com/nt1m/media-player/gh-pages/img/icon.ico",
