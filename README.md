@@ -1,14 +1,12 @@
 # Media player
 
+To try this project, go to: http://nt1m.github.io/media-player
+
+Optimized for Firefox and Chrome.
+
 ## Authors
 - Maintainers: Mohamed Hadjoudj (@MohIceAge), Tim Nguyen (@nt1m)
 - Contributors: Daniell Mesquita (@Plasmmer)
-
-## Compatibility
-Tested on: Firefox and Chrome.
-
-## Contributing
-Pull requests ! Feel free to skim through [our list of issues](https://github.com/nt1m/media-player/issues) to see you can contribute [:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
 
 ## Resources
 - Audio visualizer (modified): [HTML5 Audio Visualizer](https://github.com/Wayou/HTML5_Audio_Visualizer)
@@ -20,8 +18,13 @@ Pull requests ! Feel free to skim through [our list of issues](https://github.co
 - CSS variables
 - Canvas
 
-# Build and Run From Source the standalone app
-You'll need NodeJS, Npm and optionally git.
+## Contributing
+Pull requests ! Feel free to skim through [our list of issues](https://github.com/nt1m/media-player/issues) to see you can contribute [:)](http://i.imgur.com/Bq7Gq5W.png?raw=true ":)")
+
+# Run as standalone app
+In addition to being a web app, you can also run the Media Player as a standalone app using the Electron runtime.
+
+To get started, you'll need NodeJS, Npm and optionally git.
 
 ### Install the Prerequisites
 Download the project (by downloading the zipped project or by typing `git clone https://github.com/nt1m/media-player`)
@@ -47,13 +50,13 @@ The bundles will appear in `dist/`.
 * Linux (both 32-bit and 64-bit): `npm run pack-linux`
 * For all 3 platforms: `npm run pack-all`
 
-# Screenshots
+### Screenshots
 
-Thank you for reading this readme! Here are some screenshots as reward:
+Thank you for reading this readme! Here are some screenshots of the standalone app as a reward:
 
 <img src="screenshots/audio-default-mac.png"/>
 
 ![](screenshots/audio-compact-mac.png)               | ![](screenshots/audio-compact-light-playlist-mac.png)
 :---------------------------------------------------:|:-----------------------------------------------------:
 
-![](screenshots/video-windows.png)
+<p align="center"><img src="screenshots/video-windows.png"/></p>
