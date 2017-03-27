@@ -119,12 +119,16 @@
 }
 #playlist .playing .cross:focus,
 #playlist .playing .cross:hover {
+  -webkit-filter: invert(1);
+  filter: invert(1);
   background-color: #ddd;
 }
 #playlist .cross:focus,
 #playlist .cross:hover {
   opacity: 1;
   background-color: #15ced9;
+  -webkit-filter: none;
+  filter: none;
 }
 
 /* File upload input */
@@ -155,7 +159,7 @@
   box-sizing: border-box;
 }
 #upfile:hover + div::before {
-  background-image: linear-gradient(rgba(255,255,255,0.4),transparent);
+  background-image: linear-gradient(rgba(255,255,255,0.2),transparent);
 }
 #upfile:hover:active + div::before {
   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
