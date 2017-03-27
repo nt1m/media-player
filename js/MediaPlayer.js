@@ -359,7 +359,7 @@ var MediaPlayer = {
       this.volumeIcon.className = "";
     }
     this.volumeSlider.value = volume;
-    this.volumeSlider.title = this.volumeIcon.title = (volume * 100) + "%";
+    this.volumeSlider.title = this.volumeIcon.title = Math.round(volume * 100) + "%";
     if (this.settingsStore) {
       this.settingsStore.setItem("volume", volume);
     }

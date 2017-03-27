@@ -26,6 +26,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
+  padding-right: 10px;
 }
 
 /* Media control buttons */
@@ -219,6 +220,7 @@
 
 /* Volume control */
 #volume-icon {
+  position: relative;
   min-width: 20px;
   width: 20px;
   height: 20px;
@@ -228,6 +230,22 @@
   background-image: url(../img/volume_up.svg);
   -webkit-filter: invert(1);
   filter: invert(1);
+}
+#volume-control:not(:hover) #volume-icon::after {
+  opacity: 0;
+}
+#volume-icon:not(.mute)[title]::after {
+  content: attr(title);
+  position: absolute;
+  top: -10px;
+  margin-left: 4px;
+  background-color: var(--theme-highlight-color);
+  color: var(--theme-contrast-color);
+  filter: invert(1);
+  font-size: 0.5em;
+  padding: 1px;
+  border-radius: 2px;
+  transition: opacity 0.3s;
 }
 #volume-icon.half {
   background-image: url(../img/volume_down.svg);
