@@ -1,5 +1,11 @@
 # Media player
 
+<img src="screenshots/audio-default-mac.png"/>
+<img src="screenshots/audio-compact-mac.png"/>
+<img src="screenshots/audio-compact-light-playlist-mac.png"/>
+<img src="screenshots/video-windows.png"/>
+
+
 ## Authors
 - Maintainers: Mohamed Hadjoudj (@MohIceAge), Tim Nguyen (@nt1m)
 - Contributors: Daniell Mesquita (@Plasmmer)
