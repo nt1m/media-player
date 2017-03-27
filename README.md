@@ -2,6 +2,7 @@
 
 
 <img src="screenshots/audio-default-mac.png"/>
+                                       |
 :-------------------------------------:|:-----------------------------------------------------:
 ![](screenshots/audio-compact-mac.png) | ![](screenshots/audio-compact-light-playlist-mac.png)
 
