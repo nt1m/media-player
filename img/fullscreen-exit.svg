@@ -1,17 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
-    <title>16 copy</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="16-copy" sketch:type="MSArtboardGroup">
-            <rect id="Rectangle-1" fill="#000000" sketch:type="MSShapeGroup" x="7" y="0" width="1" height="4"></rect>
-            <rect id="Rectangle-1-Copy" fill="#000000" sketch:type="MSShapeGroup" x="7" y="4" width="5" height="1"></rect>
-            <rect id="Rectangle-1-Copy-3" fill="#000000" sketch:type="MSShapeGroup" x="0" y="7" width="5" height="1"></rect>
-            <rect id="Rectangle-1-Copy-2" fill="#000000" sketch:type="MSShapeGroup" x="4" y="8" width="1" height="4"></rect>
-            <path d="M0.5,11.5 L4.5,7.5" id="Line" stroke="#000000" stroke-linecap="round" sketch:type="MSShapeGroup"></path>
-            <path d="M7.5,4.5 L11.5,0.5" id="Line-Copy" stroke="#000000" stroke-linecap="round" sketch:type="MSShapeGroup"></path>
-        </g>
-    </g>
+<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+  <title>
+    16 copy
+  </title>
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#000" d="M7 0h1v4H7zM7 4h5v1H7zM0 7h5v1H0zM4 8h1v4H4z"/>
+    <path d="M.5 11.5l4-4M7.5 4.5l4-4" stroke="#000" stroke-linecap="round"/>
+  </g>
 </svg>
