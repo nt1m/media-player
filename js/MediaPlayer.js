@@ -186,9 +186,11 @@ var MediaPlayer = {
     if (!value) {
       this.controlsEl.classList.add("disabled");
       this.headerEl.textContent = "";
+      this.headerEl.title = "";
+      document.title = "Media Player";
       this.videoEl.hidden = true;
       this.canvasEl.hidden = false;
-      this.videoEl.pause();
+      this.pause(true);
       this.videoEl.currentTime = 0;
     } else {
       this.controlsEl.classList.remove("disabled");
