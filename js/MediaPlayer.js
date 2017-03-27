@@ -98,12 +98,13 @@ var MediaPlayer = {
     });
 
     addEventListener("keydown", (e) => {
+      if (document.activeElement != document.body) {
+        return;
+      }
       switch (e.keyCode) {
         // Spacebar
         case 32:
-          if (document.activeElement == document.body) {
-            this.togglePaused();
-          }
+          this.togglePaused();
           break;
         // Top arrow
         case 38:
