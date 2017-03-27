@@ -21,6 +21,9 @@
 
 .electron #header-container {
   padding: 0;
+  display: flex;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .electron #header,
