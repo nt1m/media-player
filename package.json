@@ -9,7 +9,7 @@
     "pack": "./node_modules/.bin/electron-packager . \"Media Player\" --icon=img/icon.png --out=dist/ --overwrite",
     "pack-win-installer": "node installer/windows/create-installer.js",
     "pack-win": "./node_modules/.bin/electron-packager . \"Media Player\" --icon=img/icon.ico --out=dist/ --platform=win32 --arch=ia32,x64 --overwrite --win32metadata.CompanyName=\"Media Player team\" --win32metadata.ProductName=\"Media Player\" --win32metadata.InternalName=media-player --win32metadata.LegalCopyright=\"Media Player team\" --win32metadata.FileDescription=\"Media Player\" --win32metadata.OriginalFilename=\"Media Player\"",
-    "pack-osx": "./node_modules/.bin/electron-packager . \"Media Player\" --icon=img/icon.icns --out=dist/ --platform=darwin --arch=ia32,x64 --overwrite",
+    "pack-osx": "./node_modules/.bin/electron-packager . \"Media Player\" --icon=img/icon.icns --out=dist/ --platform=darwin --arch=x64 --overwrite",
     "pack-linux": "./node_modules/.bin/electron-packager . \"Media Player\" --icon=img/icon.png --out=dist/ --platform=linux --arch=ia32,x64 --overwrite",
     "pack-all": "npm run pack-osx && npm run pack-linux && npm run pack-win"
   },

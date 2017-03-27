@@ -37,7 +37,13 @@ If nothing fails then you can run the app by typing:
 ```
 npm start
 ```
-or bundle it by typing:
-```
-npm run pack
-```
+
+## Bundling the app:
+
+The bundles will appear in `dist/`.
+
+* Current platform only: `npm run pack`
+* Windows (both 32-bit and 64-bit): `npm run pack-win`
+* macOS 64-bit: `npm run pack-osx`
+* Linux (both 32-bit and 64-bit): `npm run pack-linux`
+* For all 3 platforms: `npm run pack-all`
