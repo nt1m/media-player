@@ -50,16 +50,25 @@ body {
     max-width: 200px;
   }
 }
-@media (max-width: 650px) {
+
+@media (max-width: 800px) {
   .header {
-    font-size: 0.9em !important;
+    font-size: 1.1em !important;
   }
+}
+@media (max-width: 650px) {
   body .media-control {
     padding: 0;
     width: 45px;
   }
+  body .media-control::after {
+    transform: scale(0.8);
+  }
 }
 @media (max-width: 500px) {
+  .header {
+    font-size: .9em !important;
+  }
   .main-content {
     flex-direction: column;
   }
@@ -74,6 +83,8 @@ body {
   }
   #sidebar-header {
     text-align: center;
+    font-size: .9em !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
   }
   #volume-control:not(:hover) {
     width: 50px;
