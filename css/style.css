@@ -30,6 +30,10 @@ body {
   background-color: rgba(244, 244, 244, 0.9);
 }
 
+.caption-buttons {
+  order: 0;
+}
+
 * {
   outline: none;
 }

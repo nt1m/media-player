@@ -19,6 +19,8 @@ function createWindow() {
     title: "Media Player",
     darkTheme: true,
     hasShadow: true,
+    frame: false,
+    center: true,
     titleBarStyle: "hidden-inset"
   });
   win.setMenu(null);

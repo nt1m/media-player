@@ -13,6 +13,65 @@
   z-index: 999;
 }
 
+.electron #header {
+  flex: 1;
+  padding: 15px;
+}
+.electron:not(.osx) #header {
+  text-indent: calc(126px / 2);
+}
+.electron #header-container {
+  display: flex;
+  padding: 0;
+}
+
 .electron #header:empty::before {
   content: "Media Player";
+}
+
+.electron .caption-buttons {
+  display: flex;
+  height: 54px;
+  padding: 0;
+  background: #1F1F1F;
+}
+
+.electron .caption-button {
+  background: none;
+  border: none;
+  margin: 0;
+  flex: 1;
+  padding: 0 5px;
+}
+
+.electron .caption-button:hover::before {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.electron .caption-button.close:hover::before {
+  background-color: cyan;
+}
+
+.electron .caption-button::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  padding: 10px;
+  filter: invert(1);
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.electron .caption-button.close::before {
+  background-image: url(../img/electron/close.svg);
+}
+
+.electron .caption-button.maximize::before {
+  background-image: url(../img/electron/maximize.svg);
+}
+
+.electron .caption-button.minimize::before {
+  background-image: url(../img/electron/minimize.svg);
 }
