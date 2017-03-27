@@ -285,13 +285,11 @@ var MediaPlayer = {
         clearTimeout(this.prevNextTimeout);
         this.prevNextTimeout = null;
       }
-      console.log(this.prevNextInterval, this.prevNextTimeout);
       if (this.prevNextInterval) {
         clearInterval(this.prevNextInterval);
         this.prevNextInterval = null;
       } else {
         onClick();
-        console.log("click");
       }
     });
   },
