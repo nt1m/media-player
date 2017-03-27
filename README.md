@@ -1,7 +1,9 @@
 # Media player
 
-<img src="screenshots/audio-default-mac.png"/>
+![](screenshots/audio-default-mac.png)
 
+![](screenshots/audio-compact-mac.png | width=200)
+![](screenshots/audio-compact-light-playlist-mac.png | width=200)
 
 <img src="screenshots/audio-compact-mac.png" style="width: 40%"/>
 <img src="screenshots/audio-compact-light-playlist-mac.png" style="width: 40%"/>
