@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleExecutable</key>
+  <string>Media Player</string>
+  <key>CFBundleIconFile</key>
+  <string>icon.icns</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.timnguyen.mediaplayer</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>0.1</string>
+  <key>CFBundleName</key>
+  <string>Media Player</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>English</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0</string>
+  <key>CFBundleSignature</key>
+  <string>????</string>
+  <key>CFBundleVersion</key>
+  <string>0</string>
+  <key>LSApplicationCategoryType</key>
+  <string>public.app-category.video</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.8</string>
+  <key>NSAppleScriptEnabled</key>
+  <string>YES</string>
+  <key>NSMainNibFile</key>
+  <string>MainMenu</string>
+  <key>NSSupportsAutomaticGraphicsSwitching</key>
+  <true/>
+  <key>SUScheduledCheckInterval</key>
+  <string>3600</string>
+  <key>CFBundleDocumentTypes</key>
+  <array>
+    <dict>
+      <key>UTTypeConformsTo</key>
+      <array>
+        <string>public.audio</string>
+      </array>
+      <key>UTTypeDescription</key>
+      <string>AIFF file</string>
+      <key>UTTypeIdentifier</key>
+      <string>org.videolan.aiff</string>
+      <key>UTTypeTagSpecification</key>
+      <dict>
+        <key>public.filename-extension</key>
+        <array>
+          <string>aiff</string>
+          <string>aif</string>
+        </array>
+      </dict>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>mp3</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>audio.icns</string>
+      <key>CFBundleTypeName</key>
+      <string>MPEG Audio Layer 3</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>mp4</string>
+        <string>mpeg4</string>
+        <string>m4v</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>m4v.icns</string>
+      <key>CFBundleTypeName</key>
+      <string>MPEG-4 File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>opus</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>ogg.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>audio/opus</string>
+        <string>audio/ogg; codecs=opus</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>OPUS file</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>ogm</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>movie.icns</string>
+      <key>CFBundleTypeName</key>
+      <string>Ogg MPEG-4 Video File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>ogg</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>ogg.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>audio/ogg</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>Ogg Vorbis File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>oga</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>ogg.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>audio/ogg</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>Ogg Audio File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>ogv</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>movie.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>video/ogg</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>Ogg Video File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>wav</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>wav.icns</string>
+      <key>CFBundleTypeName</key>
+      <string>WAVE Audio File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>webm</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>mkv.icns</string>
+      <key>CFBundleTypeName</key>
+      <string>WebM Video File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>flac</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>audio.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>audio/flac</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>FLAC Audio File</string>
+      <key>CFBundleTypeRole</key>
+      <string>Viewer</string>
+    </dict>
+
+  </array>
+</dict>
+</plist>

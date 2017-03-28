@@ -1,6 +1,7 @@
 "use strict";
 
 const {webFrame, remote, ipcRenderer} = require("electron");
+const fs = require("fs");
 let MimeTypeUtils = require("mime-types");
 module.exports = {
   init() {
@@ -13,19 +14,8 @@ module.exports = {
       this.initWindowControls();
     }
 
-    ipcRenderer.on("file-found", (event, file, name) => {
-      try {
-        let type = MimeTypeUtils.lookup(name);
-        if (!type) {
-          return;
-        }
-        let arraybuffer = file.buffer;
-        let blob = new Blob([arraybuffer], {type});
-        blob.name = name;
-        MediaPlayer.playlist.add(blob);
-      } catch (e) {
-        alert("Could not read audio/video file");
-      }
+    ipcRenderer.on("file-found", (event, path) => {
+      this.handleFileFound(path);
     });
 
     // Debug
@@ -80,5 +70,38 @@ module.exports = {
     focusedWindow.on("maximize", () => {
       maximizeBtn.className = "caption-button restore";
     });
+  },
+
+  handleFileFound(path) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(path, null, (err, file) => {
+        if (err) {
+          return reject(err);
+        }
+        try {
+          let name = this.getFileNameFromPath(path);
+          let type = MimeTypeUtils.lookup(name);
+          if (!type) {
+            return reject("No type");
+          }
+          let blob = new Blob([file.buffer], {type});
+          blob.name = name;
+          MediaPlayer.playlist.add(blob);
+          return resolve(blob);
+        } catch (e) {
+          reject(e);
+          alert("Could not read audio/video file");
+        }
+        return reject("Unknown error");
+      });
+    });
+  },
+
+  getFileNameFromPath(filePath) {
+    let fileName = filePath.split("/").pop();
+    if (fileName == filePath) {
+      fileName = filePath.split("\\").pop();
+    }
+    return fileName;
   }
 };
