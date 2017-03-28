@@ -178,7 +178,6 @@ var MediaPlayer = {
     });
     this.videoEl.addEventListener("ended", () => {
       this.killContext();
-      URL.revokeObjectURL(this.videoEl.src);
       this.playlist.selectNext();
     });
     this.initAudioContext();
@@ -231,6 +230,7 @@ var MediaPlayer = {
             .className = item.type;
     this.videoEl.hidden = item.type != "video";
     this.canvasEl.hidden = item.type == "video";
+    URL.revokeObjectURL(this.videoEl.src);
     this.videoEl.src = URL.createObjectURL(item.media);
     this.updateHeader(item.tags);
     // Scroll to the selected item
