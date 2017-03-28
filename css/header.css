@@ -6,7 +6,6 @@
   top: 0;
   white-space: nowrap;
   z-index: 999;
-  display: flex;
 }
 
 #settings-overlay .header,
@@ -23,6 +22,7 @@
 #header-container {
   transition: font-size 0.5s, opacity 0.2s;
   padding-right: 0 !important;
+  display: flex;
 }
 
 .video #header-container {
