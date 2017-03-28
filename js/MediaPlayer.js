@@ -221,11 +221,8 @@ var MediaPlayer = {
   /** Sidebar **/
   uploadFiles(uploadedMedia) {
     uploadedMedia = Array.from(uploadedMedia) || [];
-    this.playlist.element.classList.add("loading");
 
-    return this.playlist.addAll(uploadedMedia).then(() => {
-      this.playlist.element.classList.remove("loading");
-    });
+    return this.playlist.addAll(uploadedMedia);
   },
   setMedia(hash) {
     let item = this.playlist.list.get(hash);

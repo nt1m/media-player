@@ -48,11 +48,14 @@ Playlist.prototype = {
     @param File media: The file to add
   */
   add(media) {
+    this.element.classList.add("loading");
     if (this.list.has(createHash(media))) {
+      this.element.classList.remove("loading");
       return Promise.resolve();
     }
     if (media.type.match("audio") != "audio" &&
         media.type.match("video") != "video") {
+      this.element.classList.remove("loading");
       return Promise.resolve();
     }
     let adding = new PlaylistItem({
@@ -65,6 +68,7 @@ Playlist.prototype = {
       if (!this.selectedItem) {
         this.onItemSelected(item.hash);
       }
+      this.element.classList.remove("loading");
       return item;
     });
   },

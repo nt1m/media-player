@@ -86,8 +86,7 @@ module.exports = {
           }
           let blob = new Blob([file.buffer], {type});
           blob.name = name;
-          MediaPlayer.playlist.add(blob);
-          return resolve(blob);
+          return MediaPlayer.playlist.add(blob);
         } catch (e) {
           reject(e);
           alert("Could not read audio/video file");
