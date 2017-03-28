@@ -211,6 +211,7 @@ PlaylistItem.prototype = {
 
   destroy() {
     this.element.remove();
+    this.media = null;
   }
 };
 

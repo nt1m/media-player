@@ -178,6 +178,7 @@ var MediaPlayer = {
     });
     this.videoEl.addEventListener("ended", () => {
       this.killContext();
+      URL.revokeObjectURL(this.videoEl.src);
       this.playlist.selectNext();
     });
     this.initAudioContext();

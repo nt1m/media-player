@@ -15,7 +15,13 @@ module.exports = {
     }
 
     ipcRenderer.on("file-found", (event, path) => {
-      this.handleFileFound(path);
+      MediaPlayer.playlist.element.classList.add("loading");
+      this.handleFileFound(path).then(() => {
+        MediaPlayer.playlist.element.classList.remove("loading");
+      }).catch((e) => {
+        console.error("FS handler - Failed to load media:" + e);
+        MediaPlayer.playlist.element.classList.remove("loading");
+      });
     });
 
     // Debug
@@ -86,7 +92,9 @@ module.exports = {
           }
           let blob = new Blob([file.buffer], {type});
           blob.name = name;
-          return MediaPlayer.playlist.add(blob);
+          let promise = MediaPlayer.playlist.add(blob);
+          blob = null;
+          return promise;
         } catch (e) {
           reject(e);
           alert("Could not read audio/video file");
