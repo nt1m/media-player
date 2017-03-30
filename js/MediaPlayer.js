@@ -108,10 +108,13 @@ var MediaPlayer = {
       this.classList.add("dragging");
       MediaPlayer.onProgressClick(e.pageX);
     });
-    this.progressBar.addEventListener("mouseup", (e) => {
+
+    let stopProgressBarDrag = (e) => {
       this.progressBar.classList.remove("dragging");
-    });
-    this.progressBar.addEventListener("mouseover", (e) => {
+    };
+    document.documentElement.addEventListener("mouseout", stopProgressBarDrag);
+    window.addEventListener("mouseup", stopProgressBarDrag);
+    window.addEventListener("mouseover", (e) => {
       if (this.progressBar.classList.contains("dragging")) {
         this.onProgressClick(e.pageX);
       }
