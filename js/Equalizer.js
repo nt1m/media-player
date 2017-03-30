@@ -54,7 +54,8 @@ Equalizer.prototype = {
     return biquad;
   },
   setFrequencyGain(frequency, gain) {
-    console.log(gain);
-    this.frequencyMap.get(frequency).audioNode.gain.value = gain;
+    let { audioNode } = this.frequencyMap.get(frequency);
+    audioNode.gain.value = gain;
+    audioNode.Q.value = frequency / (frequency * 2.5);
   },
 };
