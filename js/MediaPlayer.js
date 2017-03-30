@@ -183,9 +183,13 @@ var MediaPlayer = {
       this.playPauseEl.classList.add("paused");
     });
     this.videoEl.addEventListener("ended", () => {
-      this.killContext();
-      this.playlist.selectNext();
+      if (this.playlist.loop) {
+        this.killContext();
+        this.playlist.selectNext();
+      }
     });
+
+    this.changeLoopState(1);
     this.initAudioContext();
   },
   set UIEnabled(value) {
@@ -374,13 +378,35 @@ var MediaPlayer = {
       this.shuffleEl.classList.remove("checked");
     }
   },
-  toggleLoop() {
-    if (this.videoEl.loop) {
-      this.videoEl.loop = false;
-      this.loopEl.classList.remove("checked");
+  changeLoopState(state) {
+    if (!state) {
+      this.loopState = this.loopState == 2 ? 0 : this.loopState + 1;
     } else {
-      this.videoEl.loop = true;
-      this.loopEl.classList.add("checked");
+      this.loopState = state;
+    }
+
+    switch (this.loopState) {
+      // No loop
+      case 0:
+        this.playlist.loop = false;
+        this.videoEl.loop = false;
+        this.loopEl.classList.remove("checked", "loop-one");
+        break;
+
+      // Loop playlist (default)
+      case 1:
+        this.playlist.loop = true;
+        this.videoEl.loop = false;
+        this.loopEl.classList.remove("loop-one");
+        this.loopEl.classList.add("checked");
+        break;
+
+      // Loop one song
+      case 2:
+        this.playlist.loop = false;
+        this.videoEl.loop = true;
+        this.loopEl.classList.add("checked", "loop-one");
+        break;
     }
   },
   toggleSpeedBtn() {

@@ -10,6 +10,7 @@ function Playlist(params) {
   this.element = params.element;
   this.previousItem = null;
   this.shuffle = false;
+  this.loop = true;
   this.element.scrollTo = function(y, t) {
     t = t > 0 ? Math.floor(t / 4) : 40;
     let step = (y - this.scrollTop) / t * 40;

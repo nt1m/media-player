@@ -164,6 +164,6 @@ Equalizer.prototype = {
   setFrequencyGain(frequency, gain) {
     let { audioNode } = this.frequencyMap.get(frequency);
     audioNode.gain.value = gain;
-    audioNode.Q.value = 0.1;
+    audioNode.Q.value = 0.01;
   },
 };
