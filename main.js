@@ -24,25 +24,81 @@ app.on("open-file", (event, filePath) => {
 
 let win;
 
-let image = nativeImage.createFromPath(path.join(__dirname, "./img/icon.png"));
+let image = createNativeImage("./img/icon.png");
 if (app.dock) {
   app.dock.setIcon(image);
 }
 
-function onMediaStateChange(event, state) {
-  let badge;
-  switch (state) {
-    case "pause":
-      badge = "❚ ❚";
-      break;
-    case "play":
-      badge = "▶";
-      break;
-    case "ended":
-      badge = "";
-      break;
+function createNativeImage(relativePath) {
+  return nativeImage.createFromPath(path.join(__dirname, relativePath));
+}
+function setThumbarState(state) {
+  if (!win) {
+    return;
   }
-  app.dock.setBadge(badge);
+
+  let buttonFlags = state == "ended" ? ["disabled"] : ["enabled"];
+
+  let buttons = [];
+  buttons.push({
+    tooltip: "Previous song",
+    icon: createNativeImage("./img/previous-song.svg"),
+    click() {
+      win.webContents.send("request-video-action", "previous-song");
+    },
+    flags: buttonFlags,
+  });
+
+  if (state == "play") {
+    buttons.push({
+      tooltip: "Pause",
+      icon: createNativeImage("./img/pause.svg"),
+      click() {
+        win.webContents.send("request-video-action", "pause");
+      }
+    });
+  } else {
+    buttons.push({
+      tooltip: "Play",
+      icon: createNativeImage("./img/play.svg"),
+      click() {
+        win.webContents.send("request-video-action", "play");
+      },
+      flags: buttonFlags,
+    });
+  }
+
+  buttons.push({
+    tooltip: "Next song",
+    icon: createNativeImage("./img/previous-song.svg"),
+    click() {
+      win.webContents.send("request-video-action", "previous-song");
+    },
+    flags: buttonFlags,
+  });
+
+  win.setThumbarButtons(buttons);
+}
+
+function onMediaStateChange(event, state) {
+  if (app.dock) {
+    let badge;
+    switch (state) {
+      case "pause":
+        badge = "❚ ❚";
+        break;
+      case "play":
+        badge = "▶";
+        break;
+      case "ended":
+        badge = "";
+        break;
+    }
+    app.dock.setBadge(badge);
+  }
+  if (win.setThumbarButtons) {
+    setThumbarState(state);
+  }
 }
 
 function createWindow() {

@@ -14,6 +14,7 @@ module.exports = {
       this.initWindowControls();
     }
 
+    ipcRenderer.on("request-video-action", this.handleVideoAction);
     ipcRenderer.on("file-found", (event, path) => {
       MediaPlayer.playlist.element.classList.add("loading");
 
@@ -82,6 +83,25 @@ module.exports = {
     focusedWindow.on("maximize", () => {
       maximizeBtn.className = "caption-button restore";
     });
+  },
+
+  handleVideoAction(event, action) {
+    switch (action) {
+      case "play":
+        MediaPlayer.videoEl.play();
+        break;
+      case "pause":
+        MediaPlayer.videoEl.pause();
+        break;
+      case "previous-song":
+        MediaPlayer.killContext();
+        MediaPlayer.playlist.selectPrevious();
+        break;
+      case "next-song":
+        MediaPlayer.killContext();
+        MediaPlayer.playlist.selectNext();
+        break;
+    }
   },
 
   handleFileFound(path) {
