@@ -138,8 +138,10 @@ function createWindow() {
   // Close handler
   win.on("closed", () => {
     win = null;
-    app.dock.setBadge("");
-    ipcMain.removeAllListeners();
+    if (app.dock) {
+      app.dock.setBadge("");
+      ipcMain.removeAllListeners();
+    }
   });
 }
 
