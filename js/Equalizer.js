@@ -85,12 +85,13 @@ Equalizer.prototype = {
 
     let select = this.createPresetsSelect();
 
-    let container = Element("div", { parent: panel, class: "container" });
+    this.container = Element("div", { parent: panel, class: "container" });
+    this.createScale();
     for (let frequency of FREQUENCIES) {
       let audioNode = this.initNodeForFrequency(frequency);
       let div = Element("div", {
         class: "range-with-label",
-        parent: container,
+        parent: this.container,
       });
       let input = Element("input", {
         type: "range",
@@ -111,6 +112,38 @@ Equalizer.prototype = {
       });
       this.frequencyMap.set(frequency, {input, audioNode});
     }
+  },
+
+  createScale() {
+    let scale = Element("div", {
+      parent: this.container,
+      class: "scale",
+    });
+
+    Element("label", {
+      content: "+20dB",
+      parent: scale
+    });
+
+    Element("div", {
+      class: "flex",
+      parent: scale
+    });
+
+    Element("label", {
+      content: "0dB",
+      parent: scale,
+    });
+
+    Element("div", {
+      class: "flex",
+      parent: scale
+    });
+
+    Element("label", {
+      content: "-20dB",
+      parent: scale,
+    });
   },
 
   createPresetsSelect() {

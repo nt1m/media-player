@@ -212,12 +212,31 @@
   border: none;
   background: white;
 }
+#equalizer-panel .container {
+  display: flex;
+  align-items: stretch;
+}
+#equalizer-panel .container .scale {
+  width: 4ch;
+  align-items: flex-end;
+}
+#equalizer-panel .container .scale::after {
+  content: " ";
+  height: 1em;
+  display: inline-block;
+  text-align: right;
+  
+}
 #equalizer-panel .container div {
   display: inline-flex;
   flex-direction: column;
   width: 35px;
   text-align: center;
   align-items: center;
+  vertical-align: top;
+}
+#equalizer-panel .container div.flex {
+  flex-grow: 1;
 }
 @supports (-webkit-appearance: slider-vertical) {
   #equalizer-panel .container div {
