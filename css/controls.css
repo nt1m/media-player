@@ -46,7 +46,7 @@
 .media-control:not(:disabled):hover,
 .media-control:focus,
 .media-control.checked {
-  background-color: rgba(255,255,255,0.08);
+  background-color: rgba(255,255,255,0.05);
 }
 .disabled #main-controls, .disabled #speed-btn {
   opacity: 0.6;
