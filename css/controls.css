@@ -67,11 +67,7 @@
 .media-control.checked::after {
   fill: var(--theme-highlight-color);
 }
-/* Make fast rewind and fast forward icons smaller */
-#fast-rewind::after,
-#fast-forward::after {
-  background-size: 80%;
-}
+
 @supports ((-webkit-mask: url(../img/pause.svg)) or (mask-image: url(../img/pause.svg))) {  
   .media-control::after {
     background-color: white;
@@ -123,10 +119,8 @@
     -webkit-mask-image: url(../img/settings.svg);
     mask-image: url(../img/settings.svg);
   }
-  #fast-rewind::after,
-  #fast-forward::after {
-    -webkit-mask-size: 80%;
-    mask-size: 80%;
+  #equalizer-btn::after {
+    -webkit-mask-image: url(../img/equalizer.svg);
   }
 }
 /* Icons */
@@ -154,6 +148,9 @@
 #speed-btn,
 #equalizer-btn {
   position: relative;
+}
+#equalizer-btn::after {
+  background-image: url(../img/equalizer.svg);
 }
 #speed-btn::after {
   background-image:  url(../img/clock.svg);
