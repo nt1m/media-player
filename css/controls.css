@@ -220,8 +220,8 @@
   align-items: center;
 }
 @supports (-webkit-appearance: slider-vertical) {
-  #equalizer-panel div {
-    align-items: stretch;
+  #equalizer-panel .container div {
+    align-items: stretch !important;
   }
 }
 #equalizer-panel label {
