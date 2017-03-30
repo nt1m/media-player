@@ -37,7 +37,10 @@ function setThumbarState(state) {
     return;
   }
 
-  let buttonFlags = state == "ended" ? ["disabled"] : ["enabled"];
+  if (state == "ended") {
+    win.setThumbarButtons([]);
+    return;
+  }
 
   let buttons = [];
   buttons.push({
@@ -46,7 +49,6 @@ function setThumbarState(state) {
     click() {
       win.webContents.send("request-video-action", "previous-song");
     },
-    //flags: buttonFlags,
   });
 
   if (state == "play") {
@@ -64,7 +66,6 @@ function setThumbarState(state) {
       click() {
         win.webContents.send("request-video-action", "play");
       },
-      //flags: buttonFlags,
     });
   }
 
@@ -74,7 +75,6 @@ function setThumbarState(state) {
     click() {
       win.webContents.send("request-video-action", "next-song");
     },
-    //flags: buttonFlags,
   });
 
   win.setThumbarButtons(buttons);
