@@ -196,7 +196,7 @@
   border: none;
   background: white;
 }
-#equalizer-panel div {
+#equalizer-panel .container div {
   display: inline-flex;
   flex-direction: column;
   width: 35px;
