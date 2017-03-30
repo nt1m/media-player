@@ -42,17 +42,17 @@ function setThumbarState(state) {
   let buttons = [];
   buttons.push({
     tooltip: "Previous song",
-    icon: createNativeImage("./img/electron/previous-song.png"),
+    icon: path.join(__dirname, "img", "electron", "previous-song.png"),
     click() {
       win.webContents.send("request-video-action", "previous-song");
     },
-    flags: buttonFlags,
+    //flags: buttonFlags,
   });
 
   if (state == "play") {
     buttons.push({
       tooltip: "Pause",
-      icon: createNativeImage("./img/electron/pause.png"),
+      icon: path.join(__dirname, "img", "electron", "pause.png"),
       click() {
         win.webContents.send("request-video-action", "pause");
       }
@@ -60,21 +60,21 @@ function setThumbarState(state) {
   } else {
     buttons.push({
       tooltip: "Play",
-      icon: createNativeImage("./img/electron/play.png"),
+      icon: path.join(__dirname, "img", "electron", "play.png"),
       click() {
         win.webContents.send("request-video-action", "play");
       },
-      flags: buttonFlags,
+      //flags: buttonFlags,
     });
   }
 
   buttons.push({
     tooltip: "Next song",
-    icon: createNativeImage("./img/electron/next-song.png"),
+    icon: path.join(__dirname, "img", "electron", "next-song.png"),
     click() {
-      win.webContents.send("request-video-action", "previous-song");
+      win.webContents.send("request-video-action", "next-song");
     },
-    flags: buttonFlags,
+    //flags: buttonFlags,
   });
 
   win.setThumbarButtons(buttons);
