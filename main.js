@@ -29,7 +29,7 @@ if (app.dock) {
   app.dock.setIcon(image);
 }
 
-function onStateChange(event, state) {
+function onMediaStateChange(event, state) {
   let badge;
   switch (state) {
     case "pause":
@@ -75,14 +75,15 @@ function createWindow() {
     } else if (osxFile) {
       win.webContents.send("file-found", osxFile);
     }
-
-    ipcMain.on("media-state-change", onStateChange);
+    ipcMain.on("add-recent-file", (_, mediaPath) => app.addRecentDocument(mediaPath));
+    ipcMain.on("media-state-change", onMediaStateChange);
   });
 
   // Close handler
   win.on("closed", () => {
     win = null;
-    ipcMain.removeAllListeners("media-state-change");
+    app.dock.setBadge("");
+    ipcMain.removeAllListeners();
   });
 }
 

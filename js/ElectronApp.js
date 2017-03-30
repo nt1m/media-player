@@ -16,6 +16,7 @@ module.exports = {
 
     ipcRenderer.on("file-found", (event, path) => {
       MediaPlayer.playlist.element.classList.add("loading");
+
       this.handleFileFound(path).then(() => {
         MediaPlayer.playlist.element.classList.remove("loading");
       }).catch((e) => {
@@ -97,9 +98,8 @@ module.exports = {
           }
           let blob = new Blob([file.buffer], {type});
           blob.name = name;
-          let promise = MediaPlayer.playlist.add(blob);
-          blob = null;
-          return promise;
+          ipcRenderer.send("add-recent-file", path);
+          return MediaPlayer.playlist.add(blob);
         } catch (e) {
           reject(e);
           alert("Could not read audio/video file");
