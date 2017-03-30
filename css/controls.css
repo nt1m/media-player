@@ -4,6 +4,7 @@
   background-color: #222;
   text-align: center;
   display: flex;
+  position: relative;
 }
 .light #media-controls {
   background-color: #1b1b1b;
@@ -150,23 +151,58 @@
 #shuffle::after {
   background-image: url(../img/shuffle.svg)
 }
-#speed-btn {
+#speed-btn,
+#equalizer-btn {
   position: relative;
 }
 #speed-btn::after {
   background-image:  url(../img/clock.svg);
 }
-#speed-menu {
+.menu {
   position: absolute;
-  width: 100px;
   transition: all .3s;
-  left: 0;
-  background-color: #f1f1f1;
-  box-shadow: 0 0 3px #ccc;
+  left: 0
   vertical-align: middle;
   border-radius: 2px;
-  filter: invert(1);
+  background: black;
   z-index: 4000;
+  color: black;
+  filter: invert(1);
+  background-color: #f1f1f1;
+  box-shadow: 0 0 3px #ccc;
+}
+
+.menu::after{
+  content:"";
+  position: absolute;
+  left: 20px;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #f1f1f1 transparent transparent transparent;
+}
+
+#equalizer-panel {
+  padding: 10px 0;
+}
+#equalizer-panel input{
+  -webkit-appearance: slider-vertical;
+  filter: invert(1);
+  margin: auto;
+}
+#equalizer-panel div {
+  display: inline-flex;
+  flex-direction: column;
+  width: 35px;
+  text-align: center;
+}
+#equalizer-panel label {
+  font-size: 13px;
+}
+#speed-menu {
+  width: 100px;
 }
 #speed-menu > select {
   -moz-appearance: none;
@@ -191,22 +227,11 @@
 #speed-menu > select:focus > option:checked {
   filter: invert(1);
 }
-#speed-menu::after{
-  content:"";
-  position: absolute;
-  left: 20px;
-  top: 100%;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 10px 0 10px;
-  border-color: #f1f1f1 transparent transparent transparent;
-}
-#speed-btn.checked + #speed-menu {
+.media-control.checked + .menu {
   bottom: 100%;
   opacity:1;
 }
-#speed-btn.not-checked + #speed-menu {
+.media-control:not(.checked) + .menu {
   transform: scale(0);
   bottom: -100%;
   opacity: 0;

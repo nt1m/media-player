@@ -259,9 +259,18 @@ var MediaPlayer = {
     var ctx = new AudioContext();
     var media = this.videoEl;
     var mediaSrc = ctx.createMediaElementSource(media);
+
     var analyser = ctx.createAnalyser();
-    mediaSrc.connect(analyser);
     analyser.connect(ctx.destination);
+
+    this.equalizer = new Equalizer({
+      panel: document.querySelector("#equalizer-panel"),
+      toggle: document.querySelector("#equalizer-btn"),
+      audioCtx: ctx,
+      departureNode: mediaSrc,
+      destinationNode: analyser,
+    });
+
     this.analyser = analyser;
     this.ctx = ctx;
   },

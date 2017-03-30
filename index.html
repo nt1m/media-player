@@ -10,6 +10,7 @@
 	<script src="js/utils.js"></script>
 	<script src="js/SettingsStore.js"></script>
 	<script src="js/SettingsOverlay.js"></script>
+	<script src="js/Equalizer.js"></script>
 	<script src="js/Playlist.js"></script>
 	<script src="js/MediaPlayer.js"></script>
 	<link rel="stylesheet" href="css/style.css"/>
@@ -47,6 +48,8 @@
 			<span id="tooltip"></span>
 		</div>
 		<div id="media-controls" class="disabled">
+			<button class="media-control" id="equalizer-btn" title="Equalizer"></button>
+			<div id="equalizer-panel" class="menu"></div>
 			<div id="volume-control">
 				<span id="volume-icon"></span>
 				<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="MediaPlayer.changeVolume(this.value);">
@@ -58,17 +61,17 @@
 			</div>
 			<div id="secondary-controls">
 				<button class="media-control not-checked" id="speed-btn" onclick="MediaPlayer.toggleSpeedBtn()"></button>
-				<div id="speed-menu">
-							<select size="6" onchange="MediaPlayer.changeSpeed(this.value)">
-								Speed :
-								<option value="5">2</option>
-								<option value="4">1.5</option>
-								<option value="3">1.25</option>
-								<option value="2" selected="selected">1</option>
-								<option value="1">0.75</option>
-								<option value="0">0.5</option>
-							</select>
-						</div>
+				<div id="speed-menu" class="menu">
+					<select size="6" onchange="MediaPlayer.changeSpeed(this.value)">
+						Speed :
+						<option value="5">2</option>
+						<option value="4">1.5</option>
+						<option value="3">1.25</option>
+						<option value="2" selected="selected">1</option>
+						<option value="1">0.75</option>
+						<option value="0">0.5</option>
+					</select>
+				</div>
 				<button class="media-control" id="loop" onclick="MediaPlayer.toggleLoop()" title="Repeat"></button>
 				<button class="media-control" id="shuffle" onclick="MediaPlayer.toggleShuffle()" title="Shuffle"></button>
 				<button class="media-control" title="Settings" id="settings-btn"></button>
