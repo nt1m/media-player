@@ -138,9 +138,11 @@ function createWindow() {
   // Close handler
   win.on("closed", () => {
     win = null;
+    ipcMain.removeAllListeners("add-recent-file");
+    ipcMain.removeAllListeners("media-state-change");
+
     if (app.dock) {
       app.dock.setBadge("");
-      ipcMain.removeAllListeners();
     }
   });
 }
