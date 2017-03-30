@@ -89,9 +89,10 @@
   position: relative;
   flex: 1;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
   font-size: 14px;
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black 20px);
+  mask-image: linear-gradient(to left, transparent 0, black 20px);
 }
 #playlist > li p .artist {
   display: block;
