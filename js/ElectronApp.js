@@ -24,6 +24,11 @@ module.exports = {
       });
     });
 
+    MediaPlayer.videoEl.addEventListener("playing", this.notifyVideoStateChange);
+    MediaPlayer.videoEl.addEventListener("pause", this.notifyVideoStateChange);
+    MediaPlayer.videoEl.addEventListener("ended", this.notifyVideoStateChange);
+    MediaPlayer.videoEl.addEventListener("emptied", this.notifyVideoStateChange);
+
     // Debug
     document.addEventListener("keydown", function(e) {
       if (e.which === 123) {
@@ -102,6 +107,16 @@ module.exports = {
         return reject("Unknown error");
       });
     });
+  },
+
+  notifyVideoStateChange() {
+    if (MediaPlayer.videoEl.ended || isNaN(MediaPlayer.videoEl.duration)) {
+      ipcRenderer.send("media-state-change", "ended");
+    } else if (MediaPlayer.videoEl.paused) {
+      ipcRenderer.send("media-state-change", "pause");
+    } else {
+      ipcRenderer.send("media-state-change", "play");
+    }
   },
 
   getFileNameFromPath(filePath) {

@@ -110,11 +110,14 @@ var MediaPlayer = {
     });
 
     let stopProgressBarDrag = (e) => {
+      if (e.type === "mouseout" && e.target !== document.documentElement) {
+        return;
+      }
       this.progressBar.classList.remove("dragging");
     };
     document.documentElement.addEventListener("mouseout", stopProgressBarDrag);
     window.addEventListener("mouseup", stopProgressBarDrag);
-    window.addEventListener("mouseover", (e) => {
+    window.addEventListener("mousemove", (e) => {
       if (this.progressBar.classList.contains("dragging")) {
         this.onProgressClick(e.pageX);
       }
@@ -193,6 +196,7 @@ var MediaPlayer = {
       document.title = "Media Player";
       this.videoEl.hidden = true;
       this.canvasEl.hidden = false;
+      this.videoEl.src = "";
       this.pause(true);
       this.videoEl.currentTime = 0;
     } else {
@@ -272,6 +276,7 @@ var MediaPlayer = {
     let onClick = params.onClick;
     let onHold = params.onHold;
     element.addEventListener("mousedown", () => {
+      this.prevOrNextPressed = true;
       this.prevNextTimeout = setTimeout(() => {
         if (this.prevNextTimeout) {
           this.prevNextInterval = setInterval(() => {
@@ -282,6 +287,10 @@ var MediaPlayer = {
     }, 1000);
 
     element.addEventListener("mouseup", () => {
+      if (!this.prevOrNextPressed) {
+        return;
+      }
+      this.prevOrNextPressed = false;
       if (this.prevNextTimeout) {
         clearTimeout(this.prevNextTimeout);
         this.prevNextTimeout = null;

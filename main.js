@@ -1,7 +1,7 @@
 "use strict";
 
 /* eslint no-undef:0 */
-const { app, BrowserWindow, nativeImage } = require("electron");
+const { app, BrowserWindow, nativeImage, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
 const fs = require("fs");
@@ -28,6 +28,23 @@ let image = nativeImage.createFromPath(path.join(__dirname, "./img/icon.png"));
 if (app.dock) {
   app.dock.setIcon(image);
 }
+
+function onStateChange(event, state) {
+  let badge;
+  switch (state) {
+    case "pause":
+      badge = "❚ ❚";
+      break;
+    case "play":
+      badge = "▶";
+      break;
+    case "ended":
+      badge = "";
+      break;
+  }
+  app.dock.setBadge(badge);
+}
+
 function createWindow() {
   win = new BrowserWindow({
     width: 800,
@@ -58,11 +75,14 @@ function createWindow() {
     } else if (osxFile) {
       win.webContents.send("file-found", osxFile);
     }
+
+    ipcMain.on("media-state-change", onStateChange);
   });
 
   // Close handler
   win.on("closed", () => {
     win = null;
+    ipcMain.removeAllListeners("media-state-change");
   });
 }
 
