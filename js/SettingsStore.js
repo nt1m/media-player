@@ -91,7 +91,7 @@ SettingsStore.prototype = {
 
     try {
       value = JSON.parse(value);
-    } catch(e) {
+    } catch (e) {
       // Do nothing
     }
     return value;
