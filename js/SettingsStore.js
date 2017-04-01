@@ -4,7 +4,6 @@ function SettingsStore(params) {
   this.isElectron = params.isElectron;
   this.getItem = this.getItem.bind(this);
   this.setItem = this.setItem.bind(this);
-
   for (let definition of this.definitions) {
     if (!this.getItem(definition.id)) {
       this.setItem(definition.id, definition.default);
@@ -16,6 +15,7 @@ function SettingsStore(params) {
 
 SettingsStore.prototype = {
   get definitions() {
+    let that = this;
     return [{
       id: "volume",
       name: "Volume",
@@ -79,7 +79,7 @@ SettingsStore.prototype = {
         if (typeof value !== "boolean") {
           value = false;
         }
-        if (this.isElectron) {
+        if (that.isElectron) {
           require("electron").remote.BrowserWindow.getFocusedWindow().setAlwaysOnTop(value);
         }
       },
