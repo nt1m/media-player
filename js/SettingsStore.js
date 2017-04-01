@@ -79,7 +79,9 @@ SettingsStore.prototype = {
         if (typeof value !== "boolean") {
           value = false;
         }
-        require("electron").remote.BrowserWindow.getFocusedWindow().setAlwaysOnTop(value);
+        if (this.isElectron) {
+          require("electron").remote.BrowserWindow.getFocusedWindow().setAlwaysOnTop(value);
+        }
       },
     }];
   },
@@ -89,7 +91,7 @@ SettingsStore.prototype = {
 
     try {
       value = JSON.parse(value);
-    } catch(e) {
+    } catch (e) {
       // Do nothing
     }
     return value;
