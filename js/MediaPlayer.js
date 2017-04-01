@@ -288,11 +288,13 @@ var MediaPlayer = {
     let element = params.element;
     let onClick = params.onClick;
     let onHold = params.onHold;
+    let holded = false;
     element.addEventListener("mousedown", () => {
       this.prevOrNextPressed = true;
       this.prevNextTimeout = setTimeout(() => {
         if (this.prevNextTimeout) {
           this.prevNextInterval = setInterval(() => {
+            holded = true;
             onHold();
           }, 500);
         }
@@ -308,11 +310,12 @@ var MediaPlayer = {
         clearTimeout(this.prevNextTimeout);
         this.prevNextTimeout = null;
       }
+      if (!holded) {
+        onClick();
+      }
       if (this.prevNextInterval) {
         clearInterval(this.prevNextInterval);
         this.prevNextInterval = null;
-      } else {
-        onClick();
       }
     });
   },
