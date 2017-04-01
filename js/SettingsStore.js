@@ -1,6 +1,7 @@
 "use strict";
 
 function SettingsStore(params) {
+  this.isElectron = params.isElectron;
   this.getItem = this.getItem.bind(this);
   this.setItem = this.setItem.bind(this);
 
@@ -14,8 +15,8 @@ function SettingsStore(params) {
 }
 
 SettingsStore.prototype = {
-  definitions: [
-    {
+  get definitions() {
+    return [{
       id: "volume",
       name: "Volume",
       hidden: true,
@@ -67,11 +68,31 @@ SettingsStore.prototype = {
         document.documentElement.classList.toggle(
           "contrast-black", contrastColor == "#000");
       }
-    }
-  ],
+    },
+    {
+      id: "electron.always-on-top",
+      name: "Pin window on top of other windows",
+      default: false,
+      hidden: !this.isElectron,
+      type: "checkbox",
+      onApply(value) {
+        if (typeof value !== "boolean") {
+          value = false;
+        }
+        require("electron").remote.BrowserWindow.getFocusedWindow().setAlwaysOnTop(value);
+      },
+    }];
+  },
 
   getItem(id) {
-    return localStorage.getItem("settings." + id);
+    let value = localStorage.getItem("settings." + id);
+
+    try {
+      value = JSON.parse(value);
+    } catch(e) {
+      // Do nothing
+    }
+    return value;
   },
 
   setItem(id, value) {

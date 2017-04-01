@@ -64,12 +64,19 @@ SettingsOverlay.prototype = {
       var input = Element("input", {
         parent: element,
         type: setting.type,
-        oninput() {
-          store.setItem(setting.id, this.value);
-        }
       });
 
-      input.value = store.getItem(setting.id);
+      if (input.type == "color") {
+        input.oninput = function() {
+          store.setItem(setting.id, this.value);
+        };
+        input.value = store.getItem(setting.id);
+      } else {
+        input.onchange = function() {
+          store.setItem(setting.id, this.checked);
+        };
+        input.checked = store.getItem(setting.id);
+      }
     }
 
     return element;

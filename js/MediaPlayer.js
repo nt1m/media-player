@@ -2,7 +2,7 @@
 
 var MediaPlayer = {
   init() {
-    this.isElectron = window.process && window.process.type && window.process.versions.electron;
+    this.isElectron = !!(window.process && window.process.type && window.process.versions.electron);
 
     /* Define elements */
     this.videoEl = document.getElementById("MediaPlayer");
@@ -56,7 +56,9 @@ var MediaPlayer = {
       },
     });
 
-    this.settingsStore = new SettingsStore();
+    this.settingsStore = new SettingsStore({
+      isElectron: this.isElectron,
+    });
     this.settingsOverlay = new SettingsOverlay({
       store: this.settingsStore,
       element: document.getElementById("settings-overlay"),
