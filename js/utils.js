@@ -1,51 +1,21 @@
 "use strict";
+if (require !== undefined) {
+  var id3 = require("id3js");
+}
 
 /* eslint-disable no-unused-vars */
 var Utils = {
-  readID3Data(audio) {
-    if (audio.type.match("video") == "video") {
+  readID3Data(media) {
+    if (media.type.match("video") == "video") {
       return Promise.resolve({
-        title: this.removeFileExtension(audio.name)
+        title: this.removeFileExtension(media.name)
       });
     }
-    /* For more information: https://en.wikipedia.org/wiki/ID3#Layout */
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(audio.slice(audio.size - 128));
 
     return new Promise(resolve => {
-      reader.onload = (e) => {
-        var result = e.target.result;
-        /* Converting the ArrayBuffer to String */
-        result = String.fromCharCode.apply(null, new Uint8Array(result));
-
-        var tags = {};
-
-        if (result.slice(0, 4) == "TAG+") {
-          // Extended id3v1 tag
-          tags = {
-            title: result.slice(4, 64).trim(),
-            artist: result.slice(64, 124).trim(),
-            album: result.slice(124, 184).trim(),
-            // speed_list: ["unset", "slow", "medium", "fast", "hardcore"],
-            // speed: this.speed_list[parseInt(result.slice(184, 185))],
-            genre: result.slice(185, 215).trim(),
-            // start_time: result.slice(215, 221).trim(),
-            // end_time: result.slice(221, 227).trim()
-          };
-        } else if (result.slice(0, 3) == "TAG") {
-          // Basic id3v1 tag
-          tags = {
-            title: result.slice(3, 3 + 30).trim(),
-            artist: result.slice(30 + 3, 2 * 30 + 3).trim(),
-            album: result.slice(2 * 30 + 3, 3 * 30 + 3).trim(),
-            year: result.slice(3 * 30 + 3, 3 * 30 + 7).trim(),
-            // comment: result.slice(3 * 30 + 7, 4 * 30 + 7).trim()
-          };
-        } else {
-          tags = this.predictTagsFromName(audio.name);
-        }
+      id3(media, function(err, tags) {
         resolve(tags);
-      };
+      });
     });
   },
   predictTagsFromName(name) {
