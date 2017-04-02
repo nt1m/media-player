@@ -78,17 +78,14 @@
   padding: 0 5px;
 }
 
-.caption-button:hover::before,
-.caption-button:focus::before {
+.caption-button:hover::before {
   background-color: rgba(0,0,0,0.1);
 }
 
-.caption-button.close:hover::before,
-.caption-button.close:focus::before {
+.caption-button.close:hover::before{
   background-color: #15ced9;
 }
 
-.light .caption-button.close:focus::before,
 .light .caption-button.close:hover::before {
   filter: none;
 }
