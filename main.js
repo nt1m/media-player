@@ -115,6 +115,7 @@ function createWindow() {
     titleBarStyle: "hidden-inset"
   });
   win.setMenu(null);
+  // win.toggleDevTools();
   win.loadURL(url.format({
     pathname: path.join(__dirname, "./index.html"),
     protocol: "file:",

@@ -8,7 +8,8 @@ module.exports = {
     SettingsOverlay: true,
     SettingsStore: true,
     Utils: true,
-    Equalizer: true
+    Equalizer: true,
+    jsmediatags: true
   },
   env: {
     es6: true,

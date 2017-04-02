@@ -1,20 +1,28 @@
 "use strict";
-if (require !== undefined) {
-  var id3 = require("id3js");
+if (!!(window.process && window.process.type && window.process.versions.electron)) {
+  jsmediatags = require("jsmediatags");
 }
 
 /* eslint-disable no-unused-vars */
 var Utils = {
   readID3Data(media) {
-    if (media.type.match("video") == "video") {
-      return Promise.resolve({
-        title: this.removeFileExtension(media.name)
-      });
-    }
-
     return new Promise(resolve => {
-      id3(media, function(err, tags) {
-        resolve(tags);
+      new jsmediatags.Reader(media).setTagsToRead(["title", "artist", "album"])
+      .read({
+        onSuccess: (tag => {
+          let tags = {
+            title: tag.tags.title || this.removeFileExtension(media.name),
+            artist: tag.tags.artist || "",
+            album: tag.tags.album || "",
+            // pic: tag.tags.picture || null,
+            // trackNum: tag.tags.TRCK != null ? tag.tags.TRCK.data : "",
+            // lyrics: tag.tags.lyrics || "",
+          };
+          resolve(tags);
+        }),
+        onError: (e => {
+          throw new Error(e);
+        }),
       });
     });
   },
