@@ -15,7 +15,6 @@ function SettingsStore(params) {
 
 SettingsStore.prototype = {
   get definitions() {
-    let that = this;
     return [{
       id: "volume",
       name: "Volume",
@@ -75,11 +74,11 @@ SettingsStore.prototype = {
       default: false,
       hidden: !this.isElectron,
       type: "checkbox",
-      onApply(value) {
+      onApply: (value) => {
         if (typeof value !== "boolean") {
           value = false;
         }
-        if (that.isElectron) {
+        if (this.isElectron) {
           require("electron").remote.BrowserWindow.getFocusedWindow().setAlwaysOnTop(value);
         }
       },
