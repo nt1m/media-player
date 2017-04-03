@@ -1,7 +1,4 @@
 "use strict";
-// if (!!(window.process && window.process.type && window.process.versions.electron)) {
-//   jsmediatags = require("./js/jsmediatags");
-// }
 
 /* eslint-disable no-unused-vars */
 var Utils = {
@@ -14,11 +11,11 @@ var Utils = {
             title: tags.title || this.removeFileExtension(media.name),
             artist: tags.artist || "",
             album: tags.album || "",
-            pic: `data:${tags.picture.format};base64,` +
+            pic: tags.picture && (`data:${tags.picture.format};base64,` +
               window.btoa(tags.picture.data.reduce((acc, value) => {
                 acc += String.fromCharCode(value);
                 return acc;
-              }, "")) || null,
+              }, ""))) || null,
             // trackNum: tag.tags.TRCK != null ? tag.tags.TRCK.data : "",
             // lyrics: tag.tags.lyrics || "",
           };

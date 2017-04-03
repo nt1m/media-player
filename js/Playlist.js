@@ -170,17 +170,16 @@ PlaylistItem.prototype = {
       parent: item
     });
 
+    var coverDiv = Element("div", {
+      class: "cover",
+      parent: itemWrap
+    });
+    coverDiv.style.backgroundImage = `url('${cover}')`;
+
     var textContainer = Element("p", {
       class: "text-container",
       parent: itemWrap
     });
-
-    var cover = Element("div", {
-      class: "cover",
-      parent: itemWrap
-    });
-    
-    cover.style.backgroundImage = `url('${cover}')`;
 
     Element("span", {
       class: "title",
