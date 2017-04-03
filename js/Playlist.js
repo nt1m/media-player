@@ -151,14 +151,14 @@ function PlaylistItem(params) {
   return Utils.readID3Data(this.media).then(tags => {
     this.tags = tags;
 
-    this.createDOM();
+    this.createDOM({cover: tags.pic});
 
     return this;
   });
 }
 
 PlaylistItem.prototype = {
-  createDOM() {
+  createDOM({ cover }) {
     var item = Element("li", {
       title: Utils.getTooltipForTags(this.tags),
       onClick: () => this.onItemSelected(this.hash),
@@ -174,6 +174,13 @@ PlaylistItem.prototype = {
       class: "text-container",
       parent: itemWrap
     });
+
+    var cover = Element("div", {
+      class: "cover",
+      parent: itemWrap
+    });
+    
+    cover.style.backgroundImage = `url('${cover}')`;
 
     Element("span", {
       class: "title",
