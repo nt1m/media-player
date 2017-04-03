@@ -4,14 +4,93 @@
   display: flex;
 }
 
-
-/* Canvas with visualizer */
 #display-container {
   flex: 1;
-  min-width: none;
+  min-width: 0;
   position: relative;
-  overflow: auto;
+  min-height: 0;
+  flex-direction: column;
+  display: flex;
 }
+
+#content-area {
+  height: 100%;
+  flex: 1;
+  position: relative;
+}
+
+.video #content-area {
+  margin-top: -54px;
+}
+
+.video #control-overlay {
+  top: 54px;
+}
+
+#MediaPlayer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.light #MediaPlayer {
+  filter: invert(1);
+}
+
+#control-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1999;
+}
+
+#control-overlay::before {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 100%;
+  background-color: rgba(255,255,255,0.6);
+  filter: invert(1);
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(0);
+}
+
+#control-overlay.paused::before,
+#control-overlay.playing::before {
+  animation: pulse 1s;
+}
+
+#control-overlay.paused::before {
+  background-image: url(../img/pause.svg);
+}
+
+#control-overlay.playing::before {
+  background-image: url(../img/play.svg);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Canvas with visualizer */
 #visualizer {
   display: block;
   margin: auto;
@@ -21,9 +100,79 @@
   right: 0;
   bottom: 0;
   image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
   max-width: 90%;
 }
 #visualizer.placeholder {
   background: url(../img/musicicon.png) no-repeat center;
   background-size: 50%;
+  fill: var(--theme-highlight-color);
+  filter: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feComposite in="FillPaint" in2="SourceGraphic" operator="in"/></filter></svg>#a');
 }
+@supports ((-webkit-mask: url(../img/pause.svg)) or (mask-image: url(../img/pause.svg))) {  
+  #visualizer.placeholder {
+    filter: none;
+    background-image: none;
+    -webkit-mask-image: url(../img/musicicon.png);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 50%;
+
+    mask-image: url(../img/musicicon.png);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 50%;
+
+    background-color: var(--theme-highlight-color);
+  }
+}
+
+/* Settings */
+#settings-overlay {
+  background: rgba(20, 20, 20, 0.9);
+  top: 0;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 2000;
+  transition-property: transform, opacity;
+  transition-duration: .5s;
+}
+
+#settings-overlay.hidden {
+  -webkit-transform: translateY(100vh) scaleY(0);
+  transform: translateY(100vh) scaleY(0);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  max-height: 0;
+  transition-property: transform, opacity, visibility;
+}
+
+#settings-overlay > div {
+  padding: 15px;
+}
+
+.setting {
+  max-width: 400px;
+}
+.setting input, .setting select {
+  float: right;
+}
+.setting input:focus, .setting select:focus {
+  box-shadow: 0 0 0 5px rgba(255,255,255,0.1);
+}
+
+input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: white 1px solid;
+}
+input[type=checkbox]:checked {
+  background-color: white;
+}
+

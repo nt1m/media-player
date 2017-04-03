@@ -1,0 +1,9 @@
+<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+  <title>
+    16 copy
+  </title>
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#000" d="M7 0h1v4H7zM7 4h5v1H7zM0 7h5v1H0zM4 8h1v4H4z"/>
+    <path d="M.5 11.5l4-4M7.5 4.5l4-4" stroke="#000" stroke-linecap="round"/>
+  </g>
+</svg>

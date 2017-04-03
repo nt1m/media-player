@@ -2,14 +2,19 @@
 
 module.exports = {
   globals: {
-    AudioPlayer: true,
+    MediaPlayer: true,
     Playlist: true,
     Element: true,
-    Utils: true
+    SettingsOverlay: true,
+    SettingsStore: true,
+    Utils: true,
+    Equalizer: true,
+    jsmediatags: true
   },
   env: {
     es6: true,
-    browser: true
+    browser: true,
+    commonjs: true
   },
   "rules": {
     // Disallow using variables outside the blocks they are defined (especially
@@ -74,7 +79,7 @@ module.exports = {
     // rule is a better rule to check this.
     "max-depth": 0,
     // Maximum length of a line.
-    "max-len": [2, 90, 2, {"ignoreUrls": true, "ignorePattern": "data:image\/|\\s*require\\s*\\(|^\\s*loader\\.lazy|-\\*-"}],
+    "max-len": [2, 100, 2, {"ignoreUrls": true, "ignorePattern": "data:image\/|\\s*require\\s*\\(|^\\s*loader\\.lazy|-\\*-"}],
     // Maximum depth callbacks can be nested.
     "max-nested-callbacks": [2, 3],
     // Don't limit the number of parameters that can be used in a function.

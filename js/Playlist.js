@@ -8,11 +8,30 @@
 */
 function Playlist(params) {
   this.element = params.element;
+  this.previousItem = null;
+  this.shuffle = false;
+  this.loop = true;
+  this.element.scrollTo = function(y, t) {
+    t = t > 0 ? Math.floor(t / 4) : 40;
+    let step = (y - this.scrollTop) / t * 40;
+    let that = this;
+    function aux() {
+      t -= 40;
+      that.scrollTop += step;
+      if (t > 0) {
+        setTimeout(aux, 40);
+      } else {
+        that.scrollTop = y;
+      }
+    }
+    aux();
+  };
   this.params = params;
 
   this.onItemSelected = this.onItemSelected.bind(this);
   this.onItemRemoved = this.onItemRemoved.bind(this);
   this.onItemCleared = this.onItemCleared.bind(this);
+  this.selectPrevious = this.selectPrevious.bind(this);
   this.selectNext = this.selectNext.bind(this);
 
   // Hash Map
@@ -21,20 +40,28 @@ function Playlist(params) {
 }
 
 Playlist.prototype = {
-  addAll(audios) {
-    return Promise.all(audios.map(a => this.add(a)));
+  addAll(media) {
+    return Promise.all(media.map(m => this.add(m)));
   },
 
   /*
-    Adds an audio file to the playlist
-    @param File audio: The file to add
+    Adds an media file to the playlist
+    @param File media: The file to add
   */
-  add(audio) {
-    if (this.list.has(createHash(audio))) {
+  add(media) {
+    this.element.classList.add("loading");
+    if (this.list.has(createHash(media))) {
+      this.element.classList.remove("loading");
+      return Promise.resolve();
+    }
+    if (media.type.match("audio") != "audio" &&
+        media.type.match("video") != "video") {
+      this.element.classList.remove("loading");
       return Promise.resolve();
     }
     let adding = new PlaylistItem({
-      audio,
+      type: media.type.match("audio") == "audio" ? "audio" : "video",
+      media,
       playlist: this
     });
     return adding.then((item) => {
@@ -42,17 +69,48 @@ Playlist.prototype = {
       if (!this.selectedItem) {
         this.onItemSelected(item.hash);
       }
+      this.element.classList.remove("loading");
       return item;
     });
+  },
+
+  selectPrevious() {
+    if (this.shuffle && this.previousItem
+        && this.list.has(this.previousItem)
+        && this.previousItem != this.selectedItem) {
+      this.list.get(this.selectedItem).unselect();
+      this.onItemSelected(this.previousItem);
+    } else if (this.shuffle && this.previousItem == this.selectedItem) {
+      this.selectNext();
+    } else {
+      var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
+      var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
+      var nextItem = [...this.list.keys()][nextItemIndex];
+      this.list.get(this.selectedItem).unselect();
+      this.onItemSelected(nextItem);
+    }
   },
 
   selectNext(hash) {
     if (!hash) {
       hash = this.selectedItem;
     }
+    var nextItemIndex;
     var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
-    var nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
+
+    var oth = [...Array(this.list.size).keys()].filter(i => i != itemIndex);
+    if (this.list.size > 2 && this.previousItem && this.list.has(this.previousItem)) {
+      var previousItemIndex = [...this.list.keys()].findIndex(h => h === this.previousItem);
+      oth = oth.filter(i => i != previousItemIndex);
+    }
+    if (this.shuffle && this.list.size > 1) {
+      nextItemIndex = oth[Math.floor(Math.random() * oth.length)];
+    } else {
+      nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
+    }
+
     var nextItem = [...this.list.keys()][nextItemIndex];
+    this.previousItem = hash;
     this.list.get(hash).unselect();
     this.onItemSelected(nextItem);
   },
@@ -85,11 +143,12 @@ Playlist.prototype = {
 
 function PlaylistItem(params) {
   this.playlist = params.playlist;
-  this.hash = createHash(params.audio);
-  this.audio = params.audio;
+  this.hash = createHash(params.media);
+  this.media = params.media;
+  this.type = params.type;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
-  return Utils.readID3Data(this.audio).then(tags => {
+  return Utils.readID3Data(this.media).then(tags => {
     this.tags = tags;
 
     this.createDOM();
@@ -101,20 +160,24 @@ function PlaylistItem(params) {
 PlaylistItem.prototype = {
   createDOM() {
     var item = Element("li", {
-      title: this.tags.title,
+      title: Utils.getTooltipForTags(this.tags),
       onClick: () => this.onItemSelected(this.hash),
       parent: this.playlist.element
     });
-    
-    var textContainer = Element("p", {
-      class: "text-container",
+
+    var itemWrap = Element("a", {
+      href: "#",
       parent: item
     });
 
+    var textContainer = Element("p", {
+      class: "text-container",
+      parent: itemWrap
+    });
+
     var textContainer = Element("div", {
-      class: "playcoverart",
-      style: "background:url(http://musicmedia.ign.com/music/image/article/117/1171117/25-most-iconic-album-covers-of-all-time-20110527043617131-000.jpg);background-size:cover",
-      parent: item
+      class: "cover",
+      parent: itemWrap
     });
 
     Element("span", {
@@ -137,7 +200,7 @@ PlaylistItem.prototype = {
         this.onItemRemoved(this.hash);
         e.stopPropagation();
       },
-      parent: item
+      parent: itemWrap
     });
 
     this.element = item;
@@ -154,9 +217,13 @@ PlaylistItem.prototype = {
 
   destroy() {
     this.element.remove();
+    this.media = null;
   }
 };
 
 function createHash(audio) {
+  if (!audio.name) {
+    return Date.now();
+  }
   return encodeURIComponent(audio.name.replace(/\s/g, ""));
 }

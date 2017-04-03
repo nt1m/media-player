@@ -1,10 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
-@import url(header.css);
-@import url(sidebar.css);
-@import url(playlist.css);
-@import url(main_content.css);
-@import url(controls.css);
+
 /* General styles */
+[hidden] {
+  display: none !important;
+}
+html {
+  --theme-highlight-color: #0087ff;
+}
 html, body {
   height: 100%;
 }
@@ -13,7 +15,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  background-color: rgba(43, 43, 43, 0.9);
+  background-color: rgba(20, 20, 20, 0.95);
   color: white;
   font-family: Montserrat, Roboto, Arial, sans-serif;
   user-select: none;
@@ -21,6 +23,18 @@ body {
   -moz-user-select: none;
   -webkit-user-select: none;
   overflow: hidden;
+}
+
+:fullscreen .light {
+  background: transparent;
+}
+:-webkit-full-screen .light {
+  background: transparent;
+}
+
+.light {
+  filter: invert(1);
+  background-color: rgba(244, 244, 244, 0.9);
 }
 
 * {
@@ -43,41 +57,71 @@ body {
     max-width: 200px;
   }
 }
-@media (max-width: 450px) {
-  .audio-control {
+
+@media (max-width: 800px) {
+  .header {
+    font-size: 1em !important;
+  }
+}
+@media (max-width: 650px) {
+  body .media-control {
     padding: 0;
     width: 45px;
   }
-  #display-container {
-    display: none;
+  body .media-control::after {
+    transform: scale(0.8);
+  }
+}
+@media (max-width: 500px) {
+  .header {
+    font-size: .9em !important;
+  }
+  .main-content {
+    flex-direction: column;
   }
   #sidebar {
     max-width: none;
-    width: 100%;
+    width: 100% !important;
+    transition: max-height 0.3s;
+  }
+  #sidebar:not(:hover) {
+    max-height: 38px;
+    overflow: hidden;
+  }
+  .osx #sidebar-header {
+    text-align: center;
+  }
+  #sidebar-header {
+    font-size: .9em !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+  }
+  #sidebar:not(:hover) #sidebar-header {
+    background-image: url(../img/expand.svg);
   }
   #volume-control:not(:hover) {
-    width: 30px;
+    width: 50px;
   }
   #volume-icon {
     margin: 0 5px;
   }
 }
 
-@media (max-width:340px) {
+@media (max-width: 410px) {
   #secondary-controls {
-    width: 30px;
+    width: 60px;
   }
-  #secondary-controls .audio-control {
+  #secondary-controls .media-control {
+    display: inline-block;
     height: 30px;
     width: 30px;
   }
-  #secondary-controls .audio-control::after {
+  #secondary-controls .media-control::after {
     width: 20px;
     height: 20px;
   }
   #speed-menu,
   #speed-menu::after{
-    left: auto;
-    right: 3px;
+    left: auto !important;
+    right: 16px;
   }
 }

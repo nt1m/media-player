@@ -1,12 +1,141 @@
 /* Header */
-#header:not(:empty) {
+.header {
   padding: 15px;
-  background-color: #2A2A2A;
   font-size: 20px;
   position: sticky;
   top: 0;
-  overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
   z-index: 999;
+}
+
+#settings-overlay .header,
+#header {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black 75px);
+  mask-image: linear-gradient(to left, transparent 0, black 75px);
+}
+
+#header {
+  flex: 1;
+}
+
+#header-container {
+  transition: font-size 0.5s, opacity 0.2s;
+  padding-right: 0 !important;
+  display: flex;
+}
+
+.video #header-container {
+  background-image: linear-gradient(rgba(20, 20, 20, 0.95), transparent);
+}
+
+.video:not(:hover) #header-container {
+  opacity: 0;
+  transition-delay: 0s, .7s;
+}
+
+.electron.osx .header {
+  text-align: center;
+}
+
+.electron #header-container {
+  padding: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.electron #header,
+.electron #settings-overlay .header {
+  min-width: 0;
+  padding: 15px;
+  -webkit-app-region: drag;
+}
+
+.electron.osx #header,
+.electron.osx #settings-overlay .header {
+  padding: 15px 90px;
+}
+
+.electron.osx #header {
+  padding-right: 40px;
+}
+
+.electron #header:empty::before {
+  content: "Media Player";
+}
+
+.electron .caption-buttons {
+  display: flex;
+  height: 54px;
+  padding: 0;
+}
+
+.caption-button {
+  background: none;
+  border: none;
+  margin: 0;
+  flex: 1;
+  padding: 0 5px;
+}
+
+.caption-button:hover::before {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.caption-button.close:hover::before{
+  background-color: #15ced9;
+}
+
+.light .caption-button.close:hover::before {
+  filter: none;
+}
+
+.caption-button::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  padding: 10px;
+  filter: invert(1);
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.caption-button.fullscreen {
+  flex: 0;
+}
+
+:root:not(.electron) .caption-button.fullscreen,
+.electron.osx .caption-button.fullscreen {
+  min-width: 50px;
+  text-align: center;
+}
+
+:root:not(.electron) .caption-button.fullscreen::before,
+.electron.osx .caption-button.fullscreen::before {
+  transform: scale(1.25);
+}
+
+.caption-button.close::before {
+  background-image: url(../img/electron/close.svg);
+}
+
+.caption-button.maximize::before {
+  background-image: url(../img/electron/maximize.svg);
+}
+
+.caption-button.restore::before {
+  background-image: url(../img/electron/restore.svg);
+}
+
+.caption-button.minimize::before {
+  background-image: url(../img/electron/minimize.svg);
+}
+
+.caption-button.fullscreen::before {
+  background-image: url(../img/fullscreen.svg);
+}
+.fullscreen .caption-button.fullscreen::before {
+  background-image: url(../img/fullscreen-exit.svg);
 }

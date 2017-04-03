@@ -16,9 +16,17 @@
   padding: 10px;
   box-sizing: border-box;
   white-space: pre-wrap;
+  background-color: rgba(0,0,0,0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  z-index: 99;
 }
 #playlist:empty::before {
-  content: "Your playlist is empty…\AWhy not add some music ?";
+  content: "Your playlist is empty…";
   background: url(../img/cat.png) no-repeat center;
   background-size: 80px;
   background-position-y: center;
@@ -27,9 +35,16 @@
   content: "Loading…";
 }
 #playlist.loading > li {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 #playlist > li {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin: 0;
+  padding: 0;
+}
+#playlist > li a {
+  color: inherit;
+  text-decoration: none;
   padding: 10px;
   margin: 0;
   width: 100%;
@@ -38,9 +53,8 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-#playlist > li::before {
+#playlist > li a::before {
   content: "";
   display: inline-block;
   width: 16px;
@@ -49,18 +63,28 @@
   background-size: cover;
   -webkit-filter: invert(1);
   filter: invert(1);
+  border-radius: 100%;
 }
-#playlist > li.playing {
-  background-color: #0095DD;
+#playlist > li.playing a:focus::before {
+  background-color: #ddd;
 }
-#playlist > li.playing::before {
+.contrast-black #playlist > li.playing a::before {
+  -webkit-filter: none;
+  filter: none;
+}
+#playlist > li.playing a {
+  background-color: var(--theme-highlight-color);
+  color: var(--theme-contrast-color);
+}
+#playlist > li.playing a::before {
   background-image: url(../img/play.svg);
   background-color: rgba(69, 69, 69, 0.5);
   border-radius: 50%;
   z-index: 1;
 }
-#playlist > li:not(.playing):hover {
-  background-color: rgba(255,255,255,0.1)
+#playlist > li:not(.playing):hover a,
+#playlist > li:not(.playing) a:focus {
+  background-color: rgba(255,255,255,0.1);
 }
 .playcoverart {
     width: 30px;
@@ -74,9 +98,10 @@
   position: relative;
   flex: 1;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
   font-size: 14px;
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black 20px);
+  mask-image: linear-gradient(to left, transparent 0, black 20px);
 }
 #playlist > li p .artist {
   display: block;
@@ -92,60 +117,77 @@
   background-size: 10px;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-filter: invert(1);
-  filter: invert(1);
   opacity: 0.88;
   margin-left: 2px;
   border-radius: 2px;
+  -webkit-filter: invert(1);
+  filter: invert(1);
 }
+.contrast-black #playlist .playing .cross {
+  -webkit-filter: none;
+  filter: none;
+}
+#playlist .playing .cross:focus,
 #playlist .playing .cross:hover {
+  -webkit-filter: invert(1);
+  filter: invert(1);
   background-color: #ddd;
 }
+#playlist .cross:focus,
 #playlist .cross:hover {
   opacity: 1;
   background-color: #15ced9;
+  -webkit-filter: none;
+  filter: none;
 }
 
 /* File upload input */
 #upload-container {
   position: relative;
   cursor: pointer;
-  height: 20%;
-  overflow: hidden;
-  min-height: 50px;
+}
+#upload-container div {
+  padding: 10px;
+  height: 2em;
+  margin: 10px 0;
+  border-radius: 2px;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+#upload-container div::before {
+  flex: 1;
+  align-self: center;
+  content: "Add music or videos";
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.9em;
+  z-index: -1;
+  background-color: var(--theme-highlight-color);
+  color: var(--theme-contrast-color);
+  border-radius: 2px;
+  padding-top: 0.4em;
+  height: 2em;
+  box-sizing: border-box;
+}
+#upfile:hover + div::before {
+  background-image: linear-gradient(rgba(255,255,255,0.2),transparent);
+}
+#upfile:hover:active + div::before {
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+}
+#upfile:focus + div::before {
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
 }
 #upfile {
   cursor: pointer;
-}
-#upfile,
-#upload-container::after {
-  content:"";
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
-  box-sizing: border-box;
-  text-align: center;
-  outline: 2px dashed rgba(255,255,255,0.7);
-  outline-offset: -8px;
-}
-#upload-container::before {
-  content: "Drag file(s) or click here to add music";
-  text-transform: uppercase;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10px;
-}
-#upfile {
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   z-index: 99;
-}
-#upload-container::before,
-#upload-container::after {
-  text-align: center;
-  pointer-events: none;
-  z-index: 0;
 }

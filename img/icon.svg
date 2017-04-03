@@ -1,0 +1,25 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a">
+      <stop stop-color="#36FFC3" offset="0%"/>
+      <stop stop-color="#3308A3" offset="100%"/>
+    </linearGradient>
+    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b">
+      <stop stop-color="#FFF" offset="0%"/>
+      <stop stop-color="#E7E7E7" offset="100%"/>
+    </linearGradient>
+    <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="c">
+      <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.177476789 0" in="shadowBlurOuter1" result="shadowMatrixOuter1"/>
+      <feMerge>
+        <feMergeNode in="shadowMatrixOuter1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <circle fill="url(#a)" cx="128" cy="128" r="128"/>
+    <path d="M128 238c60.751 0 110-49.249 110-110S188.751 18 128 18 18 67.249 18 128s49.249 110 110 110zm1.5-179v9.444H120V59H82v9.444h-9.5V59H63v85h9.5v-9.444H82V144h38v-9.444h9.5V144h9.5V59h-9.5zm-47.25 66.111h-9.5v-9.444h9.5v9.444zm0-18.889h-9.5v-9.444h9.5v9.444zm0-18.889h-9.5V77.89h9.5v9.444zm47.5 37.778h-9.5v-9.444h9.5v9.444zm0-18.889h-9.5v-9.444h9.5v9.444zm0-18.889h-9.5V77.89h9.5v9.444zM164.25 112v49.82c-2.803-1.606-6.032-2.598-9.5-2.598-10.498 0-19 8.453-19 18.89 0 10.435 8.502 18.888 19 18.888s19-8.453 19-18.889V130.89h19V112h-28.5z" fill="url(#b)" filter="url(#c)"/>
+  </g>
+</svg>

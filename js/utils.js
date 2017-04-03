@@ -1,55 +1,45 @@
 "use strict";
+// if (!!(window.process && window.process.type && window.process.versions.electron)) {
+//   jsmediatags = require("./js/jsmediatags");
+// }
 
-/* exported Utils, Element */
-
+/* eslint-disable no-unused-vars */
 var Utils = {
-  readID3Data(audio) {
-    /* For more information: https://en.wikipedia.org/wiki/ID3#Layout */
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(audio);
-
+  readID3Data(media) {
     return new Promise(resolve => {
-      reader.onload = (e) => {
-        var result = e.target.result;
-
-        /* Getting the last 128 bytes of the Array buffer */
-        result = result.slice(result.byteLength - 128);
-
-        /* Converting the ArrayBuffer to String */
-        result = new Uint8Array(result);
-        result = String.fromCharCode.apply(null, result);
-
-        var tags = {};
-
-        if (result.slice(0, 4) == "TAG+") {
-          // Extended id3v1 tag
-          tags = {
-            "title": result.slice(4, 64).replace(/[\0]/g, ""),
-            "artist": result.slice(64, 124).replace(/[\0]/g, ""),
-            "album": result.slice(124, 184).replace(/[\0]/g, ""),
-            "speed_list": ["unset", "slow", "medium", "fast", "hardcore"],
-            "speed": this.speed_list[parseInt(result.slice(184, 185))],
-            "genre": result.slice(185, 215).replace(/[\0]/g, ""),
-            "start-time": result.slice(215, 221).replace(/[\0]/g, ""),
-            "end-time": result.slice(221, 227).replace(/[\0]/g, "")
+      new jsmediatags.Reader(media).setTagsToRead(["title", "artist", "album", "picture"])
+      .read({
+        onSuccess: (({ tags }) => {
+          let returnedTags = {
+            title: tags.title || this.removeFileExtension(media.name),
+            artist: tags.artist || "",
+            album: tags.album || "",
+            pic: `data:${tags.picture.format};base64,` +
+              window.btoa(tags.picture.data.reduce((acc, value) => {
+                acc += String.fromCharCode(value);
+                return acc;
+              }, "")) || null,
+            // trackNum: tag.tags.TRCK != null ? tag.tags.TRCK.data : "",
+            // lyrics: tag.tags.lyrics || "",
           };
-        } else if (result.slice(0, 3).replace(/[\0]/g, "") == "TAG") {
-          // Basic id3v1 tag
-          tags = {
-            title: result.slice(3, 3 + 30).replace(/[\0]/g, ""),
-            artist: result.slice(30 + 3, 2 * 30 + 3).replace(/[\0]/g, ""),
-            album: result.slice(2 * 30 + 3, 3 * 30 + 3).replace(/[\0]/g, ""),
-            year: result.slice(3 * 30 + 3, 3 * 30 + 7).replace(/[\0]/g, ""),
-            comment: result.slice(3 * 30 + 7, 4 * 30 + 7).replace(/[\0]/g, "")
-          };
-        } else {
-          tags = this.predictTagsFromName(audio.name);
-        }
-        resolve(tags);
-      };
+          if (!returnedTags.artist) {
+            returnedTags = Object.assign(
+              returnedTags,
+              this.predictTagsFromName(media.name)
+            );
+          }
+          resolve(returnedTags);
+        }),
+        onError: (e => {
+          throw new Error(e);
+        }),
+      });
     });
   },
   predictTagsFromName(name) {
+    if (!name) {
+      return {};
+    }
     var tags = {};
     name = this.removeFileExtension(name);
     var splitName = name.split("-");
@@ -81,7 +71,6 @@ var Utils = {
     var ftKeywords = ["feat", "feat.", "ft.", "featuring"];
     var splitTitle = title.toLowerCase().split(" ");
     var i = splitTitle.findIndex(w => ftKeywords.indexOf(w) > -1);
-    console.log(i, splitTitle);
     if (i > -1) {
       return title.split(splitTitle[i]).map(trim);
     }
@@ -99,6 +88,20 @@ var Utils = {
 
     name = name.split(" ").filter(w => removedKeywords.indexOf(w.toLowerCase()) === -1);
     return name.join(" ");
+  },
+
+  getTooltipForTags(tags) {
+    let tooltip = tags.title;
+    if (tags.artist) {
+      tooltip = `${tags.artist} - ${tooltip}`;
+    }
+    if (tags.album) {
+      tooltip += `\nAlbum: ${tags.album}`;
+    }
+    if (tags.genre) {
+      tooltip += `\nGenre: ${tags.genre}`;
+    }
+    return tooltip;
   },
 
   convertSecondsToDisplay(time) {
