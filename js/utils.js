@@ -1,24 +1,34 @@
 "use strict";
-if (!!(window.process && window.process.type && window.process.versions.electron)) {
-  jsmediatags = require("jsmediatags");
-}
+// if (!!(window.process && window.process.type && window.process.versions.electron)) {
+//   jsmediatags = require("./js/jsmediatags");
+// }
 
 /* eslint-disable no-unused-vars */
 var Utils = {
   readID3Data(media) {
     return new Promise(resolve => {
-      new jsmediatags.Reader(media).setTagsToRead(["title", "artist", "album"])
+      new jsmediatags.Reader(media).setTagsToRead(["title", "artist", "album", "picture"])
       .read({
-        onSuccess: (tag => {
-          let tags = {
-            title: tag.tags.title || this.removeFileExtension(media.name),
-            artist: tag.tags.artist || "",
-            album: tag.tags.album || "",
-            // pic: tag.tags.picture || null,
+        onSuccess: (({ tags }) => {
+          let returnedTags = {
+            title: tags.title || this.removeFileExtension(media.name),
+            artist: tags.artist || "",
+            album: tags.album || "",
+            pic: `data:${tags.picture.format};base64,` +
+              window.btoa(tags.picture.data.reduce((acc, value) => {
+                acc += String.fromCharCode(value);
+                return acc;
+              }, "")) || null,
             // trackNum: tag.tags.TRCK != null ? tag.tags.TRCK.data : "",
             // lyrics: tag.tags.lyrics || "",
           };
-          resolve(tags);
+          if (!returnedTags.artist) {
+            returnedTags = Object.assign(
+              returnedTags,
+              this.predictTagsFromName(media.name)
+            );
+          }
+          resolve(returnedTags);
         }),
         onError: (e => {
           throw new Error(e);
