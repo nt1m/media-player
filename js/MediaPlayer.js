@@ -191,11 +191,13 @@ var MediaPlayer = {
       }
     });
 
+    this.UIEnabled = false;
     this.changeLoopState(1);
     this.initAudioContext();
   },
   set UIEnabled(value) {
     if (!value) {
+      document.body.classList.add("controls-disabled");
       this.controlsEl.classList.add("disabled");
       this.headerEl.textContent = "";
       this.headerEl.title = "";
@@ -206,6 +208,7 @@ var MediaPlayer = {
       this.pause(true);
       this.videoEl.currentTime = 0;
     } else {
+      document.body.classList.remove("controls-disabled");
       this.controlsEl.classList.remove("disabled");
     }
   },

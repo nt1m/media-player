@@ -28,7 +28,9 @@ var Utils = {
           resolve(returnedTags);
         }),
         onError: (e => {
-          throw new Error(e);
+          resolve({
+            title: this.removeFileExtension(media.name),
+          });
         }),
       });
     });

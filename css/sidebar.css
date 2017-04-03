@@ -7,18 +7,14 @@
   overflow: auto;
   background-color: #303030;
 }
-.video + #sidebar{
-    transition: all .5s;
-    margin-right: -250px;
+.video + #sidebar {
+  transition: all .5s;
+  margin-right: -250px;
     
 }
-.video:hover  + #sidebar,.video  + #sidebar:hover {
-    transition-delay: .5s;
-    -webkit-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    margin-right: 0;
-    
+.video:hover + #sidebar,.video  + #sidebar:hover {
+  transition-delay: .8s;
+  margin-right: 0;
 }
 
 .light #sidebar {
