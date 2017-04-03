@@ -61,7 +61,10 @@
 }
 
 .electron #header:empty::before {
-  content: "Media Player";
+  content: " ";
+  width: 1em;
+  height: 1em;
+  display: inline-block;
 }
 
 .electron .caption-buttons {
