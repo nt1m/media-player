@@ -58,7 +58,7 @@
   content: "";
   display: inline-block;
   width: 16px;
-  height:16px;
+  height: 16px;
   margin-right: 10px;
   background-size: cover;
   -webkit-filter: invert(1);
@@ -86,11 +86,11 @@
 #playlist > li:not(.playing) a:focus {
   background-color: rgba(255,255,255,0.1);
 }
-.playcoverart {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    left: 3px;
+#playlist > li .cover {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 3px;
 }
 #playlist > li p {
   margin: 0;
