@@ -85,7 +85,7 @@ function onMediaStateChange(event, state) {
     let badge;
     switch (state) {
       case "pause":
-        badge = "❚ ❚";
+        badge = "⏸";
         break;
       case "play":
         badge = "▶";
