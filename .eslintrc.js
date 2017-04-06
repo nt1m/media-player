@@ -9,7 +9,7 @@ module.exports = {
     SettingsStore: true,
     Utils: true,
     Equalizer: true,
-    jsmediatags: true
+    musicmetadata: true
   },
   env: {
     es6: true,

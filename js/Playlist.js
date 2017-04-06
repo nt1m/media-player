@@ -148,7 +148,7 @@ function PlaylistItem(params) {
   this.type = params.type;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
-  return Utils.readID3Data(this.media).then(tags => {
+  return Utils.readTags(this.media).then(tags => {
     this.tags = tags;
 
     this.createDOM({cover: tags.pic});

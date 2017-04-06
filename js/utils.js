@@ -2,38 +2,41 @@
 
 /* eslint-disable no-unused-vars */
 var Utils = {
-  readID3Data(media) {
+  readTags(media) {
     return new Promise(resolve => {
-      new jsmediatags.Reader(media).setTagsToRead(["title", "artist", "album", "picture"])
-      .read({
-        onSuccess: (({ tags }) => {
+      if (media.type.match("audio") == "audio") {
+        musicmetadata(media, (e, tags) => {
+          if (e) {
+            throw new Error(e);
+          }
+          let picture = tags.picture[0];
           let returnedTags = {
             title: tags.title || this.removeFileExtension(media.name),
-            artist: tags.artist || "",
+            artist: tags.artist.join(", ") || "",
             album: tags.album || "",
-            pic: tags.picture && (`data:${tags.picture.format};base64,` +
-              window.btoa(tags.picture.data.reduce((acc, value) => {
-                acc += String.fromCharCode(value);
-                return acc;
-              }, ""))) || null,
-            // trackNum: tag.tags.TRCK != null ? tag.tags.TRCK.data : "",
-            // lyrics: tag.tags.lyrics || "",
+            pic: picture && (`data:${picture.format};base64,` +
+                window.btoa(picture.data.reduce((acc, value) => {
+                  acc += String.fromCharCode(value);
+                  return acc;
+                }, ""))) || null,
           };
           if (!returnedTags.artist) {
             returnedTags = Object.assign(
-              returnedTags,
-              this.predictTagsFromName(media.name)
-            );
+                returnedTags,
+                this.predictTagsFromName(media.name)
+              );
           }
           resolve(returnedTags);
-        }),
-        onError: (e => {
-          resolve({
-            title: this.removeFileExtension(media.name),
-          });
-        }),
-      });
+        });
+      } else {
+        resolve(this.getVideoTags(media));
+      }
     });
+  },
+  getVideoTags(vid) {
+    return {
+      title: vid.name
+    };
   },
   predictTagsFromName(name) {
     if (!name) {
