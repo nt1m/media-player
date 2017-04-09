@@ -9,6 +9,7 @@
 function Playlist(params) {
   this.element = params.element;
   this.previousItem = null;
+  this.coverEl = document.querySelector("img#cover");
   this.shuffle = false;
   this.loop = true;
   this.element.scrollTo = function(y, t) {
@@ -148,17 +149,18 @@ function PlaylistItem(params) {
   this.type = params.type;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
+  this.pic = null;
   return Utils.readTags(this.media).then(tags => {
     this.tags = tags;
-
-    this.createDOM({cover: tags.pic});
+    this.pic = tags.pic;
+    this.createDOM();
 
     return this;
   });
 }
 
 PlaylistItem.prototype = {
-  createDOM({ cover }) {
+  createDOM() {
     var item = Element("li", {
       title: Utils.getTooltipForTags(this.tags),
       onClick: () => this.onItemSelected(this.hash),
@@ -170,11 +172,11 @@ PlaylistItem.prototype = {
       parent: item
     });
 
-    var coverDiv = Element("div", {
+    /* var coverDiv = */
+    Element("div", {
       class: "cover",
       parent: itemWrap
     });
-    coverDiv.style.backgroundImage = `url('${cover}')`;
 
     var textContainer = Element("p", {
       class: "text-container",
@@ -210,6 +212,7 @@ PlaylistItem.prototype = {
 
   select() {
     this.element.classList.add("playing");
+    this.playlist.coverEl.src = this.pic == null ? "" : this.pic;
   },
 
   unselect() {

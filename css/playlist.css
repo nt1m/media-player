@@ -8,6 +8,7 @@
   text-align: center;
   overflow: auto;
   position: relative;
+  min-height: 250px;
 }
 #playlist::before {
   display: inline-block;
