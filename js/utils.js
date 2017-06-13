@@ -5,27 +5,19 @@ var Utils = {
   readTags(media) {
     return new Promise(resolve => {
       if (media.type.match("audio") == "audio") {
-        musicmetadata(media, (e, tags) => {
-          if (e) {
-            throw new Error(e);
-          }
-          let picture = tags.picture[0];
+        let reader = new FID3(media, {
+          picture: true,
+          album: true,
+          artist: true,
+          title: true
+        });
+        reader.read(tags => {
           let returnedTags = {
-            title: tags.title || this.removeFileExtension(media.name),
-            artist: tags.artist.join(", ") || "",
-            album: tags.album || "",
-            pic: picture && (`data:${picture.format};base64,` +
-                window.btoa(picture.data.reduce((acc, value) => {
-                  acc += String.fromCharCode(value);
-                  return acc;
-                }, ""))) || null,
+            title: tags.title ? tags.title.text : this.removeFileExtension(media.name),
+            artist: tags.artist ? tags.artist.text : "",
+            album: tags.album ? tags.album.text : "",
+            pic: tags.picture ? window.URL.createObjectURL(tags.picture.blob) : null,
           };
-          if (!returnedTags.artist) {
-            returnedTags = Object.assign(
-                returnedTags,
-                this.predictTagsFromName(media.name)
-              );
-          }
           resolve(returnedTags);
         });
       } else {
