@@ -430,7 +430,7 @@ var MediaPlayer = {
     if (volume == this.videoEl.volume) {
       return;
     }
-    this.videoEl.volume = volume;
+    this.videoEl.volume = volume * volume * volume;
     if (volume == 0) {
       this.volumeIcon.className = "mute";
     } else if (volume <= 0.5) {
