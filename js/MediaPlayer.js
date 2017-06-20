@@ -243,7 +243,7 @@ var MediaPlayer = {
   setMedia(hash) {
     let item = this.playlist.list.get(hash);
     document.querySelector("#display-container")
-            .className = item.type;
+      .className = item.type;
     this.videoEl.hidden = item.type != "video";
     this.canvasEl.hidden = item.type == "video";
     URL.revokeObjectURL(this.videoEl.src);
@@ -256,7 +256,7 @@ var MediaPlayer = {
   },
   updateHeader(tags) {
     let artistAndTitle = tags.artist ? tags.artist + " - " + tags.title
-                                     : tags.title;
+      : tags.title;
     this.headerEl.textContent = artistAndTitle;
     document.title = this.headerEl.textContent;
 
@@ -532,14 +532,14 @@ var MediaPlayer = {
         ctx.fillStyle = capStyle;
         if (value < capYPositionArray[i]) {
           ctx.fillRect(i * totalWidth,
-                       cheight - (--capYPositionArray[i]),
-                       meterWidth, capHeight);
+            cheight - (--capYPositionArray[i]),
+            meterWidth, capHeight);
         } else {
           ctx.fillRect(i * totalWidth, cheight - value, meterWidth, capHeight);
           capYPositionArray[i] = value;
         }
         ctx.fillStyle = getComputedStyle(document.documentElement)
-                        .getPropertyValue("--theme-highlight-color");
+          .getPropertyValue("--theme-highlight-color");
         ctx.fillRect(i * totalWidth, cheight - value + capHeight, meterWidth, cheight);
       }
       that.animationId = requestAnimationFrame(drawMeter);

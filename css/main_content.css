@@ -3,7 +3,22 @@
   min-width: none;
   display: flex;
 }
-
+#cover {
+  position: absolute;
+  margin: auto;
+  left: 0;right: 0;top: 0;bottom: 0;
+  transition: filter .2s;
+  filter: blur(5px) grayscale(50%);
+  z-index: -1;
+  max-width: 80%;
+  max-height: 80%;
+}
+#content-area:hover > #cover{
+  filter: blur(0) grayscale(0);
+}
+ #content-area:hover > #visualizer {
+  opacity: 0.2;
+}
 #display-container {
   flex: 1;
   min-width: 0;
@@ -102,6 +117,7 @@
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   max-width: 90%;
+  transition: opacity .2s;
 }
 #visualizer.placeholder {
   background: url(../img/musicicon.png) no-repeat center;
