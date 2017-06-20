@@ -217,11 +217,13 @@ PlaylistItem.prototype = {
 
   unselect() {
     this.element.classList.remove("playing");
+    this.playlist.coverEl.src = "";
   },
 
   destroy() {
     this.element.remove();
     this.media = null;
+    this.playlist.coverEl.src = "";
   }
 };
 
