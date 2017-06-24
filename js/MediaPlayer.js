@@ -379,7 +379,7 @@ var MediaPlayer = {
     }
   },
   toggleShuffle() {
-    this.playlist.shuffle = !this.playlist.shuffle;
+    this.playlist.toggleShuffle();
     if (this.playlist.shuffle) {
       this.shuffleEl.classList.add("checked");
     } else {
@@ -439,7 +439,7 @@ var MediaPlayer = {
       this.volumeIcon.className = "";
     }
     this.volumeSlider.value = volume;
-    this.volumeSlider.title = this.volumeIcon.title = Math.round(volume * 100) + "%";
+    this.volumeSlider.title = this.volumeIcon.title = Math.round(volume * volume * 100) + "%";
     if (this.settingsStore) {
       this.settingsStore.setItem("volume", volume);
     }

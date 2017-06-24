@@ -76,40 +76,32 @@ Playlist.prototype = {
   },
 
   selectPrevious() {
-    if (this.shuffle && this.previousItem
-        && this.list.has(this.previousItem)
-        && this.previousItem != this.selectedItem) {
-      this.list.get(this.selectedItem).unselect();
-      this.onItemSelected(this.previousItem);
-    } else if (this.shuffle && this.previousItem == this.selectedItem) {
-      this.selectNext();
-    } else {
-      var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
-      var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
-      var nextItem = [...this.list.keys()][nextItemIndex];
-      this.list.get(this.selectedItem).unselect();
-      this.onItemSelected(nextItem);
+    var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
+    var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
+    var nextItem = [...this.list.keys()][nextItemIndex];
+    this.list.get(this.selectedItem).unselect();
+    this.onItemSelected(nextItem);
+  },
+  toggleShuffle() {
+    this.shuffle = !this.shuffle;
+    if (this.shuffle) {
+      var array = [];
+      this.list.forEach(function(v,i) {
+        array.push([i, v]);
+      });
+      for (var _i = array.length - 1; _i + 1 > 0; _i--) {
+        var _a = array[_i];
+        var _rand = Math.floor(Math.random() * _i);
+        array[_i] = array[_rand];
+        array[_rand] = _a;
+      }
+      this.list = new Map(array);
     }
   },
-
   selectNext(hash) {
-    if (!hash) {
-      hash = this.selectedItem;
-    }
-    var nextItemIndex;
+    hash = !hash ? this.selectedItem : hash;
     var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
-
-    var oth = [...Array(this.list.size).keys()].filter(i => i != itemIndex);
-    if (this.list.size > 2 && this.previousItem && this.list.has(this.previousItem)) {
-      var previousItemIndex = [...this.list.keys()].findIndex(h => h === this.previousItem);
-      oth = oth.filter(i => i != previousItemIndex);
-    }
-    if (this.shuffle && this.list.size > 1) {
-      nextItemIndex = oth[Math.floor(Math.random() * oth.length)];
-    } else {
-      nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
-    }
-
+    var nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
     var nextItem = [...this.list.keys()][nextItemIndex];
     this.previousItem = hash;
     this.list.get(hash).unselect();
