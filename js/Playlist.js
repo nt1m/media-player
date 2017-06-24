@@ -74,14 +74,6 @@ Playlist.prototype = {
       return item;
     });
   },
-
-  selectPrevious() {
-    var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
-    var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
-    var nextItem = [...this.list.keys()][nextItemIndex];
-    this.list.get(this.selectedItem).unselect();
-    this.onItemSelected(nextItem);
-  },
   toggleShuffle() {
     this.shuffle = !this.shuffle;
     if (this.shuffle) {
@@ -98,6 +90,18 @@ Playlist.prototype = {
       this.list = new Map(array);
     }
   },
+  selectPrevious() {
+    var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
+    var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
+    var nextItem = [...this.list.keys()][nextItemIndex];
+    this.list.get(this.selectedItem).unselect();
+    this.onItemSelected(nextItem);
+    if (nextItemIndex === this.list.size - 1 && this.shuffle) {
+      this.shuffle = false;
+      this.toggleShuffle();
+    }
+  },
+
   selectNext(hash) {
     hash = !hash ? this.selectedItem : hash;
     var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
@@ -106,6 +110,10 @@ Playlist.prototype = {
     this.previousItem = hash;
     this.list.get(hash).unselect();
     this.onItemSelected(nextItem);
+    if (nextItemIndex === 0 && this.shuffle) {
+      this.shuffle = false;
+      this.toggleShuffle();
+    }
   },
 
   onItemSelected(hash) {
