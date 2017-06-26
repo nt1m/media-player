@@ -37,6 +37,7 @@ function Playlist(params) {
 
   // Hash Map
   this.list = new Map();
+  this.orderedList = null;
   return this;
 }
 
@@ -77,8 +78,9 @@ Playlist.prototype = {
   toggleShuffle() {
     this.shuffle = !this.shuffle;
     if (this.shuffle) {
+      this.orderedList = this.list;
       var array = [];
-      this.list.forEach(function(v,i) {
+      this.list.forEach(function(v, i) {
         array.push([i, v]);
       });
       for (var _i = array.length - 1; _i + 1 > 0; _i--) {
@@ -88,6 +90,9 @@ Playlist.prototype = {
         array[_rand] = _a;
       }
       this.list = new Map(array);
+    } else {
+      this.list = this.orderedList;
+      this.orderedList = null;
     }
   },
   selectPrevious() {

@@ -54,7 +54,7 @@
 			<div id="equalizer-panel" class="menu"></div>
 			<div id="volume-control">
 				<span id="volume-icon"></span>
-				<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" onchange="MediaPlayer.changeVolume(this.value);">
+				<input type="range" id="volume-range" value="1" min="0" max="1" step="0.01" oninput="MediaPlayer.changeVolume(this.value);">
 			</div>
 			<div id="main-controls">
 				<button class="media-control" id="previous-btn" title="Rewind"></button>
