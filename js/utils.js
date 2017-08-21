@@ -1,25 +1,27 @@
 "use strict";
 
 /* eslint-disable no-unused-vars */
+/* global FID3 */
 var Utils = {
   readTags(media) {
     return new Promise(resolve => {
       if (media.type.match("audio") == "audio") {
-        let reader = new FID3(media, {
-          picture: true,
-          album: true,
-          artist: true,
-          title: true
-        });
-        reader.read(tags => {
-          let returnedTags = {
-            title: tags.title ? tags.title.text : this.removeFileExtension(media.name),
-            artist: tags.artist ? tags.artist.text : "",
-            album: tags.album ? tags.album.text : "",
-            pic: tags.picture ? window.URL.createObjectURL(tags.picture.blob) : null,
-          };
-          resolve(returnedTags);
-        });
+        let reader = new FID3(media)
+          .then(tag => {
+            Promise.all([
+              tag.title != null ? tag.title.read() : -1,
+              tag.artist != null ? tag.artist.read() : -1,
+              tag.album != null ? tag.album.read() : -1,
+              tag.picture != null ? tag.picture.read() : -1,
+            ].filter(e => e != -1)).then(e => {
+              resolve({
+                title: tag.title != null ? tag.title.value : this.removeFileExtension(media.name),
+                artist: tag.artist != null ? tag.artist.value : "",
+                album: tag.album != null ? tag.album.value : "",
+                pic: tag.picture != null ? window.URL.createObjectURL(tag.picture.value) : null,
+              });
+            });
+          });
       } else {
         resolve(this.getVideoTags(media));
       }
