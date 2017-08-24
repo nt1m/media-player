@@ -42,8 +42,22 @@ function Playlist(params) {
 }
 
 Playlist.prototype = {
-  addAll(media) {
-    return Promise.all(media.map(m => this.add(m)));
+  addAll(medias) {
+    return new Promise((res, rej) => {
+      let i = 0;
+      let addNextEl = _ => {
+        if (++i < medias.length) {
+          this.add(medias[i]).then(v => {
+            addNextEl();
+          });
+        } else {
+          res()
+        }
+      };
+      if (medias.length > 0) {
+        this.add(medias[0]).then(addNextEl);
+      }
+    });
   },
 
   /*
@@ -51,6 +65,9 @@ Playlist.prototype = {
     @param File media: The file to add
   */
   add(media) {
+    if (media === null) {
+      return;
+    }
     this.element.classList.add("loading");
     if (this.list.has(createHash(media))) {
       this.element.classList.remove("loading");
