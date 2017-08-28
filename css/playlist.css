@@ -66,32 +66,22 @@
 #playlist > li:not(.playing) a:focus {
   background-color: rgba(255,255,255,0.1);
 }
-#playlist > li .cover {
-  width: 24px;
-  height: 24px;
-  margin: 0 8px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 2px;
-}
-#playlist > li .cover::before {
-  content: "";
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin: 4px;
-  background-size: cover;
-  border-radius: 100%;
-  box-sizing: border-box;
-}
 #playlist > li.playing a:focus .cover::before {
   border: 1px solid var(--theme-highlight-color);
 }
-#playlist > li.playing .cover::before {
-  background-image: url(../img/play.svg);
-  background-color: rgba(255, 255, 255, 0.5);
+#playlist > li a::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin: 0 .5em;
+  display: inline-block;
   border-radius: 50%;
   z-index: 1;
+  background-size: cover;
+}
+#playlist > li.playing a::before {
+  background-image: url(../img/play.svg);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 #playlist > li p {
   margin: 0;

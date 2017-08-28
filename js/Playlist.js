@@ -43,15 +43,15 @@ function Playlist(params) {
 
 Playlist.prototype = {
   addAll(medias) {
-    return new Promise((res, rej) => {
+    return new Promise((resolve, reject) => {
       let i = 0;
-      let addNextEl = _ => {
+      let addNextEl = () => {
         if (++i < medias.length) {
           this.add(medias[i]).then(v => {
             addNextEl();
           });
         } else {
-          res()
+          resolve();
         }
       };
       if (medias.length > 0) {

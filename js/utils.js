@@ -14,12 +14,14 @@ var Utils = {
               tag.album != null ? tag.album.read() : -1,
               tag.picture != null ? tag.picture.read() : -1,
             ].filter(e => e != -1)).then(e => {
-              resolve({
-                title: tag.title != null ? tag.title.value : this.removeFileExtension(media.name),
-                artist: tag.artist != null ? tag.artist.value : "",
-                album: tag.album != null ? tag.album.value : "",
+              let tags = {
+                title: tag.title && tag.title.value,
+                artist: tag.artist && tag.artist.value,
+                album: tag.album && tag.album.value,
                 pic: tag.picture != null ? window.URL.createObjectURL(tag.picture.value) : null,
-              });
+              };
+
+              resolve(Object.assign(tags, this.predictTagsFromName(media.name)));
             });
           });
       } else {
@@ -74,16 +76,9 @@ var Utils = {
   },
 
   sanitizeCommonKeywords(name) {
-    var keywords = ["lyric", "video", "audio", "lyrics", "official"];
-    var removedKeywords = keywords.map(k => "[" + k);
-    removedKeywords = removedKeywords.concat(keywords.map(k => "(" + k));
-    removedKeywords = removedKeywords.concat(keywords.map(k => "[" + k + "]"));
-    removedKeywords = removedKeywords.concat(keywords.map(k => "(" + k + ")"));
-    removedKeywords = removedKeywords.concat(keywords.map(k => k + "]"));
-    removedKeywords = removedKeywords.concat(keywords.map(k => k + ")"));
-
-    name = name.split(" ").filter(w => removedKeywords.indexOf(w.toLowerCase()) === -1);
-    return name.join(" ");
+    var keywordRegex = /[\(\[]([\s\w]+)?(official|music|audio|video|edit|tour|lyric|lyrics)([\s\w]+)?[\)\]]/ig;
+    name = name.replace(/_/g, " ");
+    return name.replace(keywordRegex, "");
   },
 
   getTooltipForTags(tags) {

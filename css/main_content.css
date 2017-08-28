@@ -13,10 +13,13 @@
   max-width: 80%;
   max-height: 80%;
 }
+#cover[src=""] {
+  display: none;
+}
 #content-area:hover > #cover{
   filter: blur(0) grayscale(0);
 }
- #content-area:hover > #visualizer {
+#content-area:hover > #cover:not([src=""]) + #visualizer {
   opacity: 0.2;
 }
 #display-container {
