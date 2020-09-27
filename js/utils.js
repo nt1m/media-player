@@ -8,14 +8,13 @@ var Utils = {
       if (media.type.match("audio") == "audio") {
         getMp3Tag(media)
           .then(tag => {
-            let t = {
-              title: tag.title,
-              artist: tag.artist,
+            let prediction = this.predictTagFromName(media.name)
+            resolve({
+              title: tag.title || prediction.title,
+              artist: tag.artist || prediction.artist,
               album: tag.album,
-              pic: window.URL.createObjectURL(tag.picture),
-            };
-
-            resolve({...this.predictTagFromName(media.name), ...t});
+              pic: tag.picture && window.URL.createObjectURL(tag.picture),
+            });
           });
       } else {
         resolve(this.getVideoTag(media));
