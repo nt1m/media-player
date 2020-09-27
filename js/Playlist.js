@@ -172,9 +172,9 @@ function PlaylistItem(params) {
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
   this.pic = null;
-  return Utils.readTags(this.media).then(tags => {
-    this.tags = tags;
-    this.pic = tags.pic;
+  return Utils.readTag(this.media).then(tag => {
+    this.tag = tag;
+    this.pic = tag.pic;
     this.createDOM();
 
     return this;
@@ -184,7 +184,7 @@ function PlaylistItem(params) {
 PlaylistItem.prototype = {
   createDOM() {
     var item = Element("li", {
-      title: Utils.getTooltipForTags(this.tags),
+      title: Utils.getTooltipForTag(this.tag),
       onClick: () => this.onItemSelected(this.hash),
       parent: this.playlist.element
     });
@@ -207,14 +207,14 @@ PlaylistItem.prototype = {
 
     Element("span", {
       class: "title",
-      content: this.tags.title,
+      content: this.tag.title,
       parent: textContainer
     });
 
-    if (this.tags.artist) {
+    if (this.tag.artist) {
       Element("span", {
         class: "artist",
-        content: this.tags.artist,
+        content: this.tag.artist,
         parent: textContainer
       });
     }

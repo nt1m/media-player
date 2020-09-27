@@ -1,63 +1,56 @@
 "use strict";
 
 /* eslint-disable no-unused-vars */
-/* global FID3 */
+/* global getMp3Tag */
 var Utils = {
-  readTags(media) {
+  readTag(media) {
     return new Promise(resolve => {
       if (media.type.match("audio") == "audio") {
-        let reader = new FID3(media)
+        getMp3Tag(media)
           .then(tag => {
-            Promise.all([
-              tag.title != null ? tag.title.read() : -1,
-              tag.artist != null ? tag.artist.read() : -1,
-              tag.album != null ? tag.album.read() : -1,
-              tag.picture != null ? tag.picture.read() : -1,
-            ].filter(e => e != -1)).then(e => {
-              let tags = {
-                title: tag.title && tag.title.value,
-                artist: tag.artist && tag.artist.value,
-                album: tag.album && tag.album.value,
-                pic: tag.picture != null ? window.URL.createObjectURL(tag.picture.value) : null,
-              };
+            let t = {
+              title: tag.title,
+              artist: tag.artist,
+              album: tag.album,
+              pic: window.URL.createObjectURL(tag.picture),
+            };
 
-              resolve(Object.assign(tags, this.predictTagsFromName(media.name)));
-            });
+            resolve({...this.predictTagFromName(media.name), ...t});
           });
       } else {
-        resolve(this.getVideoTags(media));
+        resolve(this.getVideoTag(media));
       }
     });
   },
-  getVideoTags(vid) {
+  getVideoTag(vid) {
     return {
       title: vid.name
     };
   },
-  predictTagsFromName(name) {
+  predictTagFromName(name) {
     if (!name) {
       return {};
     }
-    var tags = {};
+    var tag = {};
     name = this.removeFileExtension(name);
     var splitName = name.split("-");
     if (splitName.length > 1) {
-      tags.artist = trim(splitName[0]);
+      tag.artist = trim(splitName[0]);
 
       splitName.shift();
-      tags.title = trim(splitName.join(""));
+      tag.title = trim(splitName.join(""));
     } else {
-      tags.title = trim(name);
+      tag.title = trim(name);
     }
-    tags.title = this.sanitizeCommonKeywords(tags.title);
+    tag.title = this.sanitizeCommonKeywords(tag.title);
 
-    var ftData = this.extractFeaturing(tags.title);
+    var ftData = this.extractFeaturing(tag.title);
     if (ftData[1]) {
-      tags.title = ftData[0];
-      tags.artist += ", " + ftData[1];
+      tag.title = ftData[0];
+      tag.artist += ", " + ftData[1];
     }
 
-    return tags;
+    return tag;
   },
 
   removeFileExtension(name) {
@@ -81,16 +74,16 @@ var Utils = {
     return name.replace(keywordRegex, "");
   },
 
-  getTooltipForTags(tags) {
-    let tooltip = tags.title;
-    if (tags.artist) {
-      tooltip = `${tags.artist} - ${tooltip}`;
+  getTooltipForTag(tag) {
+    let tooltip = tag.title;
+    if (tag.artist) {
+      tooltip = `${tag.artist} - ${tooltip}`;
     }
-    if (tags.album) {
-      tooltip += `\nAlbum: ${tags.album}`;
+    if (tag.album) {
+      tooltip += `\nAlbum: ${tag.album}`;
     }
-    if (tags.genre) {
-      tooltip += `\nGenre: ${tags.genre}`;
+    if (tag.genre) {
+      tooltip += `\nGenre: ${tag.genre}`;
     }
     return tooltip;
   },

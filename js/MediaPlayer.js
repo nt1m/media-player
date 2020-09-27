@@ -248,19 +248,19 @@ var MediaPlayer = {
     this.canvasEl.hidden = item.type == "video";
     URL.revokeObjectURL(this.videoEl.src);
     this.videoEl.src = URL.createObjectURL(item.media);
-    this.updateHeader(item.tags);
+    this.updateHeader(item.tag);
     // Scroll to the selected item
     this.playlist.element.scrollTo(item.element.offsetTop, 1000);
     this.UIEnabled = true;
     this.play(true);
   },
-  updateHeader(tags) {
-    let artistAndTitle = tags.artist ? tags.artist + " - " + tags.title
-      : tags.title;
+  updateHeader(tag) {
+    let artistAndTitle = tag.artist ? tag.artist + "⠀⠀⠀⠀⠀⠀⠀⠀" + tag.title
+      : tag.title;
     this.headerEl.textContent = artistAndTitle;
     document.title = this.headerEl.textContent;
 
-    this.headerEl.title = Utils.getTooltipForTags(tags);
+    this.headerEl.title = Utils.getTooltipForTag(tag);
   },
 
   /** Audio controls **/
