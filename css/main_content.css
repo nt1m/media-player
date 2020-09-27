@@ -135,12 +135,10 @@
     -webkit-mask-image: url(../img/musicicon.png);
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    -webkit-mask-size: 50%;
 
     mask-image: url(../img/musicicon.png);
     mask-repeat: no-repeat;
     mask-position: center;
-    mask-size: 50%;
 
     background-color: var(--theme-highlight-color);
   }
