@@ -193,7 +193,6 @@ var MediaPlayer = {
 
     this.UIEnabled = false;
     this.changeLoopState(1);
-    this.initAudioContext();
   },
   set UIEnabled(value) {
     if (!value) {
@@ -236,6 +235,7 @@ var MediaPlayer = {
 
   /** Sidebar **/
   uploadFiles(uploadedMedia) {
+    if (!this.ctx) this.initAudioContext();
     uploadedMedia = Array.from(uploadedMedia) || [];
 
     return this.playlist.addAll(uploadedMedia);
