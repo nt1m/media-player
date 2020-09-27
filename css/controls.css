@@ -346,8 +346,8 @@
   border-radius: 5px;
   height: 3px;
 }
-#volume-range::-moz-range-thumb {
-  background: var(--theme-highlight-color);
+input[type=range]::-moz-range-thumb {
+  background: var(--theme-highlight-color) !important;
   border-radius: 50%;
   height: 16px;
   width: 16px;
@@ -356,9 +356,10 @@
 input[type=range]:focus::-moz-range-thumb {
   box-shadow: 0 0 0 8px rgba(255,255,255,0.1);
 }
-#volume-range::-moz-range-progress {
+input[type=range]::-moz-range-progress {
   background-color: var(--theme-highlight-color);
   height: 3px;
+  width: 1em;
 }
 #volume-range::-webkit-slider-track {
   -webkit-appearance: none;
