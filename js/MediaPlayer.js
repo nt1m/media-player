@@ -265,7 +265,7 @@ var MediaPlayer = {
 
   /** Audio controls **/
   initAudioContext() {
-    var AudioContext = window.webkitAudioContext || window.AudioContext;
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
     var ctx = new AudioContext();
     var media = this.videoEl;
     var mediaSrc = ctx.createMediaElementSource(media);
