@@ -255,7 +255,7 @@ var MediaPlayer = {
     this.play(true);
   },
   updateHeader(tag) {
-    let artistAndTitle = tag.artist ? tag.artist + "⠀⠀⠀⠀⠀⠀⠀⠀" + tag.title
+    let artistAndTitle = tag.artist ? tag.artist + " - " + tag.title
       : tag.title;
     this.headerEl.textContent = artistAndTitle;
     document.title = this.headerEl.textContent;
