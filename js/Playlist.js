@@ -1,5 +1,14 @@
 "use strict";
 
+function hash(audio) {
+  const h = [audio.name, audio.lastModified, audio.type, audio.size].map(e=>e+"").join('//');
+  if (!h) {
+    return Date.now();
+  }
+  return encodeURIComponent(h.replace(/\s/g, ""));
+}
+
+
 /*
   Constructor
   @param Object params
@@ -8,7 +17,6 @@
 */
 function Playlist(params) {
   this.element = params.element;
-  this.previousItem = null;
   this.coverEl = document.querySelector("img#cover");
   this.shuffle = false;
   this.loop = true;
@@ -36,28 +44,16 @@ function Playlist(params) {
   this.selectNext = this.selectNext.bind(this);
 
   // Hash Map
-  this.list = new Map();
-  this.orderedList = null;
+  this.list = [];
+  this.orderedlist = [];
+  this.hashes = [];
   return this;
 }
 
 Playlist.prototype = {
   addAll(medias) {
-    return new Promise((resolve, reject) => {
-      let i = 0;
-      let addNextEl = () => {
-        if (++i < medias.length) {
-          this.add(medias[i]).then(v => {
-            addNextEl();
-          });
-        } else {
-          resolve();
-        }
-      };
-      if (medias.length > 0) {
-        this.add(medias[0]).then(addNextEl);
-      }
-    });
+    for(var i = 0;i < medias.length; i++)
+      this.add(medias[i]);
   },
 
   /*
@@ -65,97 +61,86 @@ Playlist.prototype = {
     @param File media: The file to add
   */
   add(media) {
-    if (media === null) {
+    if (media === null || (media.type.match("audio") != "audio" &&
+                          media.type.match("video") != "video")
+                       || this.hashes.includes(hash(media))) {
       return;
     }
     this.element.classList.add("loading");
-    if (this.list.has(createHash(media))) {
-      this.element.classList.remove("loading");
-      return Promise.resolve();
-    }
-    if (media.type.match("audio") != "audio" &&
-        media.type.match("video") != "video") {
-      this.element.classList.remove("loading");
-      return Promise.resolve();
-    }
-    let adding = new PlaylistItem({
+
+    let item = new PlaylistItem({
       type: media.type.match("audio") == "audio" ? "audio" : "video",
       media,
       playlist: this
     });
-    return adding.then((item) => {
-      this.list.set(item.hash, item);
-      if (!this.selectedItem) {
-        this.onItemSelected(item.hash);
-      }
-      this.element.classList.remove("loading");
-      return item;
-    });
+    this.list.push(item);
+    this.orderedlist.push(item);
+    this.hashes.push(item.hash);
+    if (!this.selectedItem) {
+      this.onItemSelected(item);
+    }
+    this.element.classList.remove("loading");
+    return item;
+  },
+  doShuffle() {
+    for(var i = 0; i < this.list.length; i++) {
+      var j = i+Math.floor((this.list.length-i)*Math.random());
+      var tmp = this.list[i];
+      this.list[i] = this.list[j];
+      this.list[j] = tmp;
+    }
   },
   toggleShuffle() {
     this.shuffle = !this.shuffle;
     if (this.shuffle) {
-      this.orderedList = this.list;
-      var array = [];
-      this.list.forEach(function(v, i) {
-        array.push([i, v]);
-      });
-      for (var _i = array.length - 1; _i + 1 > 0; _i--) {
-        var _a = array[_i];
-        var _rand = Math.floor(Math.random() * _i);
-        array[_i] = array[_rand];
-        array[_rand] = _a;
-      }
-      this.list = new Map(array);
+      this.doShuffle();
     } else {
-      this.list = this.orderedList;
-      this.orderedList = null;
+      this.list = [...this.orderedlist];
     }
   },
   selectPrevious() {
-    var itemIndex = [...this.list.keys()].findIndex(h => h === this.selectedItem);
-    var nextItemIndex = itemIndex === 0 ? this.list.size - 1 : itemIndex - 1;
-    var nextItem = [...this.list.keys()][nextItemIndex];
-    this.list.get(this.selectedItem).unselect();
-    this.onItemSelected(nextItem);
-    if (nextItemIndex === this.list.size - 1 && this.shuffle) {
-      this.shuffle = false;
-      this.toggleShuffle();
+    var item = this.selectedItem;
+    var itemIndex = this.list.findIndex(i => i.hash === item.hash);
+    var nextItemIndex = (this.list.length+itemIndex-1)%this.list.length;
+    var nextItem = this.list[nextItemIndex];
+    item.unselect();
+    if (nextItemIndex === this.list.length - 1 && this.shuffle) {
+      this.doShuffle();
     }
+    this.onItemSelected(nextItem);
   },
 
-  selectNext(hash) {
-    hash = !hash ? this.selectedItem : hash;
-    var itemIndex = [...this.list.keys()].findIndex(h => h === hash);
-    var nextItemIndex = itemIndex === this.list.size - 1 ? 0 : itemIndex + 1;
-    var nextItem = [...this.list.keys()][nextItemIndex];
-    this.previousItem = hash;
-    this.list.get(hash).unselect();
-    this.onItemSelected(nextItem);
+  selectNext() {
+    var item = this.selectedItem;
+    var itemIndex = this.list.findIndex(i => i.hash === item.hash);
+    var nextItemIndex = (itemIndex+1)%this.list.length;
+    var nextItem = this.list[nextItemIndex];
+    item.unselect();
     if (nextItemIndex === 0 && this.shuffle) {
-      this.shuffle = false;
-      this.toggleShuffle();
+      this.doShuffle();
     }
+    this.onItemSelected(nextItem);
   },
 
-  onItemSelected(hash) {
+  onItemSelected(item) {
     if (this.selectedItem) {
-      this.list.get(this.selectedItem).unselect();
+      this.selectedItem.unselect();
     }
-    this.list.get(hash).select();
-    this.selectedItem = hash;
-    this.params.onItemSelected(hash);
+    item.select();
+    this.selectedItem = item;
+    this.params.onItemSelected(item);
   },
 
-  onItemRemoved(hash) {
-    if (this.list.size === 1) {
+  onItemRemoved(item) {
+    if (this.list.length === 1) {
       this.onItemCleared();
-    } else if (this.selectedItem === hash) {
-      this.selectNext(hash);
+    } else if (this.selectedItem.hash === item.hash) {
+      this.selectNext(item);
     }
-
-    this.list.get(hash).destroy();
-    this.list.delete(hash);
+    item.destroy();
+    this.list = this.list.filter(i => i.hash !== item.hash);
+    this.orderedlist = this.orderedlist.filter(i => i.hash !== item.hash);
+    this.hashes = this.hashes.filter(h => h !== item.hash);
   },
 
   onItemCleared() {
@@ -166,28 +151,35 @@ Playlist.prototype = {
 
 function PlaylistItem(params) {
   this.playlist = params.playlist;
-  this.hash = createHash(params.media);
+  this.hash = hash(params.media);
   this.media = params.media;
   this.type = params.type;
   this.onItemSelected = params.playlist.onItemSelected;
   this.onItemRemoved = params.playlist.onItemRemoved;
   this.pic = null;
-  return Utils.readTag(this.media).then(tag => {
+  var p;
+  [this.tag, p] = Utils.readTag(this.media);
+  this.createDOM();
+  p.then(tag => {
+    if (!tag) return;
     this.tag = tag;
     this.pic = tag.pic;
     this.createDOM();
-
-    return this;
   });
+  return this
 }
 
 PlaylistItem.prototype = {
   createDOM() {
-    var item = Element("li", {
-      title: Utils.getTooltipForTag(this.tag),
-      onClick: () => this.onItemSelected(this.hash),
-      parent: this.playlist.element
-    });
+    var item = this.element ?
+      this.element :
+      Element("li", {
+        title: Utils.getTooltipForTag(this.tag),
+        onClick: () => this.onItemSelected(this),
+        parent: this.playlist.element
+      });
+    item.setAttribute('title', Utils.getTooltipForTag(this.tag));
+    item.innerHTML = "";
 
     var itemWrap = Element("a", {
       href: "#",
@@ -222,13 +214,16 @@ PlaylistItem.prototype = {
     Element("button", {
       class: "cross",
       onClick: (e) => {
-        this.onItemRemoved(this.hash);
+        this.onItemRemoved(this);
         e.stopPropagation();
       },
       parent: itemWrap
     });
 
     this.element = item;
+    if (this.element.classList.contains("playing")) {
+      this.onItemSelected(this);
+    }
     return item;
   },
 
@@ -249,9 +244,3 @@ PlaylistItem.prototype = {
   }
 };
 
-function createHash(audio) {
-  if (!audio.name) {
-    return Date.now();
-  }
-  return encodeURIComponent(audio.name.replace(/\s/g, ""));
-}

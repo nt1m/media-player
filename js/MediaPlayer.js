@@ -240,8 +240,7 @@ var MediaPlayer = {
 
     return this.playlist.addAll(uploadedMedia);
   },
-  setMedia(hash) {
-    let item = this.playlist.list.get(hash);
+  setMedia(item) {
     document.querySelector("#display-container")
       .className = item.type;
     this.videoEl.hidden = item.type != "video";

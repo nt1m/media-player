@@ -4,11 +4,11 @@
 /* global getMp3Tag */
 var Utils = {
   readTag(media) {
-    return new Promise(resolve => {
+    const prediction = this.predictTagFromName(media.name);
+    return [prediction, new Promise(resolve => {
       if (media.type.match("audio") == "audio") {
         getMp3Tag(media)
           .then(tag => {
-            let prediction = this.predictTagFromName(media.name)
             resolve({
               title: tag.title || prediction.title,
               artist: tag.artist || prediction.artist,
@@ -19,7 +19,7 @@ var Utils = {
       } else {
         resolve(this.getVideoTag(media));
       }
-    });
+    })];
   },
   getVideoTag(vid) {
     return {
